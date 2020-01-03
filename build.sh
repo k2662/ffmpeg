@@ -63,7 +63,7 @@ $SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "3.100" > "$W
 checkStatus $? "build lame"
 
 echoSection "compile ffmpeg"
-$SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$OUT_DIR" "$CPUS" "4.2.1" > "$WORKING_DIR/build-ffmpeg.log" 2>&1
+$SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$OUT_DIR" "$CPUS" "4.2.2" > "$WORKING_DIR/build-ffmpeg.log" 2>&1
 checkStatus $? "build ffmpeg"
 
 echoSection "bundle result"
