@@ -27,12 +27,12 @@ checkStatus $? "unable to create pkg-config pc directory"
 
 # detect CPU threads (nproc for linux, sysctl for osx)
 CPUS=1
-CPUS_NPROC="$(nproc)"
+CPUS_NPROC="$(nproc 2> /dev/null)"
 if [ $? -eq 0 ]
 then
     CPUS=$CPUS_NPROC
 else
-    CPUS_SYSCTL="$(sysctl -n hw.ncpu)"
+    CPUS_SYSCTL="$(sysctl -n hw.ncpu 2> /dev/null)"
     if [ $? -eq 0 ]
     then
         CPUS=$CPUS_SYSCTL
