@@ -17,6 +17,15 @@ To get a full list of all formats and codecs that are supported just execute
 ./ffmpeg -codecs
 ```
 
+## Requirements
+There are just a few dependencies to other tools. Most of the software is compiled or downloaded during script execution. Also most of the tools should be already available on the system by default.
+
+### Required
+- curl for downloading files
+
+### Optional
+- nproc (on linux) or sysctl (on Mac OSX) for multicore compilation
+
 ## Execution
 To run this script simply execute the build.sh script.
 ```
