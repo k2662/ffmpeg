@@ -58,9 +58,9 @@ echoSection "compile x264"
 $SCRIPT_DIR/build-x264.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" > "$WORKING_DIR/build-x264.log" 2>&1
 checkStatus $? "build x264"
 
-echoSection "compile libvpx"
-$SCRIPT_DIR/build-libvpx.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "1.8.2" > "$WORKING_DIR/build-libvpx.log" 2>&1
-checkStatus $? "build libvpx"
+echoSection "compile vpx"
+$SCRIPT_DIR/build-vpx.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "1.8.2" > "$WORKING_DIR/build-vpx.log" 2>&1
+checkStatus $? "build vpx"
 
 echoSection "compile lame (mp3)"
 $SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "3.100" > "$WORKING_DIR/build-lame.log" 2>&1

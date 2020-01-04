@@ -7,7 +7,7 @@ This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
     - [nasm](http://www.nasm.us/)
 - video codecs
     - [x264](http://www.videolan.org/developers/x264.html) for H.264 encoding
-    - [libvpx](https://www.webmproject.org/) for VP8/VP9 de/encoding
+    - [vpx](https://www.webmproject.org/) for VP8/VP9 de/encoding
 - audio codecs
     - [LAME](http://lame.sourceforge.net/) for MP3 encoding
 

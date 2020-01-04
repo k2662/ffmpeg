@@ -11,31 +11,31 @@
 # start in working directory
 cd "$2"
 checkStatus $? "change directory failed"
-mkdir "libvpx"
+mkdir "vpx"
 checkStatus $? "create directory failed"
-cd "libvpx/"
+cd "vpx/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -o libvpx.tar.gz -L https://github.com/webmproject/libvpx/archive/v$5.tar.gz
-checkStatus $? "download of libvpx failed"
+curl -o vpx.tar.gz -L https://github.com/webmproject/libvpx/archive/v$5.tar.gz
+checkStatus $? "download of vpx failed"
 
 # TODO: checksum validation (if available)
 
 # unpack
-tar -zxf "libvpx.tar.gz"
-checkStatus $? "unpack libvpx failed"
+tar -zxf "vpx.tar.gz"
+checkStatus $? "unpack vpx failed"
 cd "libvpx-$5/"
 checkStatus $? "change directory failed"
 
 # prepare build
 ./configure --prefix="$3" --disable-unit-tests
-checkStatus $? "configuration of libvpx failed"
+checkStatus $? "configuration of vpx failed"
 
 # build
 make -j $4
-checkStatus $? "build of libvpx failed"
+checkStatus $? "build of vpx failed"
 
 # install
 make install
-checkStatus $? "installation of libvpx failed"
+checkStatus $? "installation of vpx failed"
