@@ -69,4 +69,4 @@ checkStatus $? "build ffmpeg"
 echoSection "bundle result"
 cd "$OUT_DIR/bin/"
 checkStatus $? "change directory failed"
-zip -9 -r "$WORKING_DIR/ffmpeg-ffprobe.zip" *
+zip -9 -r "$WORKING_DIR/ffmpeg-success.zip" *
