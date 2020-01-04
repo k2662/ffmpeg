@@ -30,7 +30,7 @@ cd "cmake-$6/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$3"
+./configure --prefix="$3" --parallel="$4"
 checkStatus $? "configuration of cmake failed"
 
 # build

@@ -2,11 +2,14 @@
 This script is made to compile FFmpeg with common codecs on Linux and Mac OSX.
 
 ## Result
-This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
+This repository builds ffmpeg and ffprobe for Mac OSX and Linux using
 - build tools
+    - [cmake](https://cmake.org/)
     - [nasm](http://www.nasm.us/)
+    - [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)
 - video codecs
     - [x264](http://www.videolan.org/developers/x264.html) for H.264 encoding
+    - [x265](http://x265.org/) for H.265/HEVC encoding
     - [vpx](https://www.webmproject.org/) for VP8/VP9 de/encoding
 - audio codecs
     - [LAME](http://lame.sourceforge.net/) for MP3 encoding

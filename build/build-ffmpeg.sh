@@ -33,7 +33,7 @@ FF_FLAGS="-L${3}/lib -I${3}/include"
 export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 ./configure --prefix="$4" --enable-gpl \
-    --enable-libx264 --enable-libvpx \
+    --enable-libx264 --enable-libx265 --enable-libvpx \
     --enable-libmp3lame
 checkStatus $? "configuration of ffmpeg failed"
 
