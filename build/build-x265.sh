@@ -41,6 +41,5 @@ make install
 checkStatus $? "installation of x265 failed"
 
 # post-installation
-# modify pkg-config file for usage with ffmpeg
-# https://mailman.videolan.org/pipermail/x265-devel/2014-April/004227.html
-sed -i -e 's/lx265/lx265 -lstdc++ -lpthread/g' $3/lib/pkgconfig/x265.pc
+# modify pkg-config file for usage with ffmpeg (it seems that the flag for threads is missing)
+sed -i ".original" -e 's/lx265/lx265 -lpthread/g' $3/lib/pkgconfig/x265.pc
