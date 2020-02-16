@@ -24,6 +24,7 @@ To get a full list of all formats and codecs that are supported just execute
 There are just a few dependencies to other tools. Most of the software is compiled or downloaded during script execution. Also most of the tools should be already available on the system by default.
 
 ### Required
+- c and c++ compiler like AppleClang (included in Xcode)
 - curl for downloading files
 
 ### Optional
