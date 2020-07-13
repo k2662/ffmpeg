@@ -1,8 +1,12 @@
 #!/bin/sh
 
 # some folder names
-SCRIPT_DIR="$( cd "$( dirname "$0" )" > /dev/null 2>&1 && pwd )/build"
+BASE_DIR="$( cd "$( dirname "$0" )" > /dev/null 2>&1 && pwd )"
+echo "base directory is ${BASE_DIR}"
+SCRIPT_DIR="${BASE_DIR}/build"
 echo "script directory is ${SCRIPT_DIR}"
+TEST_DIR="${BASE_DIR}/test"
+echo "test directory is ${TEST_DIR}"
 WORKING_DIR="$( pwd )"
 echo "working directory is ${WORKING_DIR}"
 TOOL_DIR="$WORKING_DIR/tool"
@@ -100,3 +104,7 @@ echoSection "bundle result"
 cd "$OUT_DIR/bin/"
 checkStatus $? "change directory failed"
 zip -9 -r "$WORKING_DIR/ffmpeg-success.zip" *
+
+echoSection "run tests"
+$TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$WORKING_DIR" "$OUT_DIR" > "$WORKING_DIR/test.log" 2>&1
+checkStatus $? "test"
