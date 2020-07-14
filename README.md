@@ -14,6 +14,7 @@ This repository builds FFmpeg and FFprobe for Mac OSX and Linux using
     - [vpx](https://www.webmproject.org/) for VP8/VP9 de-/encoding
 - audio codecs
     - [LAME](http://lame.sourceforge.net/) for MP3 encoding
+    - [opus](https://opus-codec.org/) for Opus de-/encoding
 
 To get a full list of all formats and codecs that are supported just execute
 ```

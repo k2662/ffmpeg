@@ -30,3 +30,7 @@ checkStatus $? "test vp8 failed"
 # test vp9
 $4/bin/ffmpeg -i "$2/test.mp4" -c:v "libvpx-vp9" -an "$3/test-vp9.webm" > "$3/test-vp9.log" 2>&1
 checkStatus $? "test vp9 failed"
+
+# test opus
+$4/bin/ffmpeg -i "$2/test.mp4" -c:a "libopus" -vn "$3/test-opus.opus" > "$3/test-opus.log" 2>&1
+checkStatus $? "test opus"
