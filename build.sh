@@ -108,9 +108,10 @@ echoDurationInSections $COMPILATION_START_TIME
 
 echoSection "bundle result"
 cd "$OUT_DIR/bin/"
-checkStatus $? "change directory failed"
+checkStatus $? "change directory"
 zip -9 -r "$WORKING_DIR/ffmpeg-success.zip" *
 
 echoSection "run tests"
 $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$WORKING_DIR" "$OUT_DIR" > "$WORKING_DIR/test.log" 2>&1
 checkStatus $? "test"
+echo "tests executed successfully"
