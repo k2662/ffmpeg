@@ -34,7 +34,7 @@ export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 # --pkg-config-flags="--static" is required to respect the Libs.private flags of the *.pc files
 ./configure --prefix="$4" --enable-gpl --pkg-config-flags="--static" \
-    --enable-libaom --enable-libx264 --enable-libx265 --enable-libvpx \
+    --enable-libaom --enable-libopenh264 --enable-libx264 --enable-libx265 --enable-libvpx \
     --enable-libmp3lame --enable-libopus
 checkStatus $? "configuration of ffmpeg failed"
 
