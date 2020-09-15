@@ -81,7 +81,7 @@ echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile x265"
-$SCRIPT_DIR/build-x265.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "3.2.1" > "$WORKING_DIR/build-x265.log" 2>&1
+$SCRIPT_DIR/build-x265.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "3.4" > "$WORKING_DIR/build-x265.log" 2>&1
 checkStatus $? "build x265"
 echoDurationInSections $START_TIME
 
