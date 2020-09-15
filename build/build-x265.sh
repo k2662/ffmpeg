@@ -17,15 +17,15 @@ cd "x265/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_$5.tar.gz
+curl -O -L https://github.com/videolan/x265/archive/$5.tar.gz
 checkStatus $? "download of x265 failed"
 
 # TODO: checksum validation (if available)
 
 # unpack
-tar -zxf "x265_$5.tar.gz"
+tar -zxf "$5.tar.gz"
 checkStatus $? "unpack x265 failed"
-cd "x265_$5/"
+cd "x265-$5/"
 checkStatus $? "change directory failed"
 
 # prepare build
