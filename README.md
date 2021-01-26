@@ -2,7 +2,7 @@
 This script is made to compile FFmpeg with common codecs on Linux and Mac OSX.
 
 ## Result
-This repository builds FFmpeg and FFprobe for Mac OSX and Linux using
+This repository builds FFmpeg and FFprobe for Linux and Mac OSX using
 - build tools
     - [cmake](https://cmake.org/)
     - [nasm](http://www.nasm.us/)
@@ -35,12 +35,6 @@ There are just a few dependencies to other tools. Most of the software is compil
 - nproc (on linux) or sysctl (on Mac OSX) for multicore compilation
 
 ## Execution
-To run this script simply execute the build.sh script.
-```
-./build.sh
-```
-
-## Folder Structure
 All files that are downloaded and generated through this script are placed in the current working directory. The recommendation is to use an empty folder for this.
 ```
 mkdir ffmpeg-compile
