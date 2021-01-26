@@ -120,7 +120,7 @@ $SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$OUT_DIR" 
 checkStatus $? "build ffmpeg"
 echoDurationInSections $START_TIME
 
-echo "compilation finished successfully"
+echoSection "compilation finished successfully"
 echoDurationInSections $COMPILATION_START_TIME
 
 echoSection "bundle result"
