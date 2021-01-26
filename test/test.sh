@@ -10,7 +10,7 @@
 # test aom av1
 START_TIME=$(currentTimeInSeconds)
 echoSection "run test aom av1 encoding"
-$4/bin/ffmpeg -i "$2/test.mp4" -c:v "libaom-av1" -an "$3/test-aom-av1.mp4" > "$3/test-aom-av1.log" 2>&1
+$4/bin/ffmpeg -i "$2/test.mp4" -c:v "libaom-av1" -cpu-used 8 -an "$3/test-aom-av1.mp4" > "$3/test-aom-av1.log" 2>&1
 checkStatus $? "test aom av1"
 echoDurationInSections $START_TIME
 
