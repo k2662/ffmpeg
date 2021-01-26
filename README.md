@@ -46,6 +46,9 @@ Now execute the script using:
 ../path/to/repository/build.sh
 ```
 
+You can use the following parameters
+- `-SKIP_TEST=YES` for skipping the tests after compiling
+
 After the execution a new folder called "out" exists. It contains the compiled FFmpeg binary (in the bin sub-folder).
 The ffmpeg-success.zip contains also all binary files of FFmpeg.
 

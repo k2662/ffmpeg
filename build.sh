@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# parse arguments
+SKIP_TEST="NO"
+for arg in "$@"; do
+    KEY=${arg%%=*}
+    VALUE=${arg#*\=}
+    if [ $KEY = "-SKIP_TEST" ]; then
+        SKIP_TEST=$VALUE
+        echo "skip test $VALUE"
+    fi
+done
+
 # some folder names
 BASE_DIR="$( cd "$( dirname "$0" )" > /dev/null 2>&1 && pwd )"
 echo "base directory is ${BASE_DIR}"
@@ -117,7 +128,9 @@ cd "$OUT_DIR/bin/"
 checkStatus $? "change directory"
 zip -9 -r "$WORKING_DIR/ffmpeg-success.zip" *
 
-echoSection "run tests"
-$TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$WORKING_DIR" "$OUT_DIR" > "$WORKING_DIR/test.log" 2>&1
-checkStatus $? "test"
-echo "tests executed successfully"
+if [ $SKIP_TEST = "NO" ]; then
+    echoSection "run tests"
+    $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$WORKING_DIR" "$OUT_DIR" > "$WORKING_DIR/test.log" 2>&1
+    checkStatus $? "test"
+    echo "tests executed successfully"
+fi
