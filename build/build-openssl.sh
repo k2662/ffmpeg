@@ -29,7 +29,7 @@ cd "openssl-$5/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$3" --openssldir="$3/openssl"
+./config --prefix="$3" --openssldir="$3/openssl"
 checkStatus $? "configuration of openssl failed"
 
 # build
