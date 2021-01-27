@@ -3,8 +3,7 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = cmake major version
-# $6 = cmake full version
+# $5 = openssl version
 
 # load functions
 . $1/functions.sh
@@ -12,32 +11,31 @@
 # start in working directory
 cd "$2"
 checkStatus $? "change directory failed"
-mkdir "cmake"
+mkdir "openssl"
 checkStatus $? "create directory failed"
-cd "cmake/"
+cd "openssl/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://cmake.org/files/v$5/cmake-$6.tar.gz
-checkStatus $? "download of cmake failed"
+curl -O https://www.openssl.org/source/openssl-$5.tar.gz
+checkStatus $? "download of openssl failed"
 
 # TODO: checksum validation (if available)
 
 # unpack
-tar -zxf "cmake-$6.tar.gz"
-checkStatus $? "unpack of cmake failed"
-cd "cmake-$6/"
+tar -zxf "openssl-$5.tar.gz"
+checkStatus $? "unpack of openssl failed"
+cd "openssl-$5/"
 checkStatus $? "change directory failed"
 
 # prepare build
-export OPENSSL_ROOT_DIR="$3"
-./configure --prefix="$3" --parallel="$4"
-checkStatus $? "configuration of cmake failed"
+./configure --prefix="$3" --openssldir="$3/openssl"
+checkStatus $? "configuration of openssl failed"
 
 # build
 make -j $4
-checkStatus $? "build of cmake failed"
+checkStatus $? "build of openssl failed"
 
 # install
 make install
-checkStatus $? "installation of cmake failed"
+checkStatus $? "installation of openssl failed"
