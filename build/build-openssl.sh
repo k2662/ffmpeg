@@ -37,5 +37,7 @@ make -j $4
 checkStatus $? "build of openssl failed"
 
 # install
-make install
-checkStatus $? "installation of openssl failed"
+make install_sw
+checkStatus $? "installation of openssl failed (install_sw)"
+make install_ssldirs
+checkStatus $? "installation of openssl failed (install_ssldirs)"
