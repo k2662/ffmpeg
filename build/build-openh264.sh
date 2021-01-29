@@ -31,8 +31,5 @@ make PREFIX="$3" -j $4
 checkStatus $? "build of openh264 failed"
 
 # install
-make install PREFIX="$3"
+make install-static PREFIX="$3"
 checkStatus $? "installation of openh264 failed"
-
-# remove dynamic lib
-rm $3/lib/libopenh264*.dylib
