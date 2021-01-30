@@ -7,6 +7,8 @@ This repository builds FFmpeg and FFprobe for Linux and Mac OSX using
     - [cmake](https://cmake.org/)
     - [nasm](http://www.nasm.us/)
     - [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)
+- libraries
+    - [openssl](https://www.openssl.org/)
 - video codecs
     - [aom](https://aomedia.org/) for AV1 de-/encoding
     - [openh264](https://www.openh264.org/) for H.264 de-/encoding

@@ -61,6 +61,12 @@ checkStatus $? "build nasm"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
+echoSection "compile openssl"
+$SCRIPT_DIR/build-openssl.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "1.1.1i" > "$WORKING_DIR/build-openssl.log" 2>&1
+checkStatus $? "build openssl"
+echoDurationInSections $START_TIME
+
+START_TIME=$(currentTimeInSeconds)
 echoSection "compile cmake"
 $SCRIPT_DIR/build-cmake.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "3.19" "3.19.3" > "$WORKING_DIR/build-cmake.log" 2>&1
 checkStatus $? "build cmake"
