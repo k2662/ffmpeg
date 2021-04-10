@@ -1,0 +1,32 @@
+stages:
+  - build
+
+default:
+  before_script:
+    - pwd
+    - ls -l
+
+.build-template:
+  script:
+    - mkdir ffbuild && cd ffbuild/
+    - ../build.sh
+  artifacts:
+    paths:
+      - ffbuild/build-*.log
+      - ffbuild/out/bin/*
+
+osx_intel64:
+  stage: build
+  extends: .build-template
+  tags:
+    - custom
+    - osx
+    - shell
+
+linux_amd64:
+  stage: build
+  extends: .build-template
+  tags:
+    - custom
+    - linux
+    - shell
