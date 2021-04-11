@@ -141,8 +141,10 @@ checkStatus $? "change directory"
 zip -9 -r "$WORKING_DIR/ffmpeg-success.zip" *
 
 if [ $SKIP_TEST = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
     echoSection "run tests"
     $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$WORKING_DIR" "$OUT_DIR" > "$WORKING_DIR/test.log" 2>&1
     checkStatus $? "test"
     echo "tests executed successfully"
+    echoDurationInSections $START_TIME
 fi
