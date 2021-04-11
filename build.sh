@@ -56,7 +56,7 @@ COMPILATION_START_TIME=$(currentTimeInSeconds)
 # start build
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile nasm"
-$SCRIPT_DIR/build-nasm.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "2.14.02" > "$WORKING_DIR/build-nasm.log" 2>&1
+$SCRIPT_DIR/build-nasm.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "2.15.05" > "$WORKING_DIR/build-nasm.log" 2>&1
 checkStatus $? "build nasm"
 echoDurationInSections $START_TIME
 
