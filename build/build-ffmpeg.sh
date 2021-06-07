@@ -29,11 +29,12 @@ cd "ffmpeg-$6/"
 checkStatus $? "change directory failed"
 
 # prepare build
+EXTRA_VERSION="https://www.martin-riedl.de"
 FF_FLAGS="-L${3}/lib -I${3}/include"
 export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 # --pkg-config-flags="--static" is required to respect the Libs.private flags of the *.pc files
-./configure --prefix="$4" --enable-gpl --pkg-config-flags="--static" --extra-version="marty-media-center" \
+./configure --prefix="$4" --enable-gpl --pkg-config-flags="--static" --extra-version="$EXTRA_VERSION" \
     --enable-gray \
     --enable-libaom --enable-libopenh264 --enable-libx264 --enable-libx265 --enable-libvpx \
     --enable-libmp3lame --enable-libopus
