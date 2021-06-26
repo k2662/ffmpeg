@@ -16,8 +16,6 @@ BASE_DIR="$( cd "$( dirname "$0" )" > /dev/null 2>&1 && pwd )"
 echo "base directory is ${BASE_DIR}"
 SCRIPT_DIR="${BASE_DIR}/build"
 echo "script directory is ${SCRIPT_DIR}"
-TEST_DIR="${BASE_DIR}/test"
-echo "test directory is ${TEST_DIR}"
 WORKING_DIR="$( pwd )"
 echo "working directory is ${WORKING_DIR}"
 SOURCE_DIR="$WORKING_DIR/source"
@@ -28,6 +26,12 @@ TOOL_DIR="$WORKING_DIR/tool"
 echo "tool directory is ${TOOL_DIR}"
 OUT_DIR="$WORKING_DIR/out"
 echo "output directory is ${OUT_DIR}"
+if [ $SKIP_TEST = "NO" ]; then
+    TEST_DIR="${BASE_DIR}/test"
+    echo "test directory is ${TEST_DIR}"
+    TEST_OUT_DIR="$WORKING_DIR/test"
+    echo "test output directory is ${TEST_OUT_DIR}"
+fi
 
 # load functions
 . $SCRIPT_DIR/functions.sh
@@ -43,6 +47,10 @@ checkStatus $? "unable to create tool directory"
 PATH="$TOOL_DIR/bin:$PATH"
 mkdir "$OUT_DIR"
 checkStatus $? "unable to create output directory"
+if [ $SKIP_TEST = "NO" ]; then
+    mkdir "$TEST_OUT_DIR"
+    checkStatus $? "unable to create test output directory"
+fi
 
 # detect CPU threads (nproc for linux, sysctl for osx)
 CPUS=1
@@ -151,7 +159,7 @@ zip -9 -r "$WORKING_DIR/ffmpeg-success.zip" *
 if [ $SKIP_TEST = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "run tests"
-    $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$WORKING_DIR" "$OUT_DIR" > "$WORKING_DIR/test.log" 2>&1
+    $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$TEST_OUT_DIR" "$OUT_DIR" > "$LOG_DIR/test.log" 2>&1
     checkStatus $? "test"
     echo "tests executed successfully"
     echoDurationInSections $START_TIME
