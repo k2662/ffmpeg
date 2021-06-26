@@ -20,6 +20,10 @@ TEST_DIR="${BASE_DIR}/test"
 echo "test directory is ${TEST_DIR}"
 WORKING_DIR="$( pwd )"
 echo "working directory is ${WORKING_DIR}"
+SOURCE_DIR="$WORKING_DIR/source"
+echo "source code directory is ${SOURCE_DIR}"
+LOG_DIR="$WORKING_DIR/log"
+echo "logs code directory is ${LOG_DIR}"
 TOOL_DIR="$WORKING_DIR/tool"
 echo "tool directory is ${TOOL_DIR}"
 OUT_DIR="$WORKING_DIR/out"
@@ -30,6 +34,10 @@ echo "output directory is ${OUT_DIR}"
 
 # prepare workspace
 echoSection "prepare workspace"
+mkdir "$SOURCE_DIR"
+checkStatus $? "unable to create source code directory"
+mkdir "$LOG_DIR"
+checkStatus $? "unable to create logs directory"
 mkdir "$TOOL_DIR"
 checkStatus $? "unable to create tool directory"
 PATH="$TOOL_DIR/bin:$PATH"
@@ -56,79 +64,79 @@ COMPILATION_START_TIME=$(currentTimeInSeconds)
 # start build
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile nasm"
-$SCRIPT_DIR/build-nasm.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "2.15.05" > "$WORKING_DIR/build-nasm.log" 2>&1
+$SCRIPT_DIR/build-nasm.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "2.15.05" > "$LOG_DIR/build-nasm.log" 2>&1
 checkStatus $? "build nasm"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile openssl"
-$SCRIPT_DIR/build-openssl.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "1.1.1k" > "$WORKING_DIR/build-openssl.log" 2>&1
+$SCRIPT_DIR/build-openssl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "1.1.1k" > "$LOG_DIR/build-openssl.log" 2>&1
 checkStatus $? "build openssl"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile cmake"
-$SCRIPT_DIR/build-cmake.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "3.20" "3.20.5" > "$WORKING_DIR/build-cmake.log" 2>&1
+$SCRIPT_DIR/build-cmake.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "3.20" "3.20.5" > "$LOG_DIR/build-cmake.log" 2>&1
 checkStatus $? "build cmake"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile pkg-config"
-$SCRIPT_DIR/build-pkg-config.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "0.29.2" > "$WORKING_DIR/build-pkg-config.log" 2>&1
+$SCRIPT_DIR/build-pkg-config.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "0.29.2" > "$LOG_DIR/build-pkg-config.log" 2>&1
 checkStatus $? "build pkg-config"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile SDL"
-$SCRIPT_DIR/build-sdl.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "2.0.14" > "$WORKING_DIR/build-sdl.log" 2>&1
+$SCRIPT_DIR/build-sdl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.0.14" > "$LOG_DIR/build-sdl.log" 2>&1
 checkStatus $? "build SDL"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile aom"
-$SCRIPT_DIR/build-aom.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "2.0.1" > "$WORKING_DIR/build-aom.log" 2>&1
+$SCRIPT_DIR/build-aom.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.0.1" > "$LOG_DIR/build-aom.log" 2>&1
 checkStatus $? "build aom"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile openh264"
-$SCRIPT_DIR/build-openh264.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "2.1.1" > "$WORKING_DIR/build-openh264.log" 2>&1
+$SCRIPT_DIR/build-openh264.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.1.1" > "$LOG_DIR/build-openh264.log" 2>&1
 checkStatus $? "build openh264"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile x264"
-$SCRIPT_DIR/build-x264.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" > "$WORKING_DIR/build-x264.log" 2>&1
+$SCRIPT_DIR/build-x264.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-x264.log" 2>&1
 checkStatus $? "build x264"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile x265"
-$SCRIPT_DIR/build-x265.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "3.4" > "$WORKING_DIR/build-x265.log" 2>&1
+$SCRIPT_DIR/build-x265.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "3.4" > "$LOG_DIR/build-x265.log" 2>&1
 checkStatus $? "build x265"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile vpx"
-$SCRIPT_DIR/build-vpx.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "1.10.0" > "$WORKING_DIR/build-vpx.log" 2>&1
+$SCRIPT_DIR/build-vpx.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "1.10.0" > "$LOG_DIR/build-vpx.log" 2>&1
 checkStatus $? "build vpx"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile lame (mp3)"
-$SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "3.100" > "$WORKING_DIR/build-lame.log" 2>&1
+$SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "3.100" > "$LOG_DIR/build-lame.log" 2>&1
 checkStatus $? "build lame"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile opus"
-$SCRIPT_DIR/build-opus.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$CPUS" "1.3.1" > "$WORKING_DIR/build-opus.log" 2>&1
+$SCRIPT_DIR/build-opus.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "1.3.1" > "$LOG_DIR/build-opus.log" 2>&1
 checkStatus $? "build opus"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile ffmpeg"
-$SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$WORKING_DIR" "$TOOL_DIR" "$OUT_DIR" "$CPUS" "4.4" > "$WORKING_DIR/build-ffmpeg.log" 2>&1
+$SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$OUT_DIR" "$CPUS" "4.4" > "$LOG_DIR/build-ffmpeg.log" 2>&1
 checkStatus $? "build ffmpeg"
 echoDurationInSections $START_TIME
 

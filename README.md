@@ -38,24 +38,20 @@ There are just a few dependencies to other tools. Most of the software is compil
 - nproc (on linux) or sysctl (on Mac OSX) for multicore compilation
 
 ## Execution
-All files that are downloaded and generated through this script are placed in the current working directory. The recommendation is to use an empty folder for this.
-```
+All files that are downloaded and generated through this script are placed in the current working directory. The recommendation is to use an empty folder for this and execute the `build.sh`.
+```sh
 mkdir ffmpeg-compile
 cd ffmpeg-compile
-```
-
-Now execute the script using:
-```
-../path/to/repository/build.sh
+../build.sh
 ```
 
 You can use the following parameters
 - `-SKIP_TEST=YES` for skipping the tests after compiling
 
-After the execution a new folder called "out" exists. It contains the compiled FFmpeg binary (in the bin sub-folder).
-The ffmpeg-success.zip contains also all binary files of FFmpeg.
+After the execution a new folder called `out` exists. It contains the compiled FFmpeg binary (in the `bin` sub-folder).
+The `ffmpeg-success.zip` contains also all binary files of FFmpeg, FFprobe and FFplay.
 
 ## Build failed?
-Check the detailed logfiles in the working directory. Each build step has its own file starting with "build-*".
+Check the detailed logfiles in the `log` directory. Each build step has its own file starting with "build-*".
 
-If the build of ffmpeg failes during the configuration phase (e.g. because it doesn't find one codec) check also the log file in ffmpeg/ffmpeg-*/ffbuild/config.log.
+If the build of ffmpeg failes during the configuration phase (e.g. because it doesn't find one codec) check also the log file in `source/ffmpeg/ffmpeg-*/ffbuild/config.log`.
