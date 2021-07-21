@@ -84,7 +84,7 @@ echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile cmake"
-$SCRIPT_DIR/build-cmake.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "3.20" "3.20.5" > "$LOG_DIR/build-cmake.log" 2>&1
+$SCRIPT_DIR/build-cmake.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "3.21" "3.21.0" > "$LOG_DIR/build-cmake.log" 2>&1
 checkStatus $? "build cmake"
 echoDurationInSections $START_TIME
 
