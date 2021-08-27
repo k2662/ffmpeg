@@ -78,7 +78,7 @@ echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile openssl"
-$SCRIPT_DIR/build-openssl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "1.1.1k" > "$LOG_DIR/build-openssl.log" 2>&1
+$SCRIPT_DIR/build-openssl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "1.1.1l" > "$LOG_DIR/build-openssl.log" 2>&1
 checkStatus $? "build openssl"
 echoDurationInSections $START_TIME
 
