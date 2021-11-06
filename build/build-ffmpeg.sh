@@ -5,6 +5,7 @@
 # $4 = output directory
 # $5 = CPUs
 # $6 = FFmpeg version
+# $7 = FFmpeg library flags
 
 # load functions
 . $1/functions.sh
@@ -35,9 +36,7 @@ export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 # --pkg-config-flags="--static" is required to respect the Libs.private flags of the *.pc files
 ./configure --prefix="$4" --enable-gpl --pkg-config-flags="--static" --extra-version="$EXTRA_VERSION" \
-    --enable-gray \
-    --enable-libaom --enable-libopenh264 --enable-libx264 --enable-libx265 --enable-libvpx \
-    --enable-libmp3lame --enable-libopus
+    --enable-gray $7
 checkStatus $? "configuration of ffmpeg failed"
 
 # start build

@@ -2,12 +2,22 @@
 
 # parse arguments
 SKIP_TEST="NO"
+SKIP_AOM="NO"
+SKIP_OPEN_H264="NO"
 for arg in "$@"; do
     KEY=${arg%%=*}
     VALUE=${arg#*\=}
     if [ $KEY = "-SKIP_TEST" ]; then
         SKIP_TEST=$VALUE
         echo "skip test $VALUE"
+    fi
+    if [ $KEY = "-SKIP_AOM" ]; then
+        SKIP_AOM=$VALUE
+        echo "skip aom $VALUE"
+    fi
+    if [ $KEY = "-SKIP_OPEN_H264" ]; then
+        SKIP_OPEN_H264=$VALUE
+        echo "skip openh264 $VALUE"
     fi
 done
 
@@ -69,6 +79,9 @@ fi
 echo "use ${CPUS} cpu threads"
 COMPILATION_START_TIME=$(currentTimeInSeconds)
 
+# prepare build
+FFMPEG_LIB_FLAGS="--enable-libx264 --enable-libx265 --enable-libvpx --enable-libmp3lame --enable-libopus"
+
 # start build
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile nasm"
@@ -100,17 +113,27 @@ $SCRIPT_DIR/build-sdl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.0.14
 checkStatus $? "build SDL"
 echoDurationInSections $START_TIME
 
-START_TIME=$(currentTimeInSeconds)
-echoSection "compile aom"
-$SCRIPT_DIR/build-aom.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.0.1" > "$LOG_DIR/build-aom.log" 2>&1
-checkStatus $? "build aom"
-echoDurationInSections $START_TIME
+if [ $SKIP_AOM = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile aom"
+    $SCRIPT_DIR/build-aom.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.0.1" > "$LOG_DIR/build-aom.log" 2>&1
+    checkStatus $? "build aom"
+    echoDurationInSections $START_TIM
+    FFMPEG_LIB_FLAGS+=" --enable-libaom"
+else
+    echoSection "skip aom"
+fi
 
-START_TIME=$(currentTimeInSeconds)
-echoSection "compile openh264"
-$SCRIPT_DIR/build-openh264.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.1.1" > "$LOG_DIR/build-openh264.log" 2>&1
-checkStatus $? "build openh264"
-echoDurationInSections $START_TIME
+if [ $SKIP_OPEN_H264 = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile openh264"
+    $SCRIPT_DIR/build-openh264.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.1.1" > "$LOG_DIR/build-openh264.log" 2>&1
+    checkStatus $? "build openh264"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS+=" --enable-libopenh264"
+else
+    echoSection "skip openh264"
+fi
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile x264"
@@ -144,7 +167,7 @@ echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile ffmpeg"
-$SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$OUT_DIR" "$CPUS" "4.4" > "$LOG_DIR/build-ffmpeg.log" 2>&1
+$SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$OUT_DIR" "$CPUS" "4.4" "$FFMPEG_LIB_FLAGS" > "$LOG_DIR/build-ffmpeg.log" 2>&1
 checkStatus $? "build ffmpeg"
 echoDurationInSections $START_TIME
 
@@ -159,7 +182,7 @@ zip -9 -r "$WORKING_DIR/ffmpeg-success.zip" *
 if [ $SKIP_TEST = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "run tests"
-    $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$TEST_OUT_DIR" "$OUT_DIR" > "$LOG_DIR/test.log" 2>&1
+    $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$TEST_OUT_DIR" "$OUT_DIR" $SKIP_AOM $SKIP_OPEN_H264 > "$LOG_DIR/test.log" 2>&1
     checkStatus $? "test"
     echo "tests executed successfully"
     echoDurationInSections $START_TIME
