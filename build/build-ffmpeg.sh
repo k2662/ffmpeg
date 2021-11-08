@@ -19,14 +19,19 @@ cd "ffmpeg/"
 checkStatus $? "change directory failed"
 
 # download ffmpeg source
-curl -O https://ffmpeg.org/releases/ffmpeg-$6.tar.bz2
+curl -o ffmpeg.tar.bz2 https://ffmpeg.org/releases/ffmpeg-$6.tar.bz2
+checkStatus $? "ffmpeg download failed"
 
 # TODO: checksum validation
 
 # unpack ffmpeg
-bunzip2 ffmpeg-$6.tar.bz2
-tar -xf ffmpeg-$6.tar
-cd "ffmpeg-$6/"
+mkdir "ffmpeg"
+checkStatus $? "create directory failed"
+bunzip2 ffmpeg.tar.bz2
+checkStatus $? "unpack ffmpeg failed (bunzip2)"
+tar -xf ffmpeg.tar -C ffmpeg --strip-components=1
+checkStatus $? "unpack ffmpeg failed (tar)"
+cd "ffmpeg/"
 checkStatus $? "change directory failed"
 
 # prepare build
