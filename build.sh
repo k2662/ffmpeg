@@ -4,6 +4,7 @@
 SKIP_TEST="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
+FFMPEG_SNAPSHOT="NO"
 for arg in "$@"; do
     KEY=${arg%%=*}
     VALUE=${arg#*\=}
@@ -18,6 +19,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_OPEN_H264" ]; then
         SKIP_OPEN_H264=$VALUE
         echo "skip openh264 $VALUE"
+    fi
+    if [ $KEY = "-FFMPEG_SNAPSHOT" ]; then
+        FFMPEG_SNAPSHOT=$VALUE
+        echo "use ffmpeg snapshot $VALUE"
     fi
 done
 
@@ -168,7 +173,11 @@ echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile ffmpeg"
-$SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$OUT_DIR" "$CPUS" "4.4.1" "$FFMPEG_LIB_FLAGS" > "$LOG_DIR/build-ffmpeg.log" 2>&1
+FFMPEG_VERSION="4.4.1"
+if [ $FFMPEG_SNAPSHOT = "YES" ]; then
+    FFMPEG_VERSION="snapshot"
+fi
+$SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$OUT_DIR" "$CPUS" "$FFMPEG_VERSION" "$FFMPEG_LIB_FLAGS" > "$LOG_DIR/build-ffmpeg.log" 2>&1
 checkStatus $? "build ffmpeg"
 echoDurationInSections $START_TIME
 

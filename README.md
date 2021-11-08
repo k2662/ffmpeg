@@ -46,6 +46,7 @@ cd ffmpeg-compile
 ```
 
 You can use the following parameters
+- `-FFMPEG_SNAPSHOT=YES` for using the latest snapshot of FFmpeg instead of the last release
 - `-SKIP_TEST=YES` for skipping the tests after compiling
 
 After the execution a new folder called `out` exists. It contains the compiled FFmpeg binary (in the `bin` sub-folder).
