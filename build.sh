@@ -77,6 +77,7 @@ else
 fi
 
 echo "use ${CPUS} cpu threads"
+echo "system info: $(uname -a)"
 COMPILATION_START_TIME=$(currentTimeInSeconds)
 
 # prepare build
