@@ -124,7 +124,7 @@ if [ $SKIP_AOM = "NO" ]; then
     echoSection "compile aom"
     $SCRIPT_DIR/build-aom.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.0.1" > "$LOG_DIR/build-aom.log" 2>&1
     checkStatus $? "build aom"
-    echoDurationInSections $START_TIM
+    echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS+=" --enable-libaom"
 else
     echoSection "skip aom"
