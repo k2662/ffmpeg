@@ -32,7 +32,9 @@ There are just a few dependencies to other tools. Most of the software is compil
 ### Required
 - c and c++ compiler like AppleClang (included in Xcode) or gcc (on Linux)
 - curl for downloading files
+- git
 - make
+- zip, bunzip2
 
 ### Optional
 - nproc (on linux) or sysctl (on Mac OSX) for multicore compilation
