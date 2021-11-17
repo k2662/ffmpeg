@@ -125,7 +125,7 @@ if [ $SKIP_AOM = "NO" ]; then
     $SCRIPT_DIR/build-aom.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.0.1" > "$LOG_DIR/build-aom.log" 2>&1
     checkStatus $? "build aom"
     echoDurationInSections $START_TIME
-    FFMPEG_LIB_FLAGS+=" --enable-libaom"
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libaom"
 else
     echoSection "skip aom"
 fi
@@ -136,7 +136,7 @@ if [ $SKIP_OPEN_H264 = "NO" ]; then
     $SCRIPT_DIR/build-openh264.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.1.1" > "$LOG_DIR/build-openh264.log" 2>&1
     checkStatus $? "build openh264"
     echoDurationInSections $START_TIME
-    FFMPEG_LIB_FLAGS+=" --enable-libopenh264"
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libopenh264"
 else
     echoSection "skip openh264"
 fi
