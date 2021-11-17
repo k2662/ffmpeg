@@ -89,7 +89,6 @@ else
 fi
 
 echo "use ${CPUS} cpu threads"
-exit
 echo "system info: $(uname -a)"
 COMPILATION_START_TIME=$(currentTimeInSeconds)
 
