@@ -5,6 +5,7 @@ SKIP_TEST="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
 FFMPEG_SNAPSHOT="NO"
+CPU_LIMIT=""
 for arg in "$@"; do
     KEY=${arg%%=*}
     VALUE=${arg#*\=}
@@ -23,6 +24,10 @@ for arg in "$@"; do
     if [ $KEY = "-FFMPEG_SNAPSHOT" ]; then
         FFMPEG_SNAPSHOT=$VALUE
         echo "use ffmpeg snapshot $VALUE"
+    fi
+    if [ $KEY = "-CPU_LIMIT" ]; then
+        CPU_LIMIT=$VALUE
+        echo "use cpu limit $VALUE"
     fi
 done
 
@@ -69,19 +74,22 @@ fi
 
 # detect CPU threads (nproc for linux, sysctl for osx)
 CPUS=1
-CPUS_NPROC="$(nproc 2> /dev/null)"
-if [ $? -eq 0 ]
-then
-    CPUS=$CPUS_NPROC
+if [ "$CPU_LIMIT" != "" ]; then
+    CPUS=$CPU_LIMIT
 else
-    CPUS_SYSCTL="$(sysctl -n hw.ncpu 2> /dev/null)"
-    if [ $? -eq 0 ]
-    then
-        CPUS=$CPUS_SYSCTL
+    CPUS_NPROC="$(nproc 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        CPUS=$CPUS_NPROC
+    else
+        CPUS_SYSCTL="$(sysctl -n hw.ncpu 2> /dev/null)"
+        if [ $? -eq 0 ]; then
+            CPUS=$CPUS_SYSCTL
+        fi
     fi
 fi
 
 echo "use ${CPUS} cpu threads"
+exit
 echo "system info: $(uname -a)"
 COMPILATION_START_TIME=$(currentTimeInSeconds)
 
