@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # parse arguments
+SKIP_BUNDLE="NO"
 SKIP_TEST="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
@@ -9,6 +10,10 @@ CPU_LIMIT=""
 for arg in "$@"; do
     KEY=${arg%%=*}
     VALUE=${arg#*\=}
+    if [ $KEY = "-SKIP_BUNDLE" ]; then
+        SKIP_BUNDLE=$VALUE
+        echo "skip bundle $VALUE"
+    fi
     if [ $KEY = "-SKIP_TEST" ]; then
         SKIP_TEST=$VALUE
         echo "skip test $VALUE"
@@ -191,10 +196,12 @@ echoDurationInSections $START_TIME
 echoSection "compilation finished successfully"
 echoDurationInSections $COMPILATION_START_TIME
 
-echoSection "bundle result"
-cd "$OUT_DIR/bin/"
-checkStatus $? "change directory"
-zip -9 -r "$WORKING_DIR/ffmpeg-success.zip" *
+if [ $SKIP_BUNDLE = "NO" ]; then
+    echoSection "bundle result"
+    cd "$OUT_DIR/bin/"
+    checkStatus $? "change directory"
+    zip -9 -r "$WORKING_DIR/ffmpeg-success.zip" *
+fi
 
 if [ $SKIP_TEST = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
