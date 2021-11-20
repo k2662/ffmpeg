@@ -126,6 +126,13 @@ checkStatus $? "build pkg-config"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
+echoSection "compile freetype"
+$SCRIPT_DIR/build-freetype.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.11.0" > "$LOG_DIR/build-freetype.log" 2>&1
+checkStatus $? "build freetype"
+echoDurationInSections $START_TIME
+FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libfreetype"
+
+START_TIME=$(currentTimeInSeconds)
 echoSection "compile SDL"
 $SCRIPT_DIR/build-sdl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.0.14" > "$LOG_DIR/build-sdl.log" 2>&1
 checkStatus $? "build SDL"

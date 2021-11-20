@@ -8,6 +8,7 @@ This repository builds FFmpeg, FFprobe and FFplay for Linux and Mac OSX using
     - [nasm](http://www.nasm.us/)
     - [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)
 - libraries
+    - [FreeType](https://freetype.org)
     - [openssl](https://www.openssl.org/)
     - [SDL](https://www.libsdl.org/)
 - video codecs

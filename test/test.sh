@@ -9,6 +9,13 @@
 # load functions
 . $1/functions.sh
 
+# test freetype
+START_TIME=$(currentTimeInSeconds)
+echoSection "run test freetype encoding"
+$4/bin/ffmpeg -i "$2/test.mp4" -frames:v 1 -vf "drawtext=fontfile=$2/NotoSans-Regular.ttf:text='Martin Riedl':fontcolor=white:fontsize=24:box=1:boxcolor=black@0.5:boxborderw=5:x=(w-text_w)/2:y=(h-text_h)/2" "$3/test-freetype.png" > "$3/test-freetype.log" 2>&1
+checkStatus $? "test freetype"
+echoDurationInSections $START_TIME
+
 # test aom av1
 if [ $5 = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
