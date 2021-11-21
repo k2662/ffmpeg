@@ -3,6 +3,7 @@
 # parse arguments
 SKIP_BUNDLE="NO"
 SKIP_TEST="NO"
+SKIP_LIBBLURAY="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
 FFMPEG_SNAPSHOT="NO"
@@ -17,6 +18,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_TEST" ]; then
         SKIP_TEST=$VALUE
         echo "skip test $VALUE"
+    fi
+    if [ $KEY = "-SKIP_LIBBLURAY" ]; then
+        SKIP_LIBBLURAY=$VALUE
+        echo "skip libbluray $VALUE"
     fi
     if [ $KEY = "-SKIP_AOM" ]; then
         SKIP_AOM=$VALUE
@@ -126,6 +131,12 @@ checkStatus $? "build pkg-config"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
+echoSection "compile xml2"
+$SCRIPT_DIR/build-xml2.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.9.12" > "$LOG_DIR/build-xml2.log" 2>&1
+checkStatus $? "build xml2"
+echoDurationInSections $START_TIME
+
+START_TIME=$(currentTimeInSeconds)
 echoSection "compile freetype"
 $SCRIPT_DIR/build-freetype.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.11.0" > "$LOG_DIR/build-freetype.log" 2>&1
 checkStatus $? "build freetype"
@@ -133,10 +144,28 @@ echoDurationInSections $START_TIME
 FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libfreetype"
 
 START_TIME=$(currentTimeInSeconds)
+echoSection "compile fontconfig"
+$SCRIPT_DIR/build-fontconfig.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.13.94" > "$LOG_DIR/build-fontconfig.log" 2>&1
+checkStatus $? "build fontconfig"
+echoDurationInSections $START_TIME
+FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-fontconfig"
+
+START_TIME=$(currentTimeInSeconds)
 echoSection "compile SDL"
 $SCRIPT_DIR/build-sdl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.0.14" > "$LOG_DIR/build-sdl.log" 2>&1
 checkStatus $? "build SDL"
 echoDurationInSections $START_TIME
+
+if [ $SKIP_LIBBLURAY = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile libbluray"
+    $SCRIPT_DIR/build-libbluray.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "1.3.0" > "$LOG_DIR/build-libbluray.log" 2>&1
+    checkStatus $? "build libbluray"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libbluray"
+else
+    echoSection "skip libbluray"
+fi
 
 if [ $SKIP_AOM = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)

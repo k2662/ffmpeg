@@ -8,9 +8,12 @@ This repository builds FFmpeg, FFprobe and FFplay for Linux and Mac OSX using
     - [nasm](http://www.nasm.us/)
     - [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)
 - libraries
+    - [libbluray](https://www.videolan.org/developers/libbluray.html)
+    - [fontconfig](https://www.freedesktop.org/wiki/Software/fontconfig/)
     - [FreeType](https://freetype.org)
     - [openssl](https://www.openssl.org/)
     - [SDL](https://www.libsdl.org/)
+    - [libxml2](http://xmlsoft.org)
 - video codecs
     - [aom](https://aomedia.org/) for AV1 de-/encoding
     - [openh264](https://www.openh264.org/) for H.264 de-/encoding

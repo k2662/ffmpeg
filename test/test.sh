@@ -16,6 +16,15 @@ $4/bin/ffmpeg -i "$2/test.mp4" -frames:v 1 -vf "drawtext=fontfile=$2/NotoSans-Re
 checkStatus $? "test freetype"
 echoDurationInSections $START_TIME
 
+# TODO: test fontconfig
+#START_TIME=$(currentTimeInSeconds)
+#echoSection "run test fontconfig encoding"
+#$4/bin/ffmpeg -i "$2/test.mp4" -frames:v 1 -vf "drawtext=font='Sans':text='Martin Riedl':fontcolor=white:fontsize=24:box=1:boxcolor=black@0.5:boxborderw=5:x=(w-text_w)/2:y=(h-text_h)/2" "$3/test-fontconfig.png" > "$3/test-fontconfig.log" 2>&1
+#checkStatus $? "test fontconfig"
+#echoDurationInSections $START_TIME
+
+# TODO: test for libbluray
+
 # test aom av1
 if [ $5 = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
