@@ -9,6 +9,7 @@ Some libraries have dependencies to each other.
 - libxml2
 - freetype
 - fontconfig
+    - requires libxml2
 - sdl
 - libbluray
     - requires libxml2
