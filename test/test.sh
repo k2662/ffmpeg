@@ -5,6 +5,8 @@
 # $4 = output directory
 # $5 = skip aom
 # $6 = skip openh264
+# $7 = skip x264
+# $8 = skip x265
 
 # load functions
 . $1/functions.sh
@@ -44,18 +46,22 @@ if [ $6 = "NO" ]; then
 fi
 
 # test x264
-START_TIME=$(currentTimeInSeconds)
-echoSection "run test x264 encoding"
-$4/bin/ffmpeg -i "$2/test.mp4" -c:v "libx264" -an "$3/test-x264.mp4" > "$3/test-x264.log" 2>&1
-checkStatus $? "test x264"
-echoDurationInSections $START_TIME
+if [ $7 = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test x264 encoding"
+    $4/bin/ffmpeg -i "$2/test.mp4" -c:v "libx264" -an "$3/test-x264.mp4" > "$3/test-x264.log" 2>&1
+    checkStatus $? "test x264"
+    echoDurationInSections $START_TIME
+fi
 
 # test x265
-START_TIME=$(currentTimeInSeconds)
-echoSection "run test x265 encoding"
-$4/bin/ffmpeg -i "$2/test.mp4" -c:v "libx265" -an "$3/test-x265.mp4" > "$3/test-x265.log" 2>&1
-checkStatus $? "test x265"
-echoDurationInSections $START_TIME
+if [ $8 = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test x265 encoding"
+    $4/bin/ffmpeg -i "$2/test.mp4" -c:v "libx265" -an "$3/test-x265.mp4" > "$3/test-x265.log" 2>&1
+    checkStatus $? "test x265"
+    echoDurationInSections $START_TIME
+fi
 
 # test vp8
 START_TIME=$(currentTimeInSeconds)

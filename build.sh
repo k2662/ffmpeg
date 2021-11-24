@@ -6,6 +6,8 @@ SKIP_TEST="NO"
 SKIP_LIBBLURAY="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
+SKIP_X264="NO"
+SKIP_X265="NO"
 FFMPEG_SNAPSHOT="NO"
 CPU_LIMIT=""
 for arg in "$@"; do
@@ -30,6 +32,14 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_OPEN_H264" ]; then
         SKIP_OPEN_H264=$VALUE
         echo "skip openh264 $VALUE"
+    fi
+    if [ $KEY = "-SKIP_X264" ]; then
+        SKIP_X264=$VALUE
+        echo "skip x264 $VALUE"
+    fi
+    if [ $KEY = "-SKIP_X265" ]; then
+        SKIP_X265=$VALUE
+        echo "skip x265 $VALUE"
     fi
     if [ $KEY = "-FFMPEG_SNAPSHOT" ]; then
         FFMPEG_SNAPSHOT=$VALUE
@@ -103,7 +113,7 @@ echo "system info: $(uname -a)"
 COMPILATION_START_TIME=$(currentTimeInSeconds)
 
 # prepare build
-FFMPEG_LIB_FLAGS="--enable-libx264 --enable-libx265 --enable-libvpx --enable-libmp3lame --enable-libopus"
+FFMPEG_LIB_FLAGS="--enable-libvpx --enable-libmp3lame --enable-libopus"
 
 # start build
 START_TIME=$(currentTimeInSeconds)
@@ -189,17 +199,27 @@ else
     echoSection "skip openh264"
 fi
 
-START_TIME=$(currentTimeInSeconds)
-echoSection "compile x264"
-$SCRIPT_DIR/build-x264.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-x264.log" 2>&1
-checkStatus $? "build x264"
-echoDurationInSections $START_TIME
+if [ $SKIP_X264 = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile x264"
+    $SCRIPT_DIR/build-x264.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-x264.log" 2>&1
+    checkStatus $? "build x264"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libx264"
+else
+    echoSection "skip x264"
+fi
 
-START_TIME=$(currentTimeInSeconds)
-echoSection "compile x265"
-$SCRIPT_DIR/build-x265.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "3.4" > "$LOG_DIR/build-x265.log" 2>&1
-checkStatus $? "build x265"
-echoDurationInSections $START_TIME
+if [ $SKIP_X265 = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile x265"
+    $SCRIPT_DIR/build-x265.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "3.4" > "$LOG_DIR/build-x265.log" 2>&1
+    checkStatus $? "build x265"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libx265"
+else
+    echoSection "skip x265"
+fi
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile vpx"
@@ -242,7 +262,8 @@ fi
 if [ $SKIP_TEST = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "run tests"
-    $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$TEST_OUT_DIR" "$OUT_DIR" $SKIP_AOM $SKIP_OPEN_H264 > "$LOG_DIR/test.log" 2>&1
+    $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$TEST_OUT_DIR" "$OUT_DIR" \
+        $SKIP_AOM $SKIP_OPEN_H264 $SKIP_X264 $SKIP_X265 > "$LOG_DIR/test.log" 2>&1
     checkStatus $? "test"
     echo "tests executed successfully"
     echoDurationInSections $START_TIME

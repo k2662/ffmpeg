@@ -54,7 +54,15 @@ cd ffmpeg-compile
 You can use the following parameters
 - `-FFMPEG_SNAPSHOT=YES` for using the latest snapshot of FFmpeg instead of the last release
 - `-SKIP_TEST=YES` for skipping the tests after compiling
+- `-SKIP_BUNDLE=YES` for skipping creating the `ffmpeg-success.zip` file
 - `-CPU_LIMIT=num` for limit CPU thread usage (default: automatically detected)
+
+If you don't need a codec, you can also disable them:
+- `-SKIP_LIBBLURAY=YES`
+- `-SKIP_AOM=YES`
+- `-SKIP_OPEN_H264=YES`
+- `-SKIP_X264=YES`
+- `-SKIP_X265=YES`
 
 After the execution a new folder called `out` exists. It contains the compiled FFmpeg binary (in the `bin` sub-folder).
 The `ffmpeg-success.zip` contains also all binary files of FFmpeg, FFprobe and FFplay.
