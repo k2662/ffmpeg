@@ -31,7 +31,7 @@ mkdir ../aom_build
 checkStatus $? "create aom build directory failed"
 cd ../aom_build
 checkStatus $? "change directory to aom build failed"
-cmake -DENABLE_TESTS=0 -DCMAKE_INSTALL_PREFIX:PATH=$3 ../aom/
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$3 -DENABLE_TESTS=0 ../aom/
 checkStatus $? "configuration of aom failed"
 
 # build
