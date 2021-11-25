@@ -3,11 +3,13 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = cmake major version
-# $6 = cmake full version
 
 # load functions
 . $1/functions.sh
+
+# versions
+VERSION_MAJOR="3.21"
+VERSION_MINOR="3.21.3"
 
 # start in working directory
 cd "$2"
@@ -18,15 +20,13 @@ cd "cmake/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://cmake.org/files/v$5/cmake-$6.tar.gz
+curl -O https://cmake.org/files/v$VERSION_MAJOR/cmake-$VERSION_MINOR.tar.gz
 checkStatus $? "download of cmake failed"
 
-# TODO: checksum validation (if available)
-
 # unpack
-tar -zxf "cmake-$6.tar.gz"
+tar -zxf "cmake-$VERSION_MINOR.tar.gz"
 checkStatus $? "unpack of cmake failed"
-cd "cmake-$6/"
+cd "cmake-$VERSION_MINOR/"
 checkStatus $? "change directory failed"
 
 # prepare build

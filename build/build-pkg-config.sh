@@ -2,10 +2,14 @@
 # $1 = script directory
 # $2 = working directory
 # $3 = tool directory
-# $4 = pkg-config version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/pkg-config")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -16,15 +20,13 @@ cd "pkg-config/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://pkg-config.freedesktop.org/releases/pkg-config-$4.tar.gz
+curl -O -L https://pkg-config.freedesktop.org/releases/pkg-config-$VERSION.tar.gz
 checkStatus $? "download of pkg-config failed"
 
-# TODO: checksum validation (if available)
-
 # unpack
-tar -zxf "pkg-config-$4.tar.gz"
+tar -zxf "pkg-config-$VERSION.tar.gz"
 checkStatus $? "unpack pkg-config failed"
-cd "pkg-config-$4/"
+cd "pkg-config-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build

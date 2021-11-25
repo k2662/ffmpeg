@@ -118,58 +118,58 @@ FFMPEG_LIB_FLAGS="--enable-libvpx --enable-libmp3lame --enable-libopus"
 # start build
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile nasm"
-$SCRIPT_DIR/build-nasm.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "2.15.05" > "$LOG_DIR/build-nasm.log" 2>&1
+$SCRIPT_DIR/build-nasm.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" > "$LOG_DIR/build-nasm.log" 2>&1
 checkStatus $? "build nasm"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile openssl"
-$SCRIPT_DIR/build-openssl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "1.1.1l" > "$LOG_DIR/build-openssl.log" 2>&1
+$SCRIPT_DIR/build-openssl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-openssl.log" 2>&1
 checkStatus $? "build openssl"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile cmake"
-$SCRIPT_DIR/build-cmake.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "3.21" "3.21.3" > "$LOG_DIR/build-cmake.log" 2>&1
+$SCRIPT_DIR/build-cmake.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-cmake.log" 2>&1
 checkStatus $? "build cmake"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile pkg-config"
-$SCRIPT_DIR/build-pkg-config.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "0.29.2" > "$LOG_DIR/build-pkg-config.log" 2>&1
+$SCRIPT_DIR/build-pkg-config.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" > "$LOG_DIR/build-pkg-config.log" 2>&1
 checkStatus $? "build pkg-config"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile xml2"
-$SCRIPT_DIR/build-xml2.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.9.12" > "$LOG_DIR/build-xml2.log" 2>&1
+$SCRIPT_DIR/build-xml2.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-xml2.log" 2>&1
 checkStatus $? "build xml2"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile freetype"
-$SCRIPT_DIR/build-freetype.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.11.0" > "$LOG_DIR/build-freetype.log" 2>&1
+$SCRIPT_DIR/build-freetype.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-freetype.log" 2>&1
 checkStatus $? "build freetype"
 echoDurationInSections $START_TIME
 FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libfreetype"
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile fontconfig"
-$SCRIPT_DIR/build-fontconfig.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.13.94" > "$LOG_DIR/build-fontconfig.log" 2>&1
+$SCRIPT_DIR/build-fontconfig.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-fontconfig.log" 2>&1
 checkStatus $? "build fontconfig"
 echoDurationInSections $START_TIME
 FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-fontconfig"
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile SDL"
-$SCRIPT_DIR/build-sdl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.0.14" > "$LOG_DIR/build-sdl.log" 2>&1
+$SCRIPT_DIR/build-sdl.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-sdl.log" 2>&1
 checkStatus $? "build SDL"
 echoDurationInSections $START_TIME
 
 if [ $SKIP_LIBBLURAY = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "compile libbluray"
-    $SCRIPT_DIR/build-libbluray.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "1.3.0" > "$LOG_DIR/build-libbluray.log" 2>&1
+    $SCRIPT_DIR/build-libbluray.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libbluray.log" 2>&1
     checkStatus $? "build libbluray"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libbluray"
@@ -180,7 +180,7 @@ fi
 if [ $SKIP_AOM = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "compile aom"
-    $SCRIPT_DIR/build-aom.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "3.2.0" > "$LOG_DIR/build-aom.log" 2>&1
+    $SCRIPT_DIR/build-aom.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-aom.log" 2>&1
     checkStatus $? "build aom"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libaom"
@@ -191,7 +191,7 @@ fi
 if [ $SKIP_OPEN_H264 = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "compile openh264"
-    $SCRIPT_DIR/build-openh264.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "2.1.1" > "$LOG_DIR/build-openh264.log" 2>&1
+    $SCRIPT_DIR/build-openh264.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-openh264.log" 2>&1
     checkStatus $? "build openh264"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libopenh264"
@@ -213,7 +213,7 @@ fi
 if [ $SKIP_X265 = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "compile x265"
-    $SCRIPT_DIR/build-x265.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "3.4" > "$LOG_DIR/build-x265.log" 2>&1
+    $SCRIPT_DIR/build-x265.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-x265.log" 2>&1
     checkStatus $? "build x265"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libx265"
@@ -223,29 +223,25 @@ fi
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile vpx"
-$SCRIPT_DIR/build-vpx.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "1.10.0" > "$LOG_DIR/build-vpx.log" 2>&1
+$SCRIPT_DIR/build-vpx.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-vpx.log" 2>&1
 checkStatus $? "build vpx"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile lame (mp3)"
-$SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "3.100" > "$LOG_DIR/build-lame.log" 2>&1
+$SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" > "$LOG_DIR/build-lame.log" 2>&1
 checkStatus $? "build lame"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile opus"
-$SCRIPT_DIR/build-opus.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "1.3.1" > "$LOG_DIR/build-opus.log" 2>&1
+$SCRIPT_DIR/build-opus.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-opus.log" 2>&1
 checkStatus $? "build opus"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile ffmpeg"
-FFMPEG_VERSION="4.4.1"
-if [ $FFMPEG_SNAPSHOT = "YES" ]; then
-    FFMPEG_VERSION="snapshot"
-fi
-$SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$OUT_DIR" "$CPUS" "$FFMPEG_VERSION" "$FFMPEG_LIB_FLAGS" > "$LOG_DIR/build-ffmpeg.log" 2>&1
+$SCRIPT_DIR/build-ffmpeg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$OUT_DIR" "$CPUS" "$FFMPEG_SNAPSHOT" "$FFMPEG_LIB_FLAGS" > "$LOG_DIR/build-ffmpeg.log" 2>&1
 checkStatus $? "build ffmpeg"
 echoDurationInSections $START_TIME
 

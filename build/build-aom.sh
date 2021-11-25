@@ -3,10 +3,14 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = aom version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/aom")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -23,7 +27,7 @@ cd "aom"
 checkStatus $? "change directory failed"
 
 # check out release
-git checkout tags/v$5
+git checkout tags/v$VERSION
 checkStatus $? "checkout of aom release failed"
 
 # prepare build

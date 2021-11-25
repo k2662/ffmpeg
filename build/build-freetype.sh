@@ -3,10 +3,14 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = freetype version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/freetype")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -17,13 +21,13 @@ cd "freetype/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://download.savannah.gnu.org/releases/freetype/freetype-$5.tar.gz
+curl -O -L https://download.savannah.gnu.org/releases/freetype/freetype-$VERSION.tar.gz
 checkStatus $? "download of freetype failed"
 
 # unpack
-tar -zxf "freetype-$5.tar.gz"
+tar -zxf "freetype-$VERSION.tar.gz"
 checkStatus $? "unpack freetype failed"
-cd "freetype-$5/"
+cd "freetype-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build

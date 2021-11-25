@@ -3,10 +3,14 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = libbluray version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/libbluray")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -17,15 +21,15 @@ cd "libbluray/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://download.videolan.org/pub/videolan/libbluray/$5/libbluray-$5.tar.bz2
+curl -O https://download.videolan.org/pub/videolan/libbluray/$VERSION/libbluray-$VERSION.tar.bz2
 checkStatus $? "download of libbluray failed"
 
 # unpack
-bunzip2 "libbluray-$5.tar.bz2"
+bunzip2 "libbluray-$VERSION.tar.bz2"
 checkStatus $? "unpack libbluray failed (bunzip2)"
-tar -xf "libbluray-$5.tar"
+tar -xf "libbluray-$VERSION.tar"
 checkStatus $? "unpack libbluray failed (tar)"
-cd "libbluray-$5/"
+cd "libbluray-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build

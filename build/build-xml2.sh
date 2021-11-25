@@ -3,10 +3,14 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = libxml2 version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/xml2")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -17,13 +21,13 @@ cd "xml2/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O ftp://xmlsoft.org/libxml2/libxml2-$5.tar.gz
+curl -O ftp://xmlsoft.org/libxml2/libxml2-$VERSION.tar.gz
 checkStatus $? "download of libxml2 failed"
 
 # unpack
-tar -zxf "libxml2-$5.tar.gz"
+tar -zxf "libxml2-$VERSION.tar.gz"
 checkStatus $? "unpack libxml2 failed"
-cd "libxml2-$5/"
+cd "libxml2-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build

@@ -3,10 +3,14 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = libvpx version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/vpx")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -17,15 +21,13 @@ cd "vpx/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -o vpx.tar.gz -L https://github.com/webmproject/libvpx/archive/v$5.tar.gz
+curl -o vpx.tar.gz -L https://github.com/webmproject/libvpx/archive/v$VERSION.tar.gz
 checkStatus $? "download of vpx failed"
-
-# TODO: checksum validation (if available)
 
 # unpack
 tar -zxf "vpx.tar.gz"
 checkStatus $? "unpack vpx failed"
-cd "libvpx-$5/"
+cd "libvpx-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build

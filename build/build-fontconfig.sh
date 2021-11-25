@@ -3,10 +3,14 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = fontconfig version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/fontconfig")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -17,13 +21,13 @@ cd "fontconfig/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://www.freedesktop.org/software/fontconfig/release/fontconfig-$5.tar.gz
+curl -O -L https://www.freedesktop.org/software/fontconfig/release/fontconfig-$VERSION.tar.gz
 checkStatus $? "download of fontconfig failed"
 
 # unpack
-tar -zxf "fontconfig-$5.tar.gz"
+tar -zxf "fontconfig-$VERSION.tar.gz"
 checkStatus $? "unpack fontconfig failed"
-cd "fontconfig-$5/"
+cd "fontconfig-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build

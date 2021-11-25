@@ -3,10 +3,14 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = openssl version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/openssl")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -17,15 +21,15 @@ cd "openssl/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://www.openssl.org/source/openssl-$5.tar.gz
+curl -O https://www.openssl.org/source/openssl-$VERSION.tar.gz
 checkStatus $? "download of openssl failed"
 
 # TODO: checksum validation (if available)
 
 # unpack
-tar -zxf "openssl-$5.tar.gz"
+tar -zxf "openssl-$VERSION.tar.gz"
 checkStatus $? "unpack of openssl failed"
-cd "openssl-$5/"
+cd "openssl-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build

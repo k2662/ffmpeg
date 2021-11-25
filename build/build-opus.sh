@@ -3,10 +3,14 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = opus version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/opus")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -17,13 +21,13 @@ cd "opus/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://archive.mozilla.org/pub/opus/opus-$5.tar.gz
+curl -O -L https://archive.mozilla.org/pub/opus/opus-$VERSION.tar.gz
 checkStatus $? "download of opus failed"
 
 # unpack
-tar -zxf "opus-$5.tar.gz"
+tar -zxf "opus-$VERSION.tar.gz"
 checkStatus $? "unpack opus failed"
-cd "opus-$5/"
+cd "opus-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build

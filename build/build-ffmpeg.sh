@@ -4,11 +4,21 @@
 # $3 = tool directory
 # $4 = output directory
 # $5 = CPUs
-# $6 = FFmpeg version
+# $6 = FFmpeg snapshot flag
 # $7 = FFmpeg library flags
 
 # load functions
 . $1/functions.sh
+
+# version
+if [ $6 = "YES" ]; then
+    VERSION="snapshot"
+else
+    # load version
+    VERSION=$(cat "$1/../version/ffmpeg")
+    checkStatus $? "load version failed"
+fi
+echo "version: $VERSION"
 
 # start in working directory
 cd $2
@@ -19,10 +29,8 @@ cd "ffmpeg/"
 checkStatus $? "change directory failed"
 
 # download ffmpeg source
-curl -o ffmpeg.tar.bz2 https://ffmpeg.org/releases/ffmpeg-$6.tar.bz2
+curl -o ffmpeg.tar.bz2 https://ffmpeg.org/releases/ffmpeg-$VERSION.tar.bz2
 checkStatus $? "ffmpeg download failed"
-
-# TODO: checksum validation
 
 # unpack ffmpeg
 mkdir "ffmpeg"

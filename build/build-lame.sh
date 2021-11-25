@@ -2,10 +2,14 @@
 # $1 = script directory
 # $2 = working directory
 # $3 = tool directory
-# $4 = lame version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/lame")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -16,15 +20,13 @@ cd "lame/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://netcologne.dl.sourceforge.net/project/lame/lame/$4/lame-$4.tar.gz
+curl -O https://netcologne.dl.sourceforge.net/project/lame/lame/$VERSION/lame-$VERSION.tar.gz
 checkStatus $? "download of lame failed"
 
-# TODO: checksum validation (if available)
-
 # unpack
-tar -zxf "lame-$4.tar.gz"
+tar -zxf "lame-$VERSION.tar.gz"
 checkStatus $? "unpack lame failed"
-cd "lame-$4/"
+cd "lame-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build

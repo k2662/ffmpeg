@@ -3,10 +3,14 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = SDL version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/sdl")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -17,15 +21,13 @@ cd "sdl/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://www.libsdl.org/release/SDL2-$5.tar.gz
+curl -O -L https://www.libsdl.org/release/SDL2-$VERSION.tar.gz
 checkStatus $? "download of SDL failed"
 
-# TODO: checksum validation (if available)
-
 # unpack
-tar -zxf "SDL2-$5.tar.gz"
+tar -zxf "SDL2-$VERSION.tar.gz"
 checkStatus $? "unpack SDL failed"
-cd "SDL2-$5/"
+cd "SDL2-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build

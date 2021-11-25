@@ -19,8 +19,6 @@ checkStatus $? "change directory failed"
 curl -O -L https://code.videolan.org/videolan/x264/-/archive/master/x264-master.tar.gz
 checkStatus $? "download of x264 failed"
 
-# TODO: checksum validation (if available)
-
 # unpack
 tar -zxf "x264-master.tar.gz"
 checkStatus $? "unpack x264 failed"

@@ -3,10 +3,14 @@
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
-# $5 = x265 version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/x265")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -17,13 +21,13 @@ cd "x265/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://github.com/videolan/x265/archive/$5.tar.gz
+curl -O -L https://github.com/videolan/x265/archive/$VERSION.tar.gz
 checkStatus $? "download of x265 failed"
 
 # unpack
-tar -zxf "$5.tar.gz"
+tar -zxf "$VERSION.tar.gz"
 checkStatus $? "unpack x265 failed"
-cd "x265-$5/"
+cd "x265-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build 10 bit

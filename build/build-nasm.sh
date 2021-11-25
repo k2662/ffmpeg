@@ -2,10 +2,14 @@
 # $1 = script directory
 # $2 = working directory
 # $3 = tool directory
-# $4 = nasm version
 
 # load functions
 . $1/functions.sh
+
+# load version
+VERSION=$(cat "$1/../version/nasm")
+checkStatus $? "load version failed"
+echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
@@ -16,15 +20,13 @@ cd "nasm/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L http://www.nasm.us/pub/nasm/releasebuilds/$4/nasm-$4.tar.gz
+curl -O -L http://www.nasm.us/pub/nasm/releasebuilds/$VERSION/nasm-$VERSION.tar.gz
 checkStatus $? "download of nasm failed"
 
-# TODO: checksum validation (if available)
-
 # unpack
-tar -zxf "nasm-$4.tar.gz"
+tar -zxf "nasm-$VERSION.tar.gz"
 checkStatus $? "unpack nasm failed"
-cd "nasm-$4/"
+cd "nasm-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
