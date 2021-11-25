@@ -73,7 +73,7 @@ checkStatus $? "build of x265 8 bit failed"
 # merge libraries
 mv libx265.a libx265_8bit.a
 checkStatus $? "move 8 bit library failed"
-if [ "$(uname)" = "linux" ]; then
+if [ "$(uname)" = "Linux" ]; then
 ar -M <<EOF
 CREATE libx265.a
 ADDLIB libx265_8bit.a
