@@ -30,6 +30,9 @@ To get a full list of all formats and codecs that are supported just execute
 ./ffmpeg -codecs
 ```
 
+## Looking for the pre-compiled result?
+Check out the [build server](https://ffmpeg.martin-riedl.de). Here you can download builds for Linux and macOS.
+
 ## Requirements
 There are just a few dependencies to other tools. Most of the software is compiled or downloaded during script execution. Also most of the tools should be already available on the system by default.
 
