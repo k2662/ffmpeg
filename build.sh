@@ -8,6 +8,7 @@ SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
 SKIP_X264="NO"
 SKIP_X265="NO"
+SKIP_X265_MULTIBIT="NO"
 FFMPEG_SNAPSHOT="NO"
 CPU_LIMIT=""
 for arg in "$@"; do
@@ -40,6 +41,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_X265" ]; then
         SKIP_X265=$VALUE
         echo "skip x265 $VALUE"
+    fi
+    if [ $KEY = "-SKIP_X265_MULTIBIT" ]; then
+        SKIP_X265_MULTIBIT=$VALUE
+        echo "skip x265 multibit $VALUE"
     fi
     if [ $KEY = "-FFMPEG_SNAPSHOT" ]; then
         FFMPEG_SNAPSHOT=$VALUE
@@ -213,7 +218,7 @@ fi
 if [ $SKIP_X265 = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "compile x265"
-    $SCRIPT_DIR/build-x265.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-x265.log" 2>&1
+    $SCRIPT_DIR/build-x265.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" "$SKIP_X265_MULTIBIT" > "$LOG_DIR/build-x265.log" 2>&1
     checkStatus $? "build x265"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libx265"
