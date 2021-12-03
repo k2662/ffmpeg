@@ -9,7 +9,7 @@
 
 # versions
 VERSION_MAJOR="3.21"
-VERSION_MINOR="3.21.3"
+VERSION_MINOR="3.21.4"
 
 # start in working directory
 cd "$2"
