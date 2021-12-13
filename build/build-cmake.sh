@@ -8,8 +8,8 @@
 . $1/functions.sh
 
 # versions
-VERSION_MAJOR="3.21"
-VERSION_MINOR="3.21.4"
+VERSION_MAJOR="3.22"
+VERSION_MINOR="3.22.1"
 
 # start in working directory
 cd "$2"
