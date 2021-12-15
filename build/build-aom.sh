@@ -21,14 +21,12 @@ cd "aom/"
 checkStatus $? "change directory failed"
 
 # download source
-git clone https://aomedia.googlesource.com/aom
-checkStatus $? "git clone of aom failed"
-cd "aom"
-checkStatus $? "change directory failed"
+curl -O https://storage.googleapis.com/aom-releases/libaom-$VERSION.tar.gz
+checkStatus $? "download of aom failed"
 
-# check out release
-git checkout tags/v$VERSION
-checkStatus $? "checkout of aom release failed"
+# unpack
+tar -zxf "libaom-$VERSION.tar.gz"
+checkStatus $? "unpack aom failed"
 
 # prepare build
 mkdir ../aom_build
