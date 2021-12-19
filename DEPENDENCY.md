@@ -1,11 +1,10 @@
 # Dependency
-Some libraries have dependencies to each other.
-
+Some libraries have dependencies to others:
 - nasm
+- pkg-config
 - openssl
 - cmake
     - requires openssl
-- pkg-config
 - libxml2
 - freetype
 - fontconfig
