@@ -24,8 +24,6 @@ checkStatus $? "change directory failed"
 curl -O https://www.openssl.org/source/openssl-$VERSION.tar.gz
 checkStatus $? "download of openssl failed"
 
-# TODO: checksum validation (if available)
-
 # unpack
 tar -zxf "openssl-$VERSION.tar.gz"
 checkStatus $? "unpack of openssl failed"
@@ -33,7 +31,8 @@ cd "openssl-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./config --prefix="$3" --openssldir="$3/openssl" no-shared
+# use custom lib path, because for any reason on linux amd64 installs otherwise in lib64 instead
+./config --prefix="$3" --openssldir="$3/openssl" --libdir="$3/lib" no-shared
 checkStatus $? "configuration of openssl failed"
 
 # build
