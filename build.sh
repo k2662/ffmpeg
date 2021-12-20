@@ -118,7 +118,7 @@ echo "system info: $(uname -a)"
 COMPILATION_START_TIME=$(currentTimeInSeconds)
 
 # prepare build
-FFMPEG_LIB_FLAGS="--enable-libvpx --enable-libmp3lame --enable-libopus"
+FFMPEG_LIB_FLAGS=""
 
 # start build
 START_TIME=$(currentTimeInSeconds)
@@ -237,18 +237,21 @@ echoSection "compile vpx"
 $SCRIPT_DIR/build-vpx.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-vpx.log" 2>&1
 checkStatus $? "build vpx"
 echoDurationInSections $START_TIME
+FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libvpx"
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile lame (mp3)"
 $SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" > "$LOG_DIR/build-lame.log" 2>&1
 checkStatus $? "build lame"
 echoDurationInSections $START_TIME
+FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libmp3lame"
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile opus"
 $SCRIPT_DIR/build-opus.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-opus.log" 2>&1
 checkStatus $? "build opus"
 echoDurationInSections $START_TIME
+FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libopus"
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile ffmpeg"
