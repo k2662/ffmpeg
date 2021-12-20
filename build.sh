@@ -59,7 +59,7 @@ done
 # some folder names
 BASE_DIR="$( cd "$( dirname "$0" )" > /dev/null 2>&1 && pwd )"
 echo "base directory is ${BASE_DIR}"
-SCRIPT_DIR="${BASE_DIR}/build"
+SCRIPT_DIR="${BASE_DIR}/script"
 echo "script directory is ${SCRIPT_DIR}"
 WORKING_DIR="$( pwd )"
 echo "working directory is ${WORKING_DIR}"
