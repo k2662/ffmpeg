@@ -8,16 +8,16 @@
 . $1/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/xml2")
+VERSION=$(cat "$1/../version/libxml2")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
 cd "$2"
 checkStatus $? "change directory failed"
-mkdir "xml2"
+mkdir "libxml2"
 checkStatus $? "create directory failed"
-cd "xml2/"
+cd "libxml2/"
 checkStatus $? "change directory failed"
 
 # download source

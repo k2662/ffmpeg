@@ -152,9 +152,9 @@ checkStatus $? "build cmake"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
-echoSection "compile xml2"
-$SCRIPT_DIR/build-xml2.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-xml2.log" 2>&1
-checkStatus $? "build xml2"
+echoSection "compile libxml2"
+$SCRIPT_DIR/build-libxml2.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libxml2.log" 2>&1
+checkStatus $? "build libxml2"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
