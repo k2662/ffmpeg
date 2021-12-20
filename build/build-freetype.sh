@@ -21,11 +21,15 @@ cd "freetype/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://download.savannah.gnu.org/releases/freetype/freetype-$VERSION.tar.gz
-checkStatus $? "download of freetype failed"
+curl -o freetype.tar.gz -L https://download.savannah.gnu.org/releases/freetype/freetype-$VERSION.tar.gz
+if [ $? -ne 0 ]; then
+    echo "download failed; start download from mirror server"
+    curl -o freetype.tar.gz -L https://sourceforge.net/projects/freetype/files/freetype2/$VERSION/freetype-$VERSION.tar.gz/download
+    checkStatus $? "download of freetype failed"
+fi
 
 # unpack
-tar -zxf "freetype-$VERSION.tar.gz"
+tar -zxf "freetype.tar.gz"
 checkStatus $? "unpack freetype failed"
 cd "freetype-$VERSION/"
 checkStatus $? "change directory failed"
