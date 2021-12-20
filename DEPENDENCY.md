@@ -2,6 +2,7 @@
 Some libraries have dependencies to others:
 - nasm
 - pkg-config
+- zlib (for ffmpeg output of png format)
 - openssl
 - cmake
     - requires openssl
@@ -9,7 +10,7 @@ Some libraries have dependencies to others:
 - freetype
 - fontconfig
     - requires libxml2
-- sdl
+- sdl (for ffplay)
 - libbluray
     - requires libxml2
     - requires freetype

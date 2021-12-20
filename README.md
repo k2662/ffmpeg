@@ -14,6 +14,7 @@ This repository builds FFmpeg, FFprobe and FFplay for Linux and Mac OSX using
     - [openssl](https://www.openssl.org/)
     - [SDL](https://www.libsdl.org/)
     - [libxml2](http://xmlsoft.org)
+    - [zlib](https://www.zlib.net)
 - video codecs
     - [aom](https://aomedia.org/) for AV1 de-/encoding
     - [openh264](https://www.openh264.org/) for H.264 de-/encoding
