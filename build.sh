@@ -9,6 +9,9 @@ SKIP_OPEN_H264="NO"
 SKIP_X264="NO"
 SKIP_X265="NO"
 SKIP_X265_MULTIBIT="NO"
+SKIP_VPX="NO"
+SKIP_LAME="NO"
+SKIP_OPUS="NO"
 FFMPEG_SNAPSHOT="NO"
 CPU_LIMIT=""
 for arg in "$@"; do
@@ -45,6 +48,18 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_X265_MULTIBIT" ]; then
         SKIP_X265_MULTIBIT=$VALUE
         echo "skip x265 multibit $VALUE"
+    fi
+    if [ $KEY = "-SKIP_VPX" ]; then
+        SKIP_VPX=$VALUE
+        echo "skip vpx $VALUE"
+    fi
+    if [ $KEY = "-SKIP_LAME" ]; then
+        SKIP_LAME=$VALUE
+        echo "skip lame (mp3) $VALUE"
+    fi
+    if [ $KEY = "-SKIP_OPUS" ]; then
+        SKIP_OPUS=$VALUE
+        echo "skip opus $VALUE"
     fi
     if [ $KEY = "-FFMPEG_SNAPSHOT" ]; then
         FFMPEG_SNAPSHOT=$VALUE
@@ -232,26 +247,38 @@ else
     echoSection "skip x265"
 fi
 
-START_TIME=$(currentTimeInSeconds)
-echoSection "compile vpx"
-$SCRIPT_DIR/build-vpx.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-vpx.log" 2>&1
-checkStatus $? "build vpx"
-echoDurationInSections $START_TIME
-FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libvpx"
+if [ $SKIP_VPX = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile vpx"
+    $SCRIPT_DIR/build-vpx.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-vpx.log" 2>&1
+    checkStatus $? "build vpx"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libvpx"
+else
+    echoSection "skip vpx"
+fi
 
-START_TIME=$(currentTimeInSeconds)
-echoSection "compile lame (mp3)"
-$SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" > "$LOG_DIR/build-lame.log" 2>&1
-checkStatus $? "build lame"
-echoDurationInSections $START_TIME
-FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libmp3lame"
+if [ $SKIP_LAME = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile lame (mp3)"
+    $SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" > "$LOG_DIR/build-lame.log" 2>&1
+    checkStatus $? "build lame"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libmp3lame"
+else
+    echoSection "skip lame (mp3)"
+fi
 
-START_TIME=$(currentTimeInSeconds)
-echoSection "compile opus"
-$SCRIPT_DIR/build-opus.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-opus.log" 2>&1
-checkStatus $? "build opus"
-echoDurationInSections $START_TIME
-FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libopus"
+if [ $SKIP_OPUS = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile opus"
+    $SCRIPT_DIR/build-opus.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-opus.log" 2>&1
+    checkStatus $? "build opus"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libopus"
+else
+    echoSection "skip opus"
+fi
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile ffmpeg"

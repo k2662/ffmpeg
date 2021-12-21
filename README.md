@@ -67,6 +67,9 @@ If you don't need a codec, you can also disable them:
 - `-SKIP_X264=YES`
 - `-SKIP_X265=YES`
 - `-SKIP_X265_MULTIBIT=YES`
+- `-SKIP_VPX=YES`
+- `-SKIP_LAME=YES`
+- `-SKIP_OPUS=YES`
 
 After the execution a new folder called `out` exists. It contains the compiled FFmpeg binary (in the `bin` sub-folder).
 The `ffmpeg-success.zip` contains also all binary files of FFmpeg, FFprobe and FFplay.
