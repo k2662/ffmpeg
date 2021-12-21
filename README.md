@@ -1,8 +1,8 @@
 # FFmpeg
-This script is made to compile FFmpeg with common codecs on Linux and Mac OSX.
+This script is made to compile FFmpeg with common codecs on Linux and macOS.
 
 ## Result
-This repository builds FFmpeg, FFprobe and FFplay for Linux and Mac OSX using
+This repository builds FFmpeg, FFprobe and FFplay using
 - build tools
     - [cmake](https://cmake.org/)
     - [nasm](http://www.nasm.us/)
@@ -37,14 +37,18 @@ Check out the [build server](https://ffmpeg.martin-riedl.de). Here you can downl
 ## Requirements
 There are just a few dependencies to other tools. Most of the software is compiled or downloaded during script execution. Also most of the tools should be already available on the system by default.
 
-### Required
-- c and c++ compiler like AppleClang (included in Xcode) or gcc (on Linux)
-- curl for downloading files
+### Linux
+- gcc (c and c++ compiler)
+- curl
 - make
 - zip, bunzip2
 
-### Optional
-- nproc (on linux) or sysctl (on Mac OSX) for multicore compilation
+### macOS
+- [Xcode](https://apps.apple.com/de/app/xcode/id497799835)
+
+### Windows (not supported)
+For compilation on Windows please use `MSYS2`. Follow the whole instructions for installation (including step 7).
+- [MSYS2](https://www.msys2.org/)
 
 ## Execution
 All files that are downloaded and generated through this script are placed in the current working directory. The recommendation is to use an empty folder for this and execute the `build.sh`.

@@ -29,6 +29,48 @@ checkStatus $? "unpack pkg-config failed"
 cd "pkg-config-$VERSION/"
 checkStatus $? "change directory failed"
 
+# windows specific stuff
+DETECTED_OS="$(uname -o 2> /dev/null)"
+echo "detected OS: $DETECTED_OS"
+if [ $DETECTED_OS = "Msys" ]; then
+    # download patches
+    # https://github.com/msys2/MINGW-packages/tree/master/mingw-w64-pkg-config
+    echo "download patches for windows"
+    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1001-Use-CreateFile-on-Win32-to-make-sure-g_unlink-always.patch
+    checkStatus "download of patch 1001 failed"
+    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1003-g_abort.all.patch
+    checkStatus "download of patch 1003 failed"
+    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1005-glib-send-log-messages-to-correct-stdout-and-stderr.patch
+    checkStatus "download of patch 1005 failed"
+    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1017-glib-use-gnu-print-scanf.patch
+    checkStatus "download of patch 1017 failed"
+    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1024-return-actually-written-data-in-printf.all.patch
+    checkStatus "download of patch 1024 failed"
+    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1030-fix-stat.all.patch
+    checkStatus "download of patch 1030 failed"
+    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1031-fix-glib-gettext-m4-error.patch
+    checkStatus "download of patch 1031 failed"
+
+    # patch fixes for windows build
+    cd glib
+    echo "apply patches for windows"
+    patch -Np1 -i "../1001-Use-CreateFile-on-Win32-to-make-sure-g_unlink-always.patch"
+    checkStatus "apply patch 1001 failed"
+    patch -Np1 -i "../1003-g_abort.all.patch"
+    checkStatus "apply patch 1003 failed"
+    patch -Np1 -i "../1005-glib-send-log-messages-to-correct-stdout-and-stderr.patch"
+    checkStatus "apply patch 1005 failed"
+    patch -Np1 -i "../1017-glib-use-gnu-print-scanf.patch"
+    checkStatus "apply patch 1017 failed"
+    patch -Np1 -i "../1024-return-actually-written-data-in-printf.all.patch"
+    checkStatus "apply patch 1024 failed"
+    patch -Np1 -i "../1030-fix-stat.all.patch"
+    checkStatus "apply patch 1030 failed"
+    patch -Np1 -i "../1031-fix-glib-gettext-m4-error.patch"
+    checkStatus "apply patch 1031 failed"
+    cd ..
+fi
+
 # prepare build
 ./configure --prefix="$3" --with-pc-path="$3/lib/pkgconfig" --with-internal-glib
 checkStatus $? "configuration of pkg-config failed"
