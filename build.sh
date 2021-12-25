@@ -4,6 +4,7 @@
 SKIP_BUNDLE="NO"
 SKIP_TEST="NO"
 SKIP_LIBBLURAY="NO"
+SKIP_ZVBI="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
 SKIP_X264="NO"
@@ -28,6 +29,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_LIBBLURAY" ]; then
         SKIP_LIBBLURAY=$VALUE
         echo "skip libbluray $VALUE"
+    fi
+    if [ $KEY = "-SKIP_ZVBI" ]; then
+        SKIP_ZVBI=$VALUE
+        echo "skip zvbi $VALUE"
     fi
     if [ $KEY = "-SKIP_AOM" ]; then
         SKIP_AOM=$VALUE
@@ -201,6 +206,17 @@ if [ $SKIP_LIBBLURAY = "NO" ]; then
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libbluray"
 else
     echoSection "skip libbluray"
+fi
+
+if [ $SKIP_ZVBI = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile zvbi"
+    $SCRIPT_DIR/build-zvbi.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-zvbi.log" 2>&1
+    checkStatus $? "build zvbi"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libzvbi"
+else
+    echoSection "skip zvbi"
 fi
 
 if [ $SKIP_AOM = "NO" ]; then

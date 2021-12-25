@@ -15,6 +15,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [SDL](https://www.libsdl.org/)
     - [libxml2](http://xmlsoft.org)
     - [zlib](https://www.zlib.net)
+    - [zvbi](https://sourceforge.net/projects/zapping/) for teletext decoding
 - video codecs
     - [aom](https://aomedia.org/) for AV1 de-/encoding
     - [openh264](https://www.openh264.org/) for H.264 de-/encoding
@@ -66,6 +67,7 @@ You can use the following parameters
 
 If you don't need a codec, you can also disable them:
 - `-SKIP_LIBBLURAY=YES`
+- `-SKIP_ZVBI=YES`
 - `-SKIP_AOM=YES`
 - `-SKIP_OPEN_H264=YES`
 - `-SKIP_X264=YES`
