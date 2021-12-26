@@ -18,8 +18,8 @@ Some libraries have dependencies to others:
 - zvbi
 - aom
 - opensh264
+- vpx
 - x264
 - x265
-- vpx
 - lame
 - opus

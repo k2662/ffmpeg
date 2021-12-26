@@ -19,9 +19,9 @@ This repository builds FFmpeg, FFprobe and FFplay using
 - video codecs
     - [aom](https://aomedia.org/) for AV1 de-/encoding
     - [openh264](https://www.openh264.org/) for H.264 de-/encoding
+    - [vpx](https://www.webmproject.org/) for VP8/VP9 de-/encoding
     - [x264](http://www.videolan.org/developers/x264.html) for H.264 encoding
     - [x265](https://www.videolan.org/developers/x265.html) for H.265/HEVC encoding (8bit+10bit+12bit)
-    - [vpx](https://www.webmproject.org/) for VP8/VP9 de-/encoding
 - audio codecs
     - [LAME](http://lame.sourceforge.net/) for MP3 encoding
     - [opus](https://opus-codec.org/) for Opus de-/encoding
@@ -66,16 +66,19 @@ You can use the following parameters
 - `-CPU_LIMIT=num` for limit CPU thread usage (default: automatically detected)
 
 If you don't need a codec, you can also disable them:
-- `-SKIP_LIBBLURAY=YES`
-- `-SKIP_ZVBI=YES`
-- `-SKIP_AOM=YES`
-- `-SKIP_OPEN_H264=YES`
-- `-SKIP_X264=YES`
-- `-SKIP_X265=YES`
-- `-SKIP_X265_MULTIBIT=YES`
-- `-SKIP_VPX=YES`
-- `-SKIP_LAME=YES`
-- `-SKIP_OPUS=YES`
+- libraries
+    - `-SKIP_LIBBLURAY=YES`
+    - `-SKIP_ZVBI=YES`
+- video codecs
+    - `-SKIP_AOM=YES`
+    - `-SKIP_OPEN_H264=YES`
+    - `-SKIP_VPX=YES`
+    - `-SKIP_X264=YES`
+    - `-SKIP_X265=YES`
+    - `-SKIP_X265_MULTIBIT=YES`
+- audio codecs
+    - `-SKIP_LAME=YES`
+    - `-SKIP_OPUS=YES`
 
 After the execution a new folder called `out` exists. It contains the compiled FFmpeg binary (in the `bin` sub-folder).
 The `ffmpeg-success.zip` contains also all binary files of FFmpeg, FFprobe and FFplay.

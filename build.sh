@@ -7,10 +7,10 @@ SKIP_LIBBLURAY="NO"
 SKIP_ZVBI="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
+SKIP_VPX="NO"
 SKIP_X264="NO"
 SKIP_X265="NO"
 SKIP_X265_MULTIBIT="NO"
-SKIP_VPX="NO"
 SKIP_LAME="NO"
 SKIP_OPUS="NO"
 FFMPEG_SNAPSHOT="NO"
@@ -42,6 +42,10 @@ for arg in "$@"; do
         SKIP_OPEN_H264=$VALUE
         echo "skip openh264 $VALUE"
     fi
+    if [ $KEY = "-SKIP_VPX" ]; then
+        SKIP_VPX=$VALUE
+        echo "skip vpx $VALUE"
+    fi
     if [ $KEY = "-SKIP_X264" ]; then
         SKIP_X264=$VALUE
         echo "skip x264 $VALUE"
@@ -53,10 +57,6 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_X265_MULTIBIT" ]; then
         SKIP_X265_MULTIBIT=$VALUE
         echo "skip x265 multibit $VALUE"
-    fi
-    if [ $KEY = "-SKIP_VPX" ]; then
-        SKIP_VPX=$VALUE
-        echo "skip vpx $VALUE"
     fi
     if [ $KEY = "-SKIP_LAME" ]; then
         SKIP_LAME=$VALUE
@@ -241,6 +241,17 @@ else
     echoSection "skip openh264"
 fi
 
+if [ $SKIP_VPX = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile vpx"
+    $SCRIPT_DIR/build-vpx.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-vpx.log" 2>&1
+    checkStatus $? "build vpx"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libvpx"
+else
+    echoSection "skip vpx"
+fi
+
 if [ $SKIP_X264 = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "compile x264"
@@ -261,17 +272,6 @@ if [ $SKIP_X265 = "NO" ]; then
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libx265"
 else
     echoSection "skip x265"
-fi
-
-if [ $SKIP_VPX = "NO" ]; then
-    START_TIME=$(currentTimeInSeconds)
-    echoSection "compile vpx"
-    $SCRIPT_DIR/build-vpx.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-vpx.log" 2>&1
-    checkStatus $? "build vpx"
-    echoDurationInSections $START_TIME
-    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libvpx"
-else
-    echoSection "skip vpx"
 fi
 
 if [ $SKIP_LAME = "NO" ]; then
