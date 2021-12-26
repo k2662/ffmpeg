@@ -87,3 +87,18 @@ The `ffmpeg-success.zip` contains also all binary files of FFmpeg, FFprobe and F
 Check the detailed logfiles in the `log` directory. Each build step has its own file starting with "build-*".
 
 If the build of ffmpeg failes during the configuration phase (e.g. because it doesn't find one codec) check also the log file in `source/ffmpeg/ffmpeg-*/ffbuild/config.log`.
+
+# License
+Copyright 2021 Martin Riedl
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
