@@ -27,6 +27,7 @@ SKIP_X265="NO"
 SKIP_X265_MULTIBIT="NO"
 SKIP_LAME="NO"
 SKIP_OPUS="NO"
+SKIP_LIBVORBIS="NO"
 FFMPEG_SNAPSHOT="NO"
 CPU_LIMIT=""
 for arg in "$@"; do
@@ -79,6 +80,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_OPUS" ]; then
         SKIP_OPUS=$VALUE
         echo "skip opus $VALUE"
+    fi
+    if [ $KEY = "-SKIP_LIBVORBIS" ]; then
+        SKIP_LIBVORBIS=$VALUE
+        echo "skip libvorbis $VALUE"
     fi
     if [ $KEY = "-FFMPEG_SNAPSHOT" ]; then
         FFMPEG_SNAPSHOT=$VALUE
@@ -222,6 +227,12 @@ else
     echoSection "skip libbluray"
 fi
 
+START_TIME=$(currentTimeInSeconds)
+echoSection "compile libogg"
+$SCRIPT_DIR/build-libogg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libogg.log" 2>&1
+checkStatus $? "build libogg"
+echoDurationInSections $START_TIME
+
 if [ $SKIP_ZVBI = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "compile zvbi"
@@ -308,6 +319,17 @@ if [ $SKIP_OPUS = "NO" ]; then
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libopus"
 else
     echoSection "skip opus"
+fi
+
+if [ $SKIP_LIBVORBIS = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile libvorbis"
+    $SCRIPT_DIR/build-libvorbis.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libvorbis.log" 2>&1
+    checkStatus $? "build libvorbis"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libvorbis"
+else
+    echoSection "skip libvorbis"
 fi
 
 START_TIME=$(currentTimeInSeconds)

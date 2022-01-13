@@ -15,6 +15,7 @@ Some libraries have dependencies to others:
     - requires libxml2
     - requires freetype
     - requires fontconfig
+- libogg
 - zvbi
 - aom
 - opensh264
@@ -23,3 +24,5 @@ Some libraries have dependencies to others:
 - x265
 - lame
 - opus
+- libvorbis
+    - libogg

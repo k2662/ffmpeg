@@ -12,6 +12,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [fontconfig](https://www.freedesktop.org/wiki/Software/fontconfig/)
     - [FreeType](https://freetype.org)
     - [openssl](https://www.openssl.org/)
+    - [libopus](https://www.opus-codec.org)
     - [SDL](https://www.libsdl.org/)
     - [libxml2](http://xmlsoft.org)
     - [zlib](https://www.zlib.net)
@@ -25,6 +26,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
 - audio codecs
     - [LAME](http://lame.sourceforge.net/) for MP3 encoding
     - [opus](https://opus-codec.org/) for Opus de-/encoding
+    - [libvorbis](https://xiph.org/vorbis/) for vorbis de-/encoding
 
 To get a full list of all formats and codecs that are supported just execute
 ```
