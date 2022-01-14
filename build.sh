@@ -223,8 +223,10 @@ if [ $SKIP_LIBBLURAY = "NO" ]; then
     checkStatus $? "build libbluray"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libbluray"
+    echo "NO" > "$LOG_DIR/skip-libbluray"
 else
     echoSection "skip libbluray"
+    echo "YES" > "$LOG_DIR/skip-libbluray"
 fi
 
 START_TIME=$(currentTimeInSeconds)
@@ -240,8 +242,10 @@ if [ $SKIP_ZVBI = "NO" ]; then
     checkStatus $? "build zvbi"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libzvbi"
+    echo "NO" > "$LOG_DIR/skip-zvbi"
 else
     echoSection "skip zvbi"
+    echo "YES" > "$LOG_DIR/skip-zvbi"
 fi
 
 if [ $SKIP_AOM = "NO" ]; then
@@ -251,8 +255,10 @@ if [ $SKIP_AOM = "NO" ]; then
     checkStatus $? "build aom"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libaom"
+    echo "NO" > "$LOG_DIR/skip-aom"
 else
     echoSection "skip aom"
+    echo "YES" > "$LOG_DIR/skip-aom"
 fi
 
 if [ $SKIP_OPEN_H264 = "NO" ]; then
@@ -262,8 +268,10 @@ if [ $SKIP_OPEN_H264 = "NO" ]; then
     checkStatus $? "build openh264"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libopenh264"
+    echo "NO" > "$LOG_DIR/skip-openh264"
 else
     echoSection "skip openh264"
+    echo "YES" > "$LOG_DIR/skip-openh264"
 fi
 
 if [ $SKIP_VPX = "NO" ]; then
@@ -273,8 +281,10 @@ if [ $SKIP_VPX = "NO" ]; then
     checkStatus $? "build vpx"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libvpx"
+    echo "NO" > "$LOG_DIR/skip-vpx"
 else
     echoSection "skip vpx"
+    echo "YES" > "$LOG_DIR/skip-vpx"
 fi
 
 if [ $SKIP_X264 = "NO" ]; then
@@ -284,8 +294,10 @@ if [ $SKIP_X264 = "NO" ]; then
     checkStatus $? "build x264"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libx264"
+    echo "NO" > "$LOG_DIR/skip-x264"
 else
     echoSection "skip x264"
+    echo "YES" > "$LOG_DIR/skip-x264"
 fi
 
 if [ $SKIP_X265 = "NO" ]; then
@@ -295,8 +307,10 @@ if [ $SKIP_X265 = "NO" ]; then
     checkStatus $? "build x265"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libx265"
+    echo "NO" > "$LOG_DIR/skip-x265"
 else
     echoSection "skip x265"
+    echo "YES" > "$LOG_DIR/skip-x265"
 fi
 
 if [ $SKIP_LAME = "NO" ]; then
@@ -306,8 +320,10 @@ if [ $SKIP_LAME = "NO" ]; then
     checkStatus $? "build lame"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libmp3lame"
+    echo "NO" > "$LOG_DIR/skip-lame"
 else
     echoSection "skip lame (mp3)"
+    echo "YES" > "$LOG_DIR/skip-lame"
 fi
 
 if [ $SKIP_OPUS = "NO" ]; then
@@ -317,8 +333,10 @@ if [ $SKIP_OPUS = "NO" ]; then
     checkStatus $? "build opus"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libopus"
+    echo "NO" > "$LOG_DIR/skip-opus"
 else
     echoSection "skip opus"
+    echo "YES" > "$LOG_DIR/skip-opus"
 fi
 
 if [ $SKIP_LIBVORBIS = "NO" ]; then
@@ -328,8 +346,10 @@ if [ $SKIP_LIBVORBIS = "NO" ]; then
     checkStatus $? "build libvorbis"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libvorbis"
+    echo "NO" > "$LOG_DIR/skip-libvorbis"
 else
     echoSection "skip libvorbis"
+    echo "YES" > "$LOG_DIR/skip-libvorbis"
 fi
 
 START_TIME=$(currentTimeInSeconds)
@@ -351,8 +371,7 @@ fi
 if [ $SKIP_TEST = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "run tests"
-    $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$TEST_OUT_DIR" "$OUT_DIR" \
-        $SKIP_AOM $SKIP_OPEN_H264 $SKIP_X264 $SKIP_X265 > "$LOG_DIR/test.log" 2>&1
+    $TEST_DIR/test.sh "$SCRIPT_DIR" "$TEST_DIR" "$TEST_OUT_DIR" "$OUT_DIR" "$LOG_DIR" > "$LOG_DIR/test.log" 2>&1
     checkStatus $? "test"
     echo "tests executed successfully"
     echoDurationInSections $START_TIME

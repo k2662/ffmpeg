@@ -20,10 +20,7 @@ SCRIPT_DIR=$1
 TEST_DIR=$2
 TEST_OUT_DIR=$3
 OUT_DIR=$4
-SKIP_AOM=$5
-SKIP_OPEN_H264=$6
-SKIP_X264=$7
-SKIP_X265=$8
+LOG_DIR=$5
 
 # load functions
 . $SCRIPT_DIR/functions.sh
@@ -42,9 +39,13 @@ echoDurationInSections $START_TIME
 #checkStatus $? "test fontconfig"
 #echoDurationInSections $START_TIME
 
-# TODO: test for libbluray
+# TODO: test libbluray
+SKIP_LIBBLURAY=$(cat "$LOG_DIR/skip-libbluray")
+checkStatus $? "load skip-libbluray failed"
 
 # test aom av1
+SKIP_AOM=$(cat "$LOG_DIR/skip-aom")
+checkStatus $? "load skip-aom failed"
 if [ $SKIP_AOM = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "run test aom av1 encoding"
@@ -54,6 +55,8 @@ if [ $SKIP_AOM = "NO" ]; then
 fi
 
 # test openh264
+SKIP_OPEN_H264=$(cat "$LOG_DIR/skip-openh264")
+checkStatus $? "load skip-openh264 failed"
 if [ $SKIP_OPEN_H264 = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "run test openh264 encoding"
@@ -62,7 +65,26 @@ if [ $SKIP_OPEN_H264 = "NO" ]; then
     echoDurationInSections $START_TIME
 fi
 
+# test vpx
+SKIP_VPX=$(cat "$LOG_DIR/skip-vpx")
+checkStatus $? "load skip-vpx failed"
+if [ $SKIP_VPX = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test vp8 encoding"
+    $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:v "libvpx" -an "$TEST_OUT_DIR/test-vp8.webm" > "$TEST_OUT_DIR/test-vp8.log" 2>&1
+    checkStatus $? "test vp8"
+    echoDurationInSections $START_TIME
+
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test vp9 encoding"
+    $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:v "libvpx-vp9" -an "$TEST_OUT_DIR/test-vp9.webm" > "$TEST_OUT_DIR/test-vp9.log" 2>&1
+    checkStatus $? "test vp9"
+    echoDurationInSections $START_TIME
+fi
+
 # test x264
+SKIP_X264=$(cat "$LOG_DIR/skip-x264")
+checkStatus $? "load skip-x264 failed"
 if [ $SKIP_X264 = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "run test x264 encoding"
@@ -72,6 +94,8 @@ if [ $SKIP_X264 = "NO" ]; then
 fi
 
 # test x265
+SKIP_X265=$(cat "$LOG_DIR/skip-x265")
+checkStatus $? "load skip-x265 failed"
 if [ $SKIP_X265 = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "run test x265 encoding"
@@ -80,30 +104,24 @@ if [ $SKIP_X265 = "NO" ]; then
     echoDurationInSections $START_TIME
 fi
 
-# test vp8
-START_TIME=$(currentTimeInSeconds)
-echoSection "run test vp8 encoding"
-$OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:v "libvpx" -an "$TEST_OUT_DIR/test-vp8.webm" > "$TEST_OUT_DIR/test-vp8.log" 2>&1
-checkStatus $? "test vp8"
-echoDurationInSections $START_TIME
-
-# test vp9
-START_TIME=$(currentTimeInSeconds)
-echoSection "run test vp9 encoding"
-$OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:v "libvpx-vp9" -an "$TEST_OUT_DIR/test-vp9.webm" > "$TEST_OUT_DIR/test-vp9.log" 2>&1
-checkStatus $? "test vp9"
-echoDurationInSections $START_TIME
-
 # test lame mp3
-START_TIME=$(currentTimeInSeconds)
-echoSection "run test lame mp3 encoding"
-$OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:a "libmp3lame" -vn "$TEST_OUT_DIR/test-lame.mp3" > "$TEST_OUT_DIR/test-lame.log" 2>&1
-checkStatus $? "test lame mp3"
-echoDurationInSections $START_TIME
+SKIP_LAME=$(cat "$LOG_DIR/skip-lame")
+checkStatus $? "load skip-lame failed"
+if [ $SKIP_LAME = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test lame mp3 encoding"
+    $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:a "libmp3lame" -vn "$TEST_OUT_DIR/test-lame.mp3" > "$TEST_OUT_DIR/test-lame.log" 2>&1
+    checkStatus $? "test lame mp3"
+    echoDurationInSections $START_TIME
+fi
 
 # test opus
-START_TIME=$(currentTimeInSeconds)
-echoSection "run test opus encoding"
-$OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:a "libopus" -vn "$TEST_OUT_DIR/test-opus.opus" > "$TEST_OUT_DIR/test-opus.log" 2>&1
-checkStatus $? "test opus"
-echoDurationInSections $START_TIME
+SKIP_OPUS=$(cat "$LOG_DIR/skip-opus")
+checkStatus $? "load skip-opus failed"
+if [ $SKIP_OPUS = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test opus encoding"
+    $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:a "libopus" -vn "$TEST_OUT_DIR/test-opus.opus" > "$TEST_OUT_DIR/test-opus.log" 2>&1
+    checkStatus $? "test opus"
+    echoDurationInSections $START_TIME
+fi
