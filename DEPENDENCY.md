@@ -19,6 +19,7 @@ Some libraries have dependencies to others:
 - zvbi
 - aom
 - opensh264
+- svt-av1
 - vpx
 - x264
 - x265

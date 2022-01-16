@@ -21,6 +21,7 @@ SKIP_LIBBLURAY="NO"
 SKIP_ZVBI="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
+SKIP_SVT_AV1="NO"
 SKIP_VPX="NO"
 SKIP_X264="NO"
 SKIP_X265="NO"
@@ -56,6 +57,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_OPEN_H264" ]; then
         SKIP_OPEN_H264=$VALUE
         echo "skip openh264 $VALUE"
+    fi
+    if [ $KEY = "-SKIP_SVT_AV1" ]; then
+        SKIP_SVT_AV1=$VALUE
+        echo "skip svt-av1 $VALUE"
     fi
     if [ $KEY = "-SKIP_VPX" ]; then
         SKIP_VPX=$VALUE
@@ -272,6 +277,19 @@ if [ $SKIP_OPEN_H264 = "NO" ]; then
 else
     echoSection "skip openh264"
     echo "YES" > "$LOG_DIR/skip-openh264"
+fi
+
+if [ $SKIP_SVT_AV1 = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile svt-av1"
+    $SCRIPT_DIR/build-svt-av1.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-svt-av1.log" 2>&1
+    checkStatus $? "build svt-av1"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libsvtav1"
+    echo "NO" > "$LOG_DIR/skip-svt-av1"
+else
+    echoSection "skip svt-av1"
+    echo "YES" > "$LOG_DIR/skip-svt-av1"
 fi
 
 if [ $SKIP_VPX = "NO" ]; then

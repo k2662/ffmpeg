@@ -20,6 +20,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
 - video codecs
     - [aom](https://aomedia.org/) for AV1 de-/encoding
     - [openh264](https://www.openh264.org/) for H.264 de-/encoding
+    - [svt-av1](https://gitlab.com/AOMediaCodec/SVT-AV1) for AV1 encoding
     - [vpx](https://www.webmproject.org/) for VP8/VP9 de-/encoding
     - [x264](http://www.videolan.org/developers/x264.html) for H.264 encoding
     - [x265](https://www.videolan.org/developers/x265.html) for H.265/HEVC encoding (8bit+10bit+12bit)
@@ -74,6 +75,7 @@ If you don't need a codec, you can also disable them:
 - video codecs
     - `-SKIP_AOM=YES`
     - `-SKIP_OPEN_H264=YES`
+    - `-SKIP_SVT_AV1=YES`
     - `-SKIP_VPX=YES`
     - `-SKIP_X264=YES`
     - `-SKIP_X265=YES`
