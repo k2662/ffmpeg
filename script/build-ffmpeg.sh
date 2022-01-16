@@ -64,7 +64,7 @@ export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 # --pkg-config-flags="--static" is required to respect the Libs.private flags of the *.pc files
 ./configure --prefix="$4" --enable-gpl --pkg-config-flags="--static" --extra-version="$EXTRA_VERSION" \
-    --enable-gray $7
+    --enable-gray --enable-libxml2 $7
 checkStatus $? "configuration of ffmpeg failed"
 
 # start build
