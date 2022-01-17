@@ -83,6 +83,7 @@ If you don't need a codec, you can also disable them:
 - audio codecs
     - `-SKIP_LAME=YES`
     - `-SKIP_OPUS=YES`
+    - `-SKIP_LIBVORBIS=YES`
 
 After the execution a new folder called `out` exists. It contains the compiled FFmpeg binary (in the `bin` sub-folder).
 The `ffmpeg-success.zip` contains also all binary files of FFmpeg, FFprobe and FFplay.
