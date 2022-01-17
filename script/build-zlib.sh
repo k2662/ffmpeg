@@ -14,21 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
-# $4 = CPUs
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/zlib")
+VERSION=$(cat "$SCRIPT_DIR/../version/zlib")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "zlib"
 checkStatus $? "create directory failed"
@@ -37,7 +39,7 @@ checkStatus $? "change directory failed"
 
 # download source
 curl -O https://www.zlib.net/zlib-$VERSION.tar.gz
-checkStatus $? "download of zlib failed"
+checkStatus $? "download failed"
 
 # unpacking
 tar -zxf "zlib-$VERSION.tar.gz"
@@ -46,11 +48,11 @@ cd "zlib-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$3" --static
+./configure --prefix="$TOOL_DIR" --static
 checkStatus $? "configuration failed"
 
 # build
-make -j $4
+make -j $CPUS
 checkStatus $? "build failed"
 
 # install

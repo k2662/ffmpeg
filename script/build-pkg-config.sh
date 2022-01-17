@@ -14,20 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/pkg-config")
+VERSION=$(cat "$SCRIPT_DIR/../version/pkg-config")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "pkg-config"
 checkStatus $? "create directory failed"
@@ -87,7 +89,7 @@ if [ $DETECTED_OS = "Msys" ]; then
 fi
 
 # prepare build
-./configure --prefix="$3" --with-pc-path="$3/lib/pkgconfig" --with-internal-glib
+./configure --prefix="$TOOL_DIR" --with-pc-path="$TOOL_DIR/lib/pkgconfig" --with-internal-glib
 checkStatus $? "configuration of pkg-config failed"
 
 # build

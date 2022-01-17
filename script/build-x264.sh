@@ -14,16 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
-# $4 = CPUs
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "x264"
 checkStatus $? "create directory failed"
@@ -32,22 +34,22 @@ checkStatus $? "change directory failed"
 
 # download source
 curl -O -L https://code.videolan.org/videolan/x264/-/archive/master/x264-master.tar.gz
-checkStatus $? "download of x264 failed"
+checkStatus $? "download failed"
 
 # unpack
 tar -zxf "x264-master.tar.gz"
-checkStatus $? "unpack x264 failed"
+checkStatus $? "unpack failed"
 cd "x264-master/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$3" --enable-static
-checkStatus $? "configuration of x264 failed"
+./configure --prefix="$TOOL_DIR" --enable-static
+checkStatus $? "configuration failed"
 
 # build
-make -j $4
-checkStatus $? "build of x264 failed"
+make -j $CPUS
+checkStatus $? "build failed"
 
 # install
 make install
-checkStatus $? "installation of x264 failed"
+checkStatus $? "installation failed"

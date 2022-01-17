@@ -14,21 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
-# $4 = CPUs
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/libbluray")
+VERSION=$(cat "$SCRIPT_DIR/../version/libbluray")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "libbluray"
 checkStatus $? "create directory failed"
@@ -37,24 +39,24 @@ checkStatus $? "change directory failed"
 
 # download source
 curl -O https://download.videolan.org/pub/videolan/libbluray/$VERSION/libbluray-$VERSION.tar.bz2
-checkStatus $? "download of libbluray failed"
+checkStatus $? "download failed"
 
 # unpack
 bunzip2 "libbluray-$VERSION.tar.bz2"
-checkStatus $? "unpack libbluray failed (bunzip2)"
+checkStatus $? "unpack failed (bunzip2)"
 tar -xf "libbluray-$VERSION.tar"
-checkStatus $? "unpack libbluray failed (tar)"
+checkStatus $? "unpack failed (tar)"
 cd "libbluray-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$3" --enable-shared=no --disable-bdjava-jar
-checkStatus $? "configuration of libbluray failed"
+./configure --prefix="$TOOL_DIR" --enable-shared=no --disable-bdjava-jar
+checkStatus $? "configuration failed"
 
 # build
-make -j $4
-checkStatus $? "build of libbluray failed"
+make -j $CPUS
+checkStatus $? "build failed"
 
 # install
 make install
-checkStatus $? "installation of libbluray failed"
+checkStatus $? "installation failed"

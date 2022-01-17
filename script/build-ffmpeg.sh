@@ -14,29 +14,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
-# $4 = output directory
-# $5 = CPUs
-# $6 = FFmpeg snapshot flag
-# $7 = FFmpeg library flags
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+OUT_DIR=$4
+CPUS=$5
+FFMPEG_SNAPSHOT=$6
+FFMPEG_LIB_FLAGS=$7
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # version
-if [ $6 = "YES" ]; then
+if [ $FFMPEG_SNAPSHOT = "YES" ]; then
     VERSION="snapshot"
 else
     # load version
-    VERSION=$(cat "$1/../version/ffmpeg")
+    VERSION=$(cat "$SCRIPT_DIR/../version/ffmpeg")
     checkStatus $? "load version failed"
 fi
 echo "version: $VERSION"
 
 # start in working directory
-cd $2
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "ffmpeg"
 checkStatus $? "create directory failed"
@@ -51,26 +53,26 @@ checkStatus $? "ffmpeg download failed"
 mkdir "ffmpeg"
 checkStatus $? "create directory failed"
 bunzip2 ffmpeg.tar.bz2
-checkStatus $? "unpack ffmpeg failed (bunzip2)"
+checkStatus $? "unpack failed (bunzip2)"
 tar -xf ffmpeg.tar -C ffmpeg --strip-components=1
-checkStatus $? "unpack ffmpeg failed (tar)"
+checkStatus $? "unpack failed (tar)"
 cd "ffmpeg/"
 checkStatus $? "change directory failed"
 
 # prepare build
 EXTRA_VERSION="https://www.martin-riedl.de"
-FF_FLAGS="-L${3}/lib -I${3}/include"
+FF_FLAGS="-L${TOOL_DIR}/lib -I${TOOL_DIR}/include"
 export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 # --pkg-config-flags="--static" is required to respect the Libs.private flags of the *.pc files
-./configure --prefix="$4" --enable-gpl --pkg-config-flags="--static" --extra-version="$EXTRA_VERSION" \
-    --enable-gray --enable-libxml2 $7
-checkStatus $? "configuration of ffmpeg failed"
+./configure --prefix="$OUT_DIR" --enable-gpl --pkg-config-flags="--static" --extra-version="$EXTRA_VERSION" \
+    --enable-gray --enable-libxml2 $FFMPEG_LIB_FLAGS
+checkStatus $? "configuration failed"
 
 # start build
-make -j $5
-checkStatus $? "build of ffmpeg failed"
+make -j $CPUS
+checkStatus $? "build failed"
 
 # install ffmpeg
 make install
-checkStatus $? "installation of ffmpeg failed"
+checkStatus $? "installation failed"

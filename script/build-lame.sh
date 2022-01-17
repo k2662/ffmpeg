@@ -14,20 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/lame")
+VERSION=$(cat "$SCRIPT_DIR/../version/lame")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "lame"
 checkStatus $? "create directory failed"
@@ -36,7 +39,7 @@ checkStatus $? "change directory failed"
 
 # download source
 curl -O https://netcologne.dl.sourceforge.net/project/lame/lame/$VERSION/lame-$VERSION.tar.gz
-checkStatus $? "download of lame failed"
+checkStatus $? "download failed"
 
 # unpack
 tar -zxf "lame-$VERSION.tar.gz"
@@ -45,13 +48,13 @@ cd "lame-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$3" --enable-shared=no
-checkStatus $? "configuration of lame failed"
+./configure --prefix="$TOOL_DIR" --enable-shared=no
+checkStatus $? "configuration failed"
 
 # build
-make
-checkStatus $? "build of lame failed"
+make -j $CPUS
+checkStatus $? "build failed"
 
 # install
 make install
-checkStatus $? "installation of lame failed"
+checkStatus $? "installation failed"

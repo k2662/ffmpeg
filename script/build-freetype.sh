@@ -14,21 +14,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
+
 # $1 = script directory
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/freetype")
+VERSION=$(cat "$SCRIPT_DIR/../version/freetype")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "freetype"
 checkStatus $? "create directory failed"
@@ -40,23 +47,23 @@ curl -o freetype.tar.gz -L https://download.savannah.gnu.org/releases/freetype/f
 if [ $? -ne 0 ]; then
     echo "download failed; start download from mirror server"
     curl -o freetype.tar.gz -L https://sourceforge.net/projects/freetype/files/freetype2/$VERSION/freetype-$VERSION.tar.gz/download
-    checkStatus $? "download of freetype failed"
+    checkStatus $? "download failed"
 fi
 
 # unpack
 tar -zxf "freetype.tar.gz"
-checkStatus $? "unpack freetype failed"
+checkStatus $? "unpack failed"
 cd "freetype-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$3" --enable-shared=no
-checkStatus $? "configuration of freetype failed"
+./configure --prefix="$TOOL_DIR" --enable-shared=no
+checkStatus $? "configuration failed"
 
 # build
-make -j $4
-checkStatus $? "build of freetype failed"
+make -j $CPUS
+checkStatus $? "build failed"
 
 # install
 make install
-checkStatus $? "installation of freetype failed"
+checkStatus $? "installation failed"

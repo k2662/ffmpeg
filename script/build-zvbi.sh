@@ -14,21 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
-# $4 = CPUs
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/zvbi")
+VERSION=$(cat "$SCRIPT_DIR/../version/zvbi")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "zvbi"
 checkStatus $? "create directory failed"
@@ -48,11 +50,11 @@ cd "zvbi-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$3" --enable-shared=no
+./configure --prefix="$TOOL_DIR" --enable-shared=no
 checkStatus $? "configuration failed"
 
 # build
-make -j $4
+make -j $CPUS
 checkStatus $? "build failed"
 
 # install

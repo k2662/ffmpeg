@@ -14,21 +14,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
+
 # $1 = script directory
 # $2 = working directory
 # $3 = tool directory
 # $4 = CPUs
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/openh264")
+VERSION=$(cat "$SCRIPT_DIR/../version/openh264")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "openh264"
 checkStatus $? "create directory failed"
@@ -37,18 +44,18 @@ checkStatus $? "change directory failed"
 
 # download source
 curl -O -L https://github.com/cisco/openh264/archive/v$VERSION.tar.gz
-checkStatus $? "download of openh264 failed"
+checkStatus $? "download failed"
 
 # unpack
 tar -zxf "v$VERSION.tar.gz"
-checkStatus $? "unpack openh264 failed"
+checkStatus $? "unpack failed"
 cd "openh264-$VERSION/"
 checkStatus $? "change directory failed"
 
 # build
-make PREFIX="$3" -j $4
-checkStatus $? "build of openh264 failed"
+make PREFIX="$TOOL_DIR" -j $CPUS
+checkStatus $? "build failed"
 
 # install
-make install-static PREFIX="$3"
-checkStatus $? "installation of openh264 failed"
+make install-static PREFIX="$TOOL_DIR"
+checkStatus $? "installation failed"

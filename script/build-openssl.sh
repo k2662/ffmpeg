@@ -14,21 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
-# $4 = CPUs
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/openssl")
+VERSION=$(cat "$SCRIPT_DIR/../version/openssl")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "openssl"
 checkStatus $? "create directory failed"
@@ -37,26 +39,26 @@ checkStatus $? "change directory failed"
 
 # download source
 curl -O https://www.openssl.org/source/openssl-$VERSION.tar.gz
-checkStatus $? "download of openssl failed"
+checkStatus $? "download failed"
 
 # unpack
 tar -zxf "openssl-$VERSION.tar.gz"
-checkStatus $? "unpack of openssl failed"
+checkStatus $? "unpack failed"
 cd "openssl-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
 # use custom lib path, because for any reason on linux amd64 installs otherwise in lib64 instead
-./config --prefix="$3" --openssldir="$3/openssl" --libdir="$3/lib" no-shared
-checkStatus $? "configuration of openssl failed"
+./config --prefix="$TOOL_DIR" --openssldir="$TOOL_DIR/openssl" --libdir="$TOOL_DIR/lib" no-shared
+checkStatus $? "configuration failed"
 
 # build
-make -j $4
-checkStatus $? "build of openssl failed"
+make -j $CPUS
+checkStatus $? "build failed"
 
 # install
 ## install without documentation
 make install_sw
-checkStatus $? "installation of openssl failed (install_sw)"
+checkStatus $? "installation failed (install_sw)"
 make install_ssldirs
-checkStatus $? "installation of openssl failed (install_ssldirs)"
+checkStatus $? "installation failed (install_ssldirs)"

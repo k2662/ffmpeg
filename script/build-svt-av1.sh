@@ -14,21 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
-# $4 = CPUs
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/svt-av1")
+VERSION=$(cat "$SCRIPT_DIR/../version/svt-av1")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "svt-av1"
 checkStatus $? "create directory failed"
@@ -48,11 +50,11 @@ mkdir "build"
 checkStatus $? "create directory failed"
 cd "build/"
 checkStatus $? "change directory failed"
-cmake -DCMAKE_INSTALL_PREFIX:PATH=$3 -DBUILD_SHARED_LIBS=NO -DBUILD_APPS=NO ../SVT-AV1-v$VERSION
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOL_DIR -DBUILD_SHARED_LIBS=NO -DBUILD_APPS=NO ../SVT-AV1-v$VERSION
 checkStatus $? "configuration failed"
 
 # build
-make -j $4
+make -j $CPUS
 checkStatus $? "build failed"
 
 # install

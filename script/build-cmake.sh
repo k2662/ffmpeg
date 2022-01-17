@@ -14,20 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
-# $4 = CPUs
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # versions
 VERSION_MAJOR="3.22"
 VERSION_MINOR="3.22.1"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "cmake"
 checkStatus $? "create directory failed"
@@ -36,23 +38,23 @@ checkStatus $? "change directory failed"
 
 # download source
 curl -O https://cmake.org/files/v$VERSION_MAJOR/cmake-$VERSION_MINOR.tar.gz
-checkStatus $? "download of cmake failed"
+checkStatus $? "download failed"
 
 # unpack
 tar -zxf "cmake-$VERSION_MINOR.tar.gz"
-checkStatus $? "unpack of cmake failed"
+checkStatus $? "unpack failed"
 cd "cmake-$VERSION_MINOR/"
 checkStatus $? "change directory failed"
 
 # prepare build
-export OPENSSL_ROOT_DIR="$3"
-./configure --prefix="$3" --parallel="$4"
-checkStatus $? "configuration of cmake failed"
+export OPENSSL_ROOT_DIR="$TOOL_DIR"
+./configure --prefix="$TOOL_DIR" --parallel="$CPUS"
+checkStatus $? "configuration failed"
 
 # build
-make -j $4
-checkStatus $? "build of cmake failed"
+make -j $CPUS
+checkStatus $? "build failed"
 
 # install
 make install
-checkStatus $? "installation of cmake failed"
+checkStatus $? "installation failed"

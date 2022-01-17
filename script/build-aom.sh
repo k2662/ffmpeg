@@ -14,21 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
-# $4 = CPUs
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/aom")
+VERSION=$(cat "$SCRIPT_DIR/../version/aom")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "aom"
 checkStatus $? "create directory failed"
@@ -37,24 +39,24 @@ checkStatus $? "change directory failed"
 
 # download source
 curl -O https://storage.googleapis.com/aom-releases/libaom-$VERSION.tar.gz
-checkStatus $? "download of aom failed"
+checkStatus $? "download failed"
 
 # unpack
 tar -zxf "libaom-$VERSION.tar.gz"
-checkStatus $? "unpack aom failed"
+checkStatus $? "unpack failed"
 
 # prepare build
 mkdir ../aom_build
-checkStatus $? "create aom build directory failed"
+checkStatus $? "create build directory failed"
 cd ../aom_build
-checkStatus $? "change directory to aom build failed"
-cmake -DCMAKE_INSTALL_PREFIX:PATH=$3 -DENABLE_TESTS=0 ../aom/
-checkStatus $? "configuration of aom failed"
+checkStatus $? "change build directory failed"
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOL_DIR -DENABLE_TESTS=0 ../aom/
+checkStatus $? "configuration failed"
 
 # build
-make -j $4
-checkStatus $? "build of aom failed"
+make -j $CPUS
+checkStatus $? "build failed"
 
 # install
 make install
-checkStatus $? "installation of aom failed"
+checkStatus $? "installation failed"

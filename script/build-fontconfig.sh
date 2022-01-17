@@ -14,21 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# $1 = script directory
-# $2 = working directory
-# $3 = tool directory
-# $4 = CPUs
+# handle arguments
+echo "arguments: $@"
+SCRIPT_DIR=$1
+SOURCE_DIR=$2
+TOOL_DIR=$3
+CPUS=$4
 
 # load functions
-. $1/functions.sh
+. $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$1/../version/fontconfig")
+VERSION=$(cat "$SCRIPT_DIR/../version/fontconfig")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
-cd "$2"
+cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
 mkdir "fontconfig"
 checkStatus $? "create directory failed"
@@ -37,24 +39,24 @@ checkStatus $? "change directory failed"
 
 # download source
 curl -O -L https://www.freedesktop.org/software/fontconfig/release/fontconfig-$VERSION.tar.gz
-checkStatus $? "download of fontconfig failed"
+checkStatus $? "download failed"
 
 # unpack
 tar -zxf "fontconfig-$VERSION.tar.gz"
-checkStatus $? "unpack fontconfig failed"
+checkStatus $? "unpack failed"
 cd "fontconfig-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
 # --with-default-fonts="" is used to fix current build on macOS
 # https://gitlab.freedesktop.org/fontconfig/fontconfig/-/merge_requests/185
-./configure --prefix="$3" --enable-static=yes --enable-shared=no --enable-libxml2 --with-default-fonts=""
-checkStatus $? "configuration of fontconfig failed"
+./configure --prefix="$TOOL_DIR" --enable-static=yes --enable-shared=no --enable-libxml2 --with-default-fonts=""
+checkStatus $? "configuration failed"
 
 # build
-make -j $4
-checkStatus $? "build of fontconfig failed"
+make -j $CPUS
+checkStatus $? "build failed"
 
 # install
 make install
-checkStatus $? "installation of fontconfig failed"
+checkStatus $? "installation failed"

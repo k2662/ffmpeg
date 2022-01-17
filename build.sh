@@ -334,7 +334,7 @@ fi
 if [ $SKIP_LAME = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "compile lame (mp3)"
-    $SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" > "$LOG_DIR/build-lame.log" 2>&1
+    $SCRIPT_DIR/build-lame.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-lame.log" 2>&1
     checkStatus $? "build lame"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libmp3lame"
