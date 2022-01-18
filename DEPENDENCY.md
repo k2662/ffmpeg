@@ -26,4 +26,7 @@ Some libraries have dependencies to others:
 - lame
 - opus
 - libvorbis
-    - libogg
+    - requires libogg
+- libtheora
+    - requires libogg
+    - requires libvorbis

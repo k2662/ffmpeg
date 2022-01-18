@@ -22,6 +22,7 @@ SKIP_ZVBI="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
 SKIP_SVT_AV1="NO"
+SKIP_LIBTHEORA="NO"
 SKIP_VPX="NO"
 SKIP_X264="NO"
 SKIP_X265="NO"
@@ -61,6 +62,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_SVT_AV1" ]; then
         SKIP_SVT_AV1=$VALUE
         echo "skip svt-av1 $VALUE"
+    fi
+    if [ $KEY = "-SKIP_LIBTHEORA" ]; then
+        SKIP_LIBTHEORA=$VALUE
+        echo "skip libtheora $VALUE"
     fi
     if [ $KEY = "-SKIP_VPX" ]; then
         SKIP_VPX=$VALUE
@@ -368,6 +373,19 @@ if [ $SKIP_LIBVORBIS = "NO" ]; then
 else
     echoSection "skip libvorbis"
     echo "YES" > "$LOG_DIR/skip-libvorbis"
+fi
+
+if [ $SKIP_LIBTHEORA = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile libtheora"
+    $SCRIPT_DIR/build-libtheora.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libtheora.log" 2>&1
+    checkStatus $? "build libtheora"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libtheora"
+    echo "NO" > "$LOG_DIR/skip-libtheora"
+else
+    echoSection "skip libtheora"
+    echo "YES" > "$LOG_DIR/skip-libtheora"
 fi
 
 START_TIME=$(currentTimeInSeconds)
