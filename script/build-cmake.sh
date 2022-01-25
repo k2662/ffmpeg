@@ -26,7 +26,7 @@ CPUS=$4
 
 # versions
 VERSION_MAJOR="3.22"
-VERSION_MINOR="3.22.1"
+VERSION_MINOR="3.22.2"
 
 # start in working directory
 cd "$SOURCE_DIR"
