@@ -46,11 +46,11 @@ tar -zxf "libaom-$VERSION.tar.gz"
 checkStatus $? "unpack failed"
 
 # prepare build
-mkdir ../aom_build
+mkdir aom_build
 checkStatus $? "create build directory failed"
-cd ../aom_build
+cd aom_build
 checkStatus $? "change build directory failed"
-cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOL_DIR -DENABLE_TESTS=0 ../aom/
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOL_DIR -DENABLE_TESTS=0 ../libaom-$VERSION/
 checkStatus $? "configuration failed"
 
 # build
