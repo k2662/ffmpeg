@@ -207,6 +207,12 @@ checkStatus $? "build libxml2"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
+echoSection "compile fribidi"
+$SCRIPT_DIR/build-fribidi.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-fribidi.log" 2>&1
+checkStatus $? "build fribidi"
+echoDurationInSections $START_TIME
+
+START_TIME=$(currentTimeInSeconds)
 echoSection "compile freetype"
 $SCRIPT_DIR/build-freetype.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-freetype.log" 2>&1
 checkStatus $? "build freetype"
@@ -219,6 +225,12 @@ $SCRIPT_DIR/build-fontconfig.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" 
 checkStatus $? "build fontconfig"
 echoDurationInSections $START_TIME
 FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-fontconfig"
+
+START_TIME=$(currentTimeInSeconds)
+echoSection "compile harfbuzz"
+$SCRIPT_DIR/build-harfbuzz.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-harfbuzz.log" 2>&1
+checkStatus $? "build harfbuzz"
+echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile SDL"
@@ -238,6 +250,13 @@ else
     echoSection "skip libbluray"
     echo "YES" > "$LOG_DIR/skip-libbluray"
 fi
+
+START_TIME=$(currentTimeInSeconds)
+echoSection "compile libass"
+$SCRIPT_DIR/build-libass.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libass.log" 2>&1
+checkStatus $? "build libass"
+echoDurationInSections $START_TIME
+FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libass"
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile libogg"

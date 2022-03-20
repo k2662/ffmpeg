@@ -43,6 +43,13 @@ echoDurationInSections $START_TIME
 SKIP_LIBBLURAY=$(cat "$LOG_DIR/skip-libbluray")
 checkStatus $? "load skip-libbluray failed"
 
+# test libass
+START_TIME=$(currentTimeInSeconds)
+echoSection "run test libass encoding"
+$OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -vf "subtitles=$TEST_DIR/subtitle.srt" "$TEST_OUT_DIR/test-libass.mp4" > "$TEST_OUT_DIR/test-libass.log" 2>&1
+checkStatus $? "test libass"
+echoDurationInSections $START_TIME
+
 # test aom av1
 SKIP_AOM=$(cat "$LOG_DIR/skip-aom")
 checkStatus $? "load skip-aom failed"

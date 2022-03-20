@@ -7,14 +7,21 @@ Some libraries have dependencies to others:
 - cmake
     - requires openssl
 - libxml2
+- fribidi
 - freetype
 - fontconfig
     - requires libxml2
+- harfbuzz
 - sdl (for ffplay)
 - libbluray
     - requires libxml2
     - requires freetype
     - requires fontconfig
+- libass
+    - requires fribidi
+    - requires freetype
+    - requires fontconfig
+    - requires harfbuzz
 - libogg
 - zvbi
 - aom

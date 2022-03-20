@@ -8,9 +8,12 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [nasm](http://www.nasm.us/)
     - [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)
 - libraries
+    - [libass](https://github.com/libass/libass)
     - [libbluray](https://www.videolan.org/developers/libbluray.html)
     - [fontconfig](https://www.freedesktop.org/wiki/Software/fontconfig/)
     - [FreeType](https://freetype.org)
+    - [FriBidi](https://github.com/fribidi/fribidi)
+    - [harfbuzz](https://github.com/harfbuzz/harfbuzz)
     - [openssl](https://www.openssl.org/)
     - [libopus](https://www.opus-codec.org)
     - [SDL](https://www.libsdl.org/)
