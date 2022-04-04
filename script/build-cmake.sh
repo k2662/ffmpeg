@@ -25,8 +25,8 @@ CPUS=$4
 . $SCRIPT_DIR/functions.sh
 
 # versions
-VERSION_MAJOR="3.22"
-VERSION_MINOR="3.22.3"
+VERSION_MAJOR="3.23"
+VERSION_MINOR="3.23.0"
 
 # start in working directory
 cd "$SOURCE_DIR"
