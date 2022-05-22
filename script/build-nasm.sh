@@ -37,17 +37,19 @@ cd "nasm/"
 checkStatus $? "change directory failed"
 
 # download source
+mkdir "nasm"
+checkStatus $? "create directory failed"
 curl -O -L http://www.nasm.us/pub/nasm/releasebuilds/$VERSION/nasm-$VERSION.tar.gz
 if [ $? -ne 0 ]; then
     echo "download failed; start download from github server"
-    curl -o freetype.tar.gz -L https://github.com/netwide-assembler/nasm/archive/refs/tags/nasm-$VERSION.tar.gz
+    curl -O -L https://github.com/netwide-assembler/nasm/archive/refs/tags/nasm-$VERSION.tar.gz
     checkStatus $? "download failed"
 fi
 
 # unpack
-tar -zxf "nasm-$VERSION.tar.gz"
+tar -zxf "nasm-$VERSION.tar.gz" -C nasm --strip-components=1
 checkStatus $? "unpack failed"
-cd "nasm-$VERSION/"
+cd "nasm/"
 checkStatus $? "change directory failed"
 
 # prepare build
