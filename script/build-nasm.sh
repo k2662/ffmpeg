@@ -53,6 +53,13 @@ cd "nasm/"
 checkStatus $? "change directory failed"
 
 # prepare build
+if [ -f "configure" ]; then
+    echo "configure file found; continue"
+else
+    echo "run autogen first"
+    ./autogen.sh
+    checkStatus "autogen failed"
+fi
 ./configure --prefix="$TOOL_DIR"
 checkStatus $? "configuration failed"
 
