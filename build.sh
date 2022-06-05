@@ -172,7 +172,7 @@ FFMPEG_LIB_FLAGS=""
 # start build
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile nasm"
-$SCRIPT_DIR/build-nasm.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" > "$LOG_DIR/build-nasm.log" 2>&1
+$SCRIPT_DIR/build-nasm.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-nasm.log" 2>&1
 checkStatus $? "build nasm"
 echoDurationInSections $START_TIME
 

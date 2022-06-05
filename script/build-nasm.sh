@@ -19,6 +19,7 @@ echo "arguments: $@"
 SCRIPT_DIR=$1
 SOURCE_DIR=$2
 TOOL_DIR=$3
+CPUS=$4
 
 # load functions
 . $SCRIPT_DIR/functions.sh
@@ -64,7 +65,7 @@ fi
 checkStatus $? "configuration failed"
 
 # build
-make
+make -j $CPUS
 checkStatus $? "build failed"
 
 # install
