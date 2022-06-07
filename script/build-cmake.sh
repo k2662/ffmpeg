@@ -28,6 +28,14 @@ CPUS=$4
 VERSION_MAJOR="3.23"
 VERSION_MINOR="3.23.2"
 
+# detect existing installation of cmake
+CURRENT_VERSION=$(cmake --version | grep -m 1 "" |  sed -r 's/.*([0-9]+\.[0-9]+\.[0-9]+)/\1/')
+echo "detected installed version of cmake: $CURRENT_VERSION"
+if [ "$CURRENT_VERSION" = "$VERSION_MINOR" ]; then
+    echo "cmake already in current version available"
+    exit 0
+fi
+
 # start in working directory
 cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
