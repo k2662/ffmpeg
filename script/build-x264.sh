@@ -43,7 +43,7 @@ cd "x264-master/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$TOOL_DIR" --enable-static
+./configure --prefix="$TOOL_DIR" --enable-static --disable-cli
 checkStatus $? "configuration failed"
 
 # build
