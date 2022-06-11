@@ -48,9 +48,7 @@ cd "fontconfig-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
-# --with-default-fonts="" is used to fix current build on macOS
-# https://gitlab.freedesktop.org/fontconfig/fontconfig/-/merge_requests/185
-./configure --prefix="$TOOL_DIR" --enable-static=yes --enable-shared=no --enable-libxml2 --with-default-fonts=""
+./configure --prefix="$TOOL_DIR" --enable-static=yes --enable-shared=no --enable-libxml2
 checkStatus $? "configuration failed"
 
 # build
