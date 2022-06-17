@@ -38,14 +38,22 @@ cd "libxml2/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O ftp://xmlsoft.org/libxml2/libxml2-$VERSION.tar.gz
+curl -O https://gitlab.gnome.org/GNOME/libxml2/-/archive/v$VERSION/libxml2-v$VERSION.tar.gz
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "libxml2-$VERSION.tar.gz"
+tar -zxf "libxml2-v$VERSION.tar.gz"
 checkStatus $? "unpack failed"
-cd "libxml2-$VERSION/"
+cd "libxml2-v$VERSION/"
 checkStatus $? "change directory failed"
+
+# check for pre-generated configure file
+if [ -f "configure" ]; then
+    echo "use existing configure file"
+else
+    ACLOCAL_PATH=$TOOL_DIR/share/aclocal NOCONFIGURE=YES ./autogen.sh
+    checkStatus $? "autogen failed"
+fi
 
 # prepare build
 ./configure --prefix="$TOOL_DIR" --enable-shared=no --without-python

@@ -7,6 +7,7 @@ Some libraries have dependencies to others:
 - cmake
     - requires openssl
 - libxml2
+    - requires pkg-config
 - fribidi
 - freetype
 - fontconfig
