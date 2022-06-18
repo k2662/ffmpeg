@@ -47,14 +47,28 @@ checkStatus $? "unpacking failed"
 cd "zlib-$VERSION/"
 checkStatus $? "change directory failed"
 
-# prepare build
-./configure --prefix="$TOOL_DIR" --static
-checkStatus $? "configuration failed"
+DETECTED_OS="$(uname -o 2> /dev/null)"
+echo "detected OS: $DETECTED_OS"
+if [ $DETECTED_OS = "Msys" ]; then
+	echo "run windows specific build"
 
-# build
-make -j $CPUS
-checkStatus $? "build failed"
+	# windows build
+	make -j $CPUS -f win32/Makefile.gcc
+	checkStatus $? "build failed"
 
-# install
-make install
-checkStatus $? "installation failed"
+	# install
+	make -j $CPUS -f win32/Makefile.gcc install INCLUDE_PATH=$TOOL_DIR/include LIBRARY_PATH=$TOOL_DIR/lib BINARY_PATH=$TOO_DIR/bin
+	checkStatus $? "installation failed"
+else
+	# prepare build
+	./configure --prefix="$TOOL_DIR" --static
+	checkStatus $? "configuration failed"
+
+	# build
+	make -j $CPUS
+	checkStatus $? "build failed"
+
+	# install
+	make install
+	checkStatus $? "installation failed"
+fi
