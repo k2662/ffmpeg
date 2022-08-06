@@ -38,11 +38,11 @@ cd "libxml2/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://gitlab.gnome.org/GNOME/libxml2/-/archive/v$VERSION/libxml2-v$VERSION.tar.gz
+download https://gitlab.gnome.org/GNOME/libxml2/-/archive/v$VERSION/libxml2-v$VERSION.tar.gz "libxml2.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "libxml2-v$VERSION.tar.gz"
+tar -zxf "libxml2.tar.gz"
 checkStatus $? "unpack failed"
 cd "libxml2-v$VERSION/"
 checkStatus $? "change directory failed"

@@ -38,7 +38,7 @@ cd "zvbi/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -o zvbi.tar.bz2 -L https://sourceforge.net/projects/zapping/files/zvbi/$VERSION/zvbi-$VERSION.tar.bz2/download
+download https://sourceforge.net/projects/zapping/files/zvbi/$VERSION/zvbi-$VERSION.tar.bz2/download "zvbi.tar.bz2"
 checkStatus $? "download failed"
 
 # unpack

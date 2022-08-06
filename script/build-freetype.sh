@@ -43,10 +43,10 @@ cd "freetype/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -o freetype.tar.gz -L https://download.savannah.gnu.org/releases/freetype/freetype-$VERSION.tar.gz
+download https://download.savannah.gnu.org/releases/freetype/freetype-$VERSION.tar.gz "freetype.tar.gz"
 if [ $? -ne 0 ]; then
     echo "download failed; start download from mirror server"
-    curl -o freetype.tar.gz -L https://sourceforge.net/projects/freetype/files/freetype2/$VERSION/freetype-$VERSION.tar.gz/download
+    download https://sourceforge.net/projects/freetype/files/freetype2/$VERSION/freetype-$VERSION.tar.gz/download "freetype.tar.gz"
     checkStatus $? "download failed"
 fi
 

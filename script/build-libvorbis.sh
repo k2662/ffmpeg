@@ -38,11 +38,11 @@ cd "libvorbis/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-$VERSION.tar.gz
+download https://ftp.osuosl.org/pub/xiph/releases/vorbis/libvorbis-$VERSION.tar.gz "libvorbis.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "libvorbis-$VERSION.tar.gz"
+tar -zxf "libvorbis.tar.gz"
 checkStatus $? "unpack failed"
 cd "libvorbis-$VERSION/"
 checkStatus $? "change directory failed"

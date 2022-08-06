@@ -39,13 +39,13 @@ cd "x265/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://bitbucket.org/multicoreware/x265_git/get/$VERSION.tar.gz
+download https://bitbucket.org/multicoreware/x265_git/get/$VERSION.tar.gz "x265.tar.gz"
 checkStatus $? "download of x265 failed"
 
 # unpack
 mkdir "x265"
 checkStatus $? "create directory failed"
-tar -zxf "$VERSION.tar.gz" -C x265 --strip-components=1
+tar -zxf "x265.tar.gz" -C x265 --strip-components=1
 checkStatus $? "unpack failed"
 cd "x265/"
 checkStatus $? "change directory failed"

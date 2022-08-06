@@ -37,11 +37,11 @@ cd "pkg-config/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://pkg-config.freedesktop.org/releases/pkg-config-$VERSION.tar.gz
+download https://pkg-config.freedesktop.org/releases/pkg-config-$VERSION.tar.gz "pkg-config.tar.gz"
 checkStatus $? "download of pkg-config failed"
 
 # unpack
-tar -zxf "pkg-config-$VERSION.tar.gz"
+tar -zxf "pkg-config.tar.gz"
 checkStatus $? "unpack pkg-config failed"
 cd "pkg-config-$VERSION/"
 checkStatus $? "change directory failed"
@@ -53,19 +53,19 @@ if [ $DETECTED_OS = "Msys" ]; then
     # download patches
     # https://github.com/msys2/MINGW-packages/tree/master/mingw-w64-pkg-config
     echo "download patches for windows"
-    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1001-Use-CreateFile-on-Win32-to-make-sure-g_unlink-always.patch
+    download https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1001-Use-CreateFile-on-Win32-to-make-sure-g_unlink-always.patch "1001-Use-CreateFile-on-Win32-to-make-sure-g_unlink-always.patch"
     checkStatus "download of patch 1001 failed"
-    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1003-g_abort.all.patch
+    download https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1003-g_abort.all.patch "1003-g_abort.all.patch"
     checkStatus "download of patch 1003 failed"
-    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1005-glib-send-log-messages-to-correct-stdout-and-stderr.patch
+    download https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1005-glib-send-log-messages-to-correct-stdout-and-stderr.patch "1005-glib-send-log-messages-to-correct-stdout-and-stderr.patch"
     checkStatus "download of patch 1005 failed"
-    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1017-glib-use-gnu-print-scanf.patch
+    download https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1017-glib-use-gnu-print-scanf.patch "1017-glib-use-gnu-print-scanf.patch"
     checkStatus "download of patch 1017 failed"
-    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1024-return-actually-written-data-in-printf.all.patch
+    download https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1024-return-actually-written-data-in-printf.all.patch "1024-return-actually-written-data-in-printf.all.patch"
     checkStatus "download of patch 1024 failed"
-    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1030-fix-stat.all.patch
+    download https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1030-fix-stat.all.patch "1030-fix-stat.all.patch"
     checkStatus "download of patch 1030 failed"
-    curl -O https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1031-fix-glib-gettext-m4-error.patch
+    download https://raw.githubusercontent.com/msys2/MINGW-packages/5e72f0204a19fd0a45d50d8e08bf9bed6455b32b/mingw-w64-pkg-config/1031-fix-glib-gettext-m4-error.patch "1031-fix-glib-gettext-m4-error.patch"
     checkStatus "download of patch 1031 failed"
 
     # patch fixes for windows build

@@ -38,11 +38,11 @@ cd "sdl/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://www.libsdl.org/release/SDL2-$VERSION.tar.gz
+download https://www.libsdl.org/release/SDL2-$VERSION.tar.gz "SDL2.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "SDL2-$VERSION.tar.gz"
+tar -zxf "SDL2.tar.gz"
 checkStatus $? "unpack failed"
 cd "SDL2-$VERSION/"
 checkStatus $? "change directory failed"

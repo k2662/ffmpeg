@@ -38,11 +38,11 @@ cd "lame/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://netcologne.dl.sourceforge.net/project/lame/lame/$VERSION/lame-$VERSION.tar.gz
+download https://netcologne.dl.sourceforge.net/project/lame/lame/$VERSION/lame-$VERSION.tar.gz "lame.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "lame-$VERSION.tar.gz"
+tar -zxf "lame.tar.gz"
 checkStatus $? "unpack lame failed"
 cd "lame-$VERSION/"
 checkStatus $? "change directory failed"

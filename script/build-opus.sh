@@ -38,11 +38,11 @@ cd "opus/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://archive.mozilla.org/pub/opus/opus-$VERSION.tar.gz
+download https://archive.mozilla.org/pub/opus/opus-$VERSION.tar.gz "opus.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "opus-$VERSION.tar.gz"
+tar -zxf "opus.tar.gz"
 checkStatus $? "unpack failed"
 cd "opus-$VERSION/"
 checkStatus $? "change directory failed"

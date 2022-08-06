@@ -38,11 +38,11 @@ cd "aom/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://storage.googleapis.com/aom-releases/libaom-$VERSION.tar.gz
+download https://storage.googleapis.com/aom-releases/libaom-$VERSION.tar.gz "libaom.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "libaom-$VERSION.tar.gz"
+tar -zxf "libaom.tar.gz"
 checkStatus $? "unpack failed"
 
 # prepare build

@@ -43,11 +43,11 @@ cd "openh264/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://github.com/cisco/openh264/archive/v$VERSION.tar.gz
+download https://github.com/cisco/openh264/archive/v$VERSION.tar.gz "openh264.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "v$VERSION.tar.gz"
+tar -zxf "openh264.tar.gz"
 checkStatus $? "unpack failed"
 cd "openh264-$VERSION/"
 checkStatus $? "change directory failed"

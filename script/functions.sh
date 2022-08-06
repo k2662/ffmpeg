@@ -41,3 +41,9 @@ echoDurationInSections(){
     END_TIME=$(currentTimeInSeconds)
     echo "took $(($END_TIME - $1))s"
 }
+
+download(){
+    URL=$1
+    NAME=$2
+    curl -o "$NAME" -L -f "$URL"
+}

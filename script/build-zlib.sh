@@ -38,11 +38,11 @@ cd "zlib/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://www.zlib.net/zlib-$VERSION.tar.gz
+download https://www.zlib.net/zlib-$VERSION.tar.gz "zlib.tar.gz"
 checkStatus $? "download failed"
 
 # unpacking
-tar -zxf "zlib-$VERSION.tar.gz"
+tar -zxf "zlib.tar.gz"
 checkStatus $? "unpacking failed"
 cd "zlib-$VERSION/"
 checkStatus $? "change directory failed"

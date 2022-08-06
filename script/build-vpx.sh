@@ -38,7 +38,7 @@ cd "vpx/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -o vpx.tar.gz -L https://github.com/webmproject/libvpx/archive/v$VERSION.tar.gz
+download https://github.com/webmproject/libvpx/archive/v$VERSION.tar.gz "vpx.tar.gz"
 checkStatus $? "download failed"
 
 # unpack

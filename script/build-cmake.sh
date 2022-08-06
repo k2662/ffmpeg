@@ -45,11 +45,11 @@ cd "cmake/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://cmake.org/files/v$VERSION_MAJOR/cmake-$VERSION_MINOR.tar.gz
+download https://cmake.org/files/v$VERSION_MAJOR/cmake-$VERSION_MINOR.tar.gz "cmake.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "cmake-$VERSION_MINOR.tar.gz"
+tar -zxf "cmake.tar.gz"
 checkStatus $? "unpack failed"
 cd "cmake-$VERSION_MINOR/"
 checkStatus $? "change directory failed"

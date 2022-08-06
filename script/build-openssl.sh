@@ -38,11 +38,11 @@ cd "openssl/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://www.openssl.org/source/openssl-$VERSION.tar.gz
+download https://www.openssl.org/source/openssl-$VERSION.tar.gz "openssl.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "openssl-$VERSION.tar.gz"
+tar -zxf "openssl.tar.gz"
 checkStatus $? "unpack failed"
 cd "openssl-$VERSION/"
 checkStatus $? "change directory failed"

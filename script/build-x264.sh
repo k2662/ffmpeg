@@ -33,7 +33,7 @@ cd "x264/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://code.videolan.org/videolan/x264/-/archive/master/x264-master.tar.gz
+download https://code.videolan.org/videolan/x264/-/archive/master/x264-master.tar.gz "x264-master.tar.gz"
 checkStatus $? "download failed"
 
 # unpack

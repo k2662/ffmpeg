@@ -38,11 +38,11 @@ cd "libogg/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-$VERSION.tar.gz
+download https://ftp.osuosl.org/pub/xiph/releases/ogg/libogg-$VERSION.tar.gz "libogg.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "libogg-$VERSION.tar.gz"
+tar -zxf "libogg.tar.gz"
 checkStatus $? "unpack failed"
 cd "libogg-$VERSION/"
 checkStatus $? "change directory failed"

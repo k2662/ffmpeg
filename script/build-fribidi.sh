@@ -38,11 +38,11 @@ cd "fribidi/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://github.com/fribidi/fribidi/releases/download/v$VERSION/fribidi-$VERSION.tar.xz
+download https://github.com/fribidi/fribidi/releases/download/v$VERSION/fribidi-$VERSION.tar.xz "fribidi.tar.xz"
 checkStatus $? "download failed"
 
 # unpack
-tar -xf "fribidi-$VERSION.tar.xz"
+tar -xf "fribidi.tar.xz"
 checkStatus $? "unpack failed"
 cd "fribidi-$VERSION/"
 checkStatus $? "change directory failed"

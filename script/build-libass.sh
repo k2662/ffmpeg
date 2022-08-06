@@ -38,11 +38,11 @@ cd "libass/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://github.com/libass/libass/releases/download/$VERSION/libass-$VERSION.tar.gz
+download https://github.com/libass/libass/releases/download/$VERSION/libass-$VERSION.tar.gz "libass.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "libass-$VERSION.tar.gz"
+tar -zxf "libass.tar.gz"
 checkStatus $? "unpack failed"
 cd "libass-$VERSION/"
 checkStatus $? "change directory failed"

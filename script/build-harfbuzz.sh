@@ -38,11 +38,11 @@ cd "harfbuzz/"
 checkStatus $? "change directory failed"
 
 # download source
-curl -O -L https://github.com/harfbuzz/harfbuzz/releases/download/$VERSION/harfbuzz-$VERSION.tar.xz
+download https://github.com/harfbuzz/harfbuzz/releases/download/$VERSION/harfbuzz-$VERSION.tar.xz "harfbuzz.tar.xz"
 checkStatus $? "download failed"
 
 # unpack
-tar -xf "harfbuzz-$VERSION.tar.xz"
+tar -xf "harfbuzz.tar.xz"
 checkStatus $? "unpack failed"
 cd "harfbuzz-$VERSION/"
 checkStatus $? "change directory failed"
