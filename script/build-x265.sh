@@ -87,7 +87,7 @@ if [ $SKIP_X265_MULTIBIT = "NO" ]; then
     checkStatus $? "symlink creation of 10 bit library failed"
     ln -s 12bit/libx265.a libx265_12bit.a
     checkStatus $? "symlink creation of 12 bit library failed"
-    cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOL_DIR -DENABLE_SHARED=NO \
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOL_DIR -DENABLE_SHARED=NO -DENABLE_CLI=OFF \
         -DEXTRA_LINK_FLAGS=-L. -DEXTRA_LIB="x265_10bit.a;x265_12bit.a" -DLINKED_10BIT=ON -DLINKED_12BIT=ON source
     checkStatus $? "configuration 8 bit failed"
 
@@ -113,7 +113,7 @@ EOF
     checkStatus $? "multi-bit library creation failed"
 else
     # prepare build
-    cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOL_DIR -DENABLE_SHARED=NO source
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOL_DIR -DENABLE_SHARED=NO -DENABLE_CLI=OFF source
     checkStatus $? "configuration failed"
 
     # build
