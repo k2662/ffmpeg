@@ -72,6 +72,17 @@ if [ $SKIP_OPEN_H264 = "NO" ]; then
     echoDurationInSections $START_TIME
 fi
 
+# test rav1e
+SKIP_RAV1E=$(cat "$LOG_DIR/skip-rav1e")
+checkStatus $? "load skip-rav1e failed"
+if [ $SKIP_RAV1E = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test rav1e encoding"
+    $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:v "librav1e" -speed 10 -qp 200 -an "$TEST_OUT_DIR/test-rav1e.mp4" > "$TEST_OUT_DIR/test-rav1e.log" 2>&1
+    checkStatus $? "test rav1e"
+    echoDurationInSections $START_TIME
+fi
+
 # test vpx
 SKIP_VPX=$(cat "$LOG_DIR/skip-vpx")
 checkStatus $? "load skip-vpx failed"

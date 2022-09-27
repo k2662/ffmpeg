@@ -21,6 +21,7 @@ SKIP_LIBBLURAY="NO"
 SKIP_ZVBI="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
+SKIP_RAV1E="NO"
 SKIP_SVT_AV1="NO"
 SKIP_LIBTHEORA="NO"
 SKIP_VPX="NO"
@@ -58,6 +59,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_OPEN_H264" ]; then
         SKIP_OPEN_H264=$VALUE
         echo "skip openh264 $VALUE"
+    fi
+    if [ $KEY = "-SKIP_RAV1E" ]; then
+        SKIP_RAV1E=$VALUE
+        echo "skip rav1e $VALUE"
     fi
     if [ $KEY = "-SKIP_SVT_AV1" ]; then
         SKIP_SVT_AV1=$VALUE
@@ -301,6 +306,19 @@ if [ $SKIP_OPEN_H264 = "NO" ]; then
 else
     echoSection "skip openh264"
     echo "YES" > "$LOG_DIR/skip-openh264"
+fi
+
+if [ $SKIP_RAV1E = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile rav1e"
+    $SCRIPT_DIR/build-rav1e.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-rav1e.log" 2>&1
+    checkStatus $? "build rav1e"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-librav1e"
+    echo "NO" > "$LOG_DIR/skip-rav1e"
+else
+    echoSection "skip rav1e"
+    echo "YES" > "$LOG_DIR/skip-rav1e"
 fi
 
 if [ $SKIP_SVT_AV1 = "NO" ]; then

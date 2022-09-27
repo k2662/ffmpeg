@@ -26,6 +26,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
 - video codecs
     - [aom](https://aomedia.org/) for AV1 de-/encoding
     - [openh264](https://www.openh264.org/) for H.264 de-/encoding
+    - [rav1e](https://github.com/xiph/rav1e) for AV1 encoding
     - [svt-av1](https://gitlab.com/AOMediaCodec/SVT-AV1) for AV1 encoding
     - [libtheroa](https://www.theora.org) for theora encoding
     - [vpx](https://www.webmproject.org/) for VP8/VP9 de-/encoding
@@ -50,9 +51,11 @@ There are just a few dependencies to other tools. Most of the software is compil
 - curl
 - make
 - zip, bunzip2
+- rust / cargo / cargo-c
 
 ### macOS
 - [Xcode](https://apps.apple.com/de/app/xcode/id497799835)
+- rust / cargo / cargo-c
 
 ### Windows (not supported)
 For compilation on Windows please use `MSYS2`. Follow the whole instructions for installation (including step 7).
@@ -79,6 +82,7 @@ If you don't need a codec, you can also disable them:
 - video codecs
     - `-SKIP_AOM=YES`
     - `-SKIP_OPEN_H264=YES`
+    - `-SKIP_RAV1=YES`
     - `-SKIP_SVT_AV1=YES`
     - `-SKIP_LIBTHEORA=YES`
     - `-SKIP_VPX=YES`
