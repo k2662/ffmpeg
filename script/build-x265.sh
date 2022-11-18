@@ -39,7 +39,11 @@ cd "x265/"
 checkStatus $? "change directory failed"
 
 # download source
-download https://bitbucket.org/multicoreware/x265_git/get/$VERSION.tar.gz "x265.tar.gz"
+# - latest release (verison 3.5) doesn't contain optimizations for M1 Mac
+# - master branch is currently (18.11.2022) not working for M1 Mac
+#   --> https://bitbucket.org/multicoreware/x265_git/issues/622/x265-cli-failure-on-mac
+# download https://bitbucket.org/multicoreware/x265_git/get/$VERSION.tar.gz "x265.tar.gz"
+download https://gitlab.com/martinr92/x265-mirror/-/archive/8c159ba54aaf7f3e815790e7951c2ed285d2e0a7/x265-mirror-8c159ba54aaf7f3e815790e7951c2ed285d2e0a7.tar.gz "x265.tar.gz"
 checkStatus $? "download of x265 failed"
 
 # unpack
@@ -127,4 +131,5 @@ checkStatus $? "installation failed"
 
 # post-installation
 # modify pkg-config file for usage with ffmpeg (it seems that the flag for threads is missing)
+# --> https://bitbucket.org/multicoreware/x265_git/issues/371/x265-not-found-using-pkg-config
 sed -i.original -e 's/lx265/lx265 -lpthread/g' $TOOL_DIR/lib/pkgconfig/x265.pc
