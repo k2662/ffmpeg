@@ -23,6 +23,7 @@ Some libraries have dependencies to others:
     - requires freetype
     - requires fontconfig
     - requires harfbuzz
+- libklvanc
 - libogg
 - zvbi
 - aom

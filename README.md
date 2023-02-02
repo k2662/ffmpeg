@@ -17,6 +17,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [FreeType](https://freetype.org)
     - [FriBidi](https://github.com/fribidi/fribidi)
     - [harfbuzz](https://github.com/harfbuzz/harfbuzz)
+    - [libklvanc](https://github.com/stoth68000/libklvanc)
     - [openssl](https://www.openssl.org/)
     - [libopus](https://www.opus-codec.org)
     - [SDL](https://www.libsdl.org/)
@@ -77,6 +78,7 @@ You can use the following parameters
 
 If you don't need a codec, you can also disable them:
 - libraries
+    - `-SKIP_LIBKLVANC=YES`
     - `-SKIP_LIBBLURAY=YES`
     - `-SKIP_ZVBI=YES`
 - video codecs
