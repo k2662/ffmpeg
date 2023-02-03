@@ -31,6 +31,7 @@ SKIP_X265_MULTIBIT="NO"
 SKIP_LAME="NO"
 SKIP_OPUS="NO"
 SKIP_LIBVORBIS="NO"
+SKIP_LIBKLVANC="NO"
 FFMPEG_SNAPSHOT="NO"
 CPU_LIMIT=""
 for arg in "$@"; do
@@ -99,6 +100,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_LIBVORBIS" ]; then
         SKIP_LIBVORBIS=$VALUE
         echo "skip libvorbis $VALUE"
+    fi
+    if [ $KEY = "-SKIP_LIBKLVANC" ]; then
+        SKIP_LIBKLVANC=$VALUE
+        echo "skip libklvanc $VALUE"
     fi
     if [ $KEY = "-FFMPEG_SNAPSHOT" ]; then
         FFMPEG_SNAPSHOT=$VALUE
@@ -262,6 +267,19 @@ $SCRIPT_DIR/build-libass.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$
 checkStatus $? "build libass"
 echoDurationInSections $START_TIME
 FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libass"
+
+if [ $SKIP_LIBKLVANC = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile libklvanc"
+    $SCRIPT_DIR/build-libklvanc.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libklvanc.log" 2>&1
+    checkStatus $? "build libklvanc"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libklvanc"
+    echo "NO" > "$LOG_DIR/skip-libklvanc"
+else
+    echoSection "skip libklvanc"
+    echo "YES" > "$LOG_DIR/skip-libklvanc"
+fi
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile libogg"
