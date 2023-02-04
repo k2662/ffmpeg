@@ -13,6 +13,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
 - libraries
     - [libass](https://github.com/libass/libass) for subtitle rendering
     - [libbluray](https://www.videolan.org/developers/libbluray.html) for container format bluray
+    - [decklink](https://www.blackmagicdesign.com/developer/)
     - [fontconfig](https://www.freedesktop.org/wiki/Software/fontconfig/)
     - [FreeType](https://freetype.org)
     - [FriBidi](https://github.com/fribidi/fribidi)
@@ -98,6 +99,14 @@ If you don't need a codec, you can also disable them:
 
 After the execution a new folder called `out` exists. It contains the compiled FFmpeg binary (in the `bin` sub-folder).
 The `ffmpeg-success.zip` contains also all binary files of FFmpeg, FFprobe and FFplay.
+
+### Decklink
+It is required to prepare the Blackmagic Decklink SDK manually, because a automated download is not possible.
+Download the SDK manually from the [Blackmagic Website](https://www.blackmagicdesign.com/developer/) and extract the compressed file.
+Then add the following parameters (for the SDK include location):
+```sh
+-DECKLINK_SDK=/path/to/SDK/os/include -SKIP_DECKLINK=NO
+```
 
 ## Build failed?
 Check the detailed logfiles in the `log` directory. Each build step has its own file starting with "build-*".
