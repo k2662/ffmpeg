@@ -40,3 +40,4 @@ Some libraries have dependencies to others:
 - libtheora
     - requires libogg
     - requires libvorbis
+- decklink

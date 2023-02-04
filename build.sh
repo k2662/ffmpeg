@@ -32,6 +32,8 @@ SKIP_LAME="NO"
 SKIP_OPUS="NO"
 SKIP_LIBVORBIS="NO"
 SKIP_LIBKLVANC="NO"
+SKIP_DECKLINK="YES"
+DECKLINK_SDK=""
 FFMPEG_SNAPSHOT="NO"
 CPU_LIMIT=""
 for arg in "$@"; do
@@ -104,6 +106,14 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_LIBKLVANC" ]; then
         SKIP_LIBKLVANC=$VALUE
         echo "skip libklvanc $VALUE"
+    fi
+    if [ $KEY = "-SKIP_DECKLINK" ]; then
+        SKIP_DECKLINK=$VALUE
+        echo "skip decklink $VALUE"
+    fi
+    if [ $KEY = "-DECKLINK_SDK" ]; then
+        DECKLINK_SDK=$VALUE
+        echo "use decklink SDK folder $VALUE"
     fi
     if [ $KEY = "-FFMPEG_SNAPSHOT" ]; then
         FFMPEG_SNAPSHOT=$VALUE
@@ -441,6 +451,19 @@ if [ $SKIP_LIBTHEORA = "NO" ]; then
 else
     echoSection "skip libtheora"
     echo "YES" > "$LOG_DIR/skip-libtheora"
+fi
+
+if [ $SKIP_DECKLINK = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "prepare decklink SDK"
+    $SCRIPT_DIR/build-decklink.sh "$SCRIPT_DIR" "$TOOL_DIR" "$DECKLINK_SDK"
+    checkStatus $? "decklink SDK"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-decklink"
+    echo "NO" > "$LOG_DIR/skip-decklink"
+else
+    echoSection "skip decklink SDK"
+    echo "YES" > "$LOG_DIR/skip-decklink"
 fi
 
 START_TIME=$(currentTimeInSeconds)
