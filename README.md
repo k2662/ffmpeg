@@ -11,8 +11,8 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [nasm](http://www.nasm.us/)
     - [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)
 - libraries
-    - [libass](https://github.com/libass/libass)
-    - [libbluray](https://www.videolan.org/developers/libbluray.html)
+    - [libass](https://github.com/libass/libass) for subtitle rendering
+    - [libbluray](https://www.videolan.org/developers/libbluray.html) for container format bluray
     - [fontconfig](https://www.freedesktop.org/wiki/Software/fontconfig/)
     - [FreeType](https://freetype.org)
     - [FriBidi](https://github.com/fribidi/fribidi)
@@ -20,9 +20,9 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [libklvanc](https://github.com/stoth68000/libklvanc)
     - [libogg](https://xiph.org/ogg/) for container format ogg
     - [openssl](https://www.openssl.org/)
-    - [SDL](https://www.libsdl.org/)
+    - [SDL](https://www.libsdl.org/) for ffplay
     - [libxml2](http://xmlsoft.org)
-    - [zlib](https://www.zlib.net)
+    - [zlib](https://www.zlib.net) for png format
     - [zvbi](https://sourceforge.net/projects/zapping/) for teletext decoding
 - video codecs
     - [aom](https://aomedia.org/) for AV1 de-/encoding
