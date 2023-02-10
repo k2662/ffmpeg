@@ -456,7 +456,7 @@ fi
 if [ $SKIP_DECKLINK = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)
     echoSection "prepare decklink SDK"
-    $SCRIPT_DIR/build-decklink.sh "$SCRIPT_DIR" "$TOOL_DIR" "$DECKLINK_SDK"
+    $SCRIPT_DIR/build-decklink.sh "$SCRIPT_DIR" "$TOOL_DIR" "$DECKLINK_SDK" > "$LOG_DIR/build-decklink.log" 2>&1
     checkStatus $? "decklink SDK"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-decklink"
