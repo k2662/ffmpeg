@@ -18,8 +18,8 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [FriBidi](https://github.com/fribidi/fribidi)
     - [harfbuzz](https://github.com/harfbuzz/harfbuzz)
     - [libklvanc](https://github.com/stoth68000/libklvanc)
+    - [libogg](https://xiph.org/ogg/) for container format ogg
     - [openssl](https://www.openssl.org/)
-    - [libopus](https://www.opus-codec.org)
     - [SDL](https://www.libsdl.org/)
     - [libxml2](http://xmlsoft.org)
     - [zlib](https://www.zlib.net)
