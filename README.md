@@ -28,6 +28,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
 - video codecs
     - [aom](https://aomedia.org/) for AV1 de-/encoding
     - [openh264](https://www.openh264.org/) for H.264 de-/encoding
+    - [OpenJPEG](http://www.openjpeg.org/) for JPEG de-/encoding
     - [rav1e](https://github.com/xiph/rav1e) for AV1 encoding
     - [svt-av1](https://gitlab.com/AOMediaCodec/SVT-AV1) for AV1 encoding
     - [libtheroa](https://www.theora.org) for theora encoding
@@ -85,6 +86,7 @@ If you don't need a codec, you can also disable them:
 - video codecs
     - `-SKIP_AOM=YES`
     - `-SKIP_OPEN_H264=YES`
+    - `-SKIP_OPEN_JPEG=YES`
     - `-SKIP_RAV1=YES`
     - `-SKIP_SVT_AV1=YES`
     - `-SKIP_LIBTHEORA=YES`

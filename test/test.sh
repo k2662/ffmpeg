@@ -72,6 +72,17 @@ if [ $SKIP_OPEN_H264 = "NO" ]; then
     echoDurationInSections $START_TIME
 fi
 
+# test openJPEG
+SKIP_OPEN_JPEG=$(cat "$LOG_DIR/skip-openJPEG")
+checkStatus $? "load skip-openJPEG failed"
+if [ $SKIP_OPEN_JPEG = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test openJPEG encoding"
+    $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:v "libopenjpeg" -an -frames:v 1 "$TEST_OUT_DIR/test-openJPEG.jpg" > "$TEST_OUT_DIR/test-openJPEG.log" 2>&1
+    checkStatus $? "test openJPEG"
+    echoDurationInSections $START_TIME
+fi
+
 # test rav1e
 SKIP_RAV1E=$(cat "$LOG_DIR/skip-rav1e")
 checkStatus $? "load skip-rav1e failed"
