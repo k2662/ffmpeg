@@ -188,6 +188,7 @@ COMPILATION_START_TIME=$(currentTimeInSeconds)
 
 # prepare build
 FFMPEG_LIB_FLAGS=""
+REQUIRES_NON_FREE="NO"
 
 # start build
 START_TIME=$(currentTimeInSeconds)
@@ -460,10 +461,17 @@ if [ $SKIP_DECKLINK = "NO" ]; then
     checkStatus $? "decklink SDK"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-decklink"
+    REQUIRES_NON_FREE="YES"
     echo "NO" > "$LOG_DIR/skip-decklink"
 else
     echoSection "skip decklink SDK"
     echo "YES" > "$LOG_DIR/skip-decklink"
+fi
+
+# check other ffmpeg flags
+if [ $REQUIRES_NON_FREE = "YES" ]; then
+    FFMPEG_LIB_FLAGS="--enable-nonfree $FFMPEG_LIB_FLAGS"
+    echo "requires non-free build flag"
 fi
 
 START_TIME=$(currentTimeInSeconds)
