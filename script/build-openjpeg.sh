@@ -60,3 +60,7 @@ checkStatus $? "build failed"
 # install
 make install
 checkStatus $? "installation failed"
+
+# post-installation
+# modify pkg-config file for usage with ffmpeg (it seems that the flag for threads is missing)
+sed -i.original -e 's/lopenjp2/lopenjp2 -lpthread/g' $TOOL_DIR/lib/pkgconfig/libopenjp2.pc
