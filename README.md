@@ -87,7 +87,7 @@ If you don't need a codec, you can also disable them:
     - `-SKIP_AOM=YES`
     - `-SKIP_OPEN_H264=YES`
     - `-SKIP_OPEN_JPEG=YES`
-    - `-SKIP_RAV1=YES`
+    - `-SKIP_RAV1E=YES`
     - `-SKIP_SVT_AV1=YES`
     - `-SKIP_LIBTHEORA=YES`
     - `-SKIP_VPX=YES`
