@@ -43,6 +43,17 @@ echoDurationInSections $START_TIME
 SKIP_LIBBLURAY=$(cat "$LOG_DIR/skip-libbluray")
 checkStatus $? "load skip-libbluray failed"
 
+# test hap (snappy)
+SKIP_SNAPPY=$(cat "$LOG_DIR/skip-snappy")
+checkStatus $? "load skip-snappy failed"
+if [ $SKIP_SNAPPY = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test hap (snappy) encoding"
+    $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:v "hap" -an "$TEST_OUT_DIR/test-hap-snappy.mov" > "$TEST_OUT_DIR/test-hap-snappy.log" 2>&1
+    checkStatus $? "test hap (snappy)"
+    echoDurationInSections $START_TIME
+fi
+
 # test libass
 START_TIME=$(currentTimeInSeconds)
 echoSection "run test libass encoding"

@@ -22,6 +22,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [libogg](https://xiph.org/ogg/) for container format ogg
     - [openssl](https://www.openssl.org/)
     - [SDL](https://www.libsdl.org/) for ffplay
+    - [snappy](https://github.com/google/snappy/) for HAP encoding
     - [libxml2](http://xmlsoft.org)
     - [zlib](https://www.zlib.net) for png format
     - [zvbi](https://sourceforge.net/projects/zapping/) for teletext decoding
@@ -81,6 +82,7 @@ If you don't need a codec, you can also disable them:
 - libraries
     - `-SKIP_LIBKLVANC=YES`
     - `-SKIP_LIBBLURAY=YES`
+    - `-SKIP_SNAPPY=YES`
     - `-SKIP_ZVBI=YES`
 - video codecs
     - `-SKIP_AOM=YES`

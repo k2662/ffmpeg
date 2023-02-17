@@ -18,6 +18,7 @@ Some libraries have dependencies to others:
     - requires libxml2
     - requires freetype
     - requires fontconfig
+- snappy
 - libass
     - requires fribidi
     - requires freetype
