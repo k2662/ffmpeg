@@ -25,6 +25,7 @@ SKIP_RAV1E="NO"
 SKIP_SVT_AV1="NO"
 SKIP_LIBTHEORA="NO"
 SKIP_VPX="NO"
+SKIP_LIBWEBP="NO"
 SKIP_X264="NO"
 SKIP_X265="NO"
 SKIP_X265_MULTIBIT="NO"
@@ -78,6 +79,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_VPX" ]; then
         SKIP_VPX=$VALUE
         echo "skip vpx $VALUE"
+    fi
+    if [ $KEY = "-SKIP_LIBWEBP" ]; then
+        SKIP_LIBWEBP=$VALUE
+        echo "skip libwebp $VALUE"
     fi
     if [ $KEY = "-SKIP_X264" ]; then
         SKIP_X264=$VALUE
@@ -374,6 +379,19 @@ if [ $SKIP_VPX = "NO" ]; then
 else
     echoSection "skip vpx"
     echo "YES" > "$LOG_DIR/skip-vpx"
+fi
+
+if [ $SKIP_LIBWEBP = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile libwebp"
+    $SCRIPT_DIR/build-libwebp.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libwebp.log" 2>&1
+    checkStatus $? "build libwebp"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libwebp"
+    echo "NO" > "$LOG_DIR/skip-libwebp"
+else
+    echoSection "skip libwebp"
+    echo "YES" > "$LOG_DIR/skip-libwebp"
 fi
 
 if [ $SKIP_X264 = "NO" ]; then

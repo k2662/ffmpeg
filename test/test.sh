@@ -100,6 +100,17 @@ if [ $SKIP_VPX = "NO" ]; then
     echoDurationInSections $START_TIME
 fi
 
+# test libwebp
+SKIP_LIBWEBP=$(cat "$LOG_DIR/skip-libwebp")
+checkStatus $? "load skip-libwebp failed"
+if [ $SKIP_LIBWEBP = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test libwebp encoding"
+    $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -c:v "libwebp" -an "$TEST_OUT_DIR/test-libwebp.webp" > "$TEST_OUT_DIR/test-libwebp.log" 2>&1
+    checkStatus $? "test libwebp"
+    echoDurationInSections $START_TIME
+fi
+
 # test x264
 SKIP_X264=$(cat "$LOG_DIR/skip-x264")
 checkStatus $? "load skip-x264 failed"
