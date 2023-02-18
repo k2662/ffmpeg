@@ -508,6 +508,7 @@ else
 fi
 
 # check other ffmpeg flags
+echoSection "check additional build flags"
 if [ $REQUIRES_GPL = "YES" ]; then
     FFMPEG_LIB_FLAGS="--enable-gpl $FFMPEG_LIB_FLAGS"
     echo "requires GPL build flag"
