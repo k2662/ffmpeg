@@ -18,6 +18,7 @@
 SKIP_BUNDLE="NO"
 SKIP_TEST="NO"
 SKIP_LIBBLURAY="NO"
+SKIP_SNAPPY="NO"
 SKIP_ZVBI="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
@@ -51,6 +52,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_LIBBLURAY" ]; then
         SKIP_LIBBLURAY=$VALUE
         echo "skip libbluray $VALUE"
+    fi
+    if [ $KEY = "-SKIP_SNAPPY" ]; then
+        SKIP_SNAPPY=$VALUE
+        echo "skip snappy $VALUE"
     fi
     if [ $KEY = "-SKIP_ZVBI" ]; then
         SKIP_ZVBI=$VALUE
@@ -275,6 +280,19 @@ if [ $SKIP_LIBBLURAY = "NO" ]; then
 else
     echoSection "skip libbluray"
     echo "YES" > "$LOG_DIR/skip-libbluray"
+fi
+
+if [ $SKIP_SNAPPY = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile snappy"
+    $SCRIPT_DIR/build-snappy.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-snappy.log" 2>&1
+    checkStatus $? "build snappy"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libsnappy"
+    echo "NO" > "$LOG_DIR/skip-snappy"
+else
+    echoSection "skip snappy"
+    echo "YES" > "$LOG_DIR/skip-snappy"
 fi
 
 START_TIME=$(currentTimeInSeconds)
