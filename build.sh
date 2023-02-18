@@ -198,6 +198,7 @@ COMPILATION_START_TIME=$(currentTimeInSeconds)
 
 # prepare build
 FFMPEG_LIB_FLAGS=""
+REQUIRES_GPL="NO"
 REQUIRES_NON_FREE="NO"
 
 # start build
@@ -419,6 +420,7 @@ if [ $SKIP_X264 = "NO" ]; then
     checkStatus $? "build x264"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libx264"
+    REQUIRES_GPL="YES"
     echo "NO" > "$LOG_DIR/skip-x264"
 else
     echoSection "skip x264"
@@ -432,6 +434,7 @@ if [ $SKIP_X265 = "NO" ]; then
     checkStatus $? "build x265"
     echoDurationInSections $START_TIME
     FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libx265"
+    REQUIRES_GPL="YES"
     echo "NO" > "$LOG_DIR/skip-x265"
 else
     echoSection "skip x265"
@@ -505,6 +508,10 @@ else
 fi
 
 # check other ffmpeg flags
+if [ $REQUIRES_GPL = "YES" ]; then
+    FFMPEG_LIB_FLAGS="--enable-gpl $FFMPEG_LIB_FLAGS"
+    echo "requires GPL build flag"
+fi
 if [ $REQUIRES_NON_FREE = "YES" ]; then
     FFMPEG_LIB_FLAGS="--enable-nonfree $FFMPEG_LIB_FLAGS"
     echo "requires non-free build flag"
