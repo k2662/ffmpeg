@@ -114,6 +114,17 @@ Then add the following parameters (for the SDK include location):
 -DECKLINK_SDK=/path/to/SDK/os/include -SKIP_DECKLINK=NO
 ```
 
+## Validate Build
+### Dynamic Linking
+You can check dynamically linked libraries using on of the follwing command:
+```
+# macOS
+otool -L out/bin/ffmpeg
+
+# linux
+ldd out/bin/ffmpeg
+```
+
 ## Build failed?
 Check the detailed logfiles in the `log` directory. Each build step has its own file starting with "build-*".
 
