@@ -1,6 +1,7 @@
 # Dependency
 Some libraries have dependencies to others:
 - nasm
+- libiconv
 - pkg-config
 - zlib
 - openssl
