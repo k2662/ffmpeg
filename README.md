@@ -116,7 +116,7 @@ Then add the following parameters (for the SDK include location):
 
 ## Validate Build
 ### Dynamic Linking
-You can check dynamically linked libraries using on of the follwing command:
+You can check dynamically linked libraries using the follwing command:
 ```
 # macOS
 otool -L out/bin/ffmpeg
