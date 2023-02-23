@@ -29,6 +29,7 @@ Some libraries have dependencies to others:
 - zvbi
 - aom
 - openh264
+- openJPEG
 - rav1e
 - svt-av1
 - vpx

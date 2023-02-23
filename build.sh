@@ -22,6 +22,7 @@ SKIP_SNAPPY="NO"
 SKIP_ZVBI="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
+SKIP_OPEN_JPEG="NO"
 SKIP_RAV1E="NO"
 SKIP_SVT_AV1="NO"
 SKIP_LIBTHEORA="NO"
@@ -68,6 +69,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_OPEN_H264" ]; then
         SKIP_OPEN_H264=$VALUE
         echo "skip openh264 $VALUE"
+    fi
+    if [ $KEY = "-SKIP_OPEN_JPEG" ]; then
+        SKIP_OPEN_JPEG=$VALUE
+        echo "skip openJPEG $VALUE"
     fi
     if [ $KEY = "-SKIP_RAV1E" ]; then
         SKIP_RAV1E=$VALUE
@@ -359,6 +364,19 @@ if [ $SKIP_OPEN_H264 = "NO" ]; then
 else
     echoSection "skip openh264"
     echo "YES" > "$LOG_DIR/skip-openh264"
+fi
+
+if [ $SKIP_OPEN_JPEG = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile openJPEG"
+    $SCRIPT_DIR/build-openjpeg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-openJPEG.log" 2>&1
+    checkStatus $? "build openJPEG"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libopenjpeg"
+    echo "NO" > "$LOG_DIR/skip-openJPEG"
+else
+    echoSection "skip openJPEG"
+    echo "YES" > "$LOG_DIR/skip-openJPEG"
 fi
 
 if [ $SKIP_RAV1E = "NO" ]; then
