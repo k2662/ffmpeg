@@ -48,7 +48,7 @@ cd "SDL2-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$TOOL_DIR" --enable-shared=no
+./configure --prefix="$TOOL_DIR" --enable-shared=no --enable-system-iconv=no
 checkStatus $? "configuration failed"
 
 # build
