@@ -19,6 +19,8 @@ Some libraries have dependencies to others:
     - requires freetype
     - requires fontconfig
 - snappy
+- libvmaf
+    - requires python3 + pip virtualenv
 - libass
     - requires fribidi
     - requires freetype

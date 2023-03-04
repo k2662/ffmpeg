@@ -57,10 +57,12 @@ There are just a few dependencies to other tools. Most of the software is compil
 - make
 - zip, bunzip2
 - rust / cargo / cargo-c
+- python3 (including pip virtualenv)
 
 ### macOS
 - [Xcode](https://apps.apple.com/de/app/xcode/id497799835)
 - rust / cargo / cargo-c
+- python3 (including pip virtualenv)
 
 ### Windows (not supported)
 For compilation on Windows please use `MSYS2`. Follow the whole instructions for installation (including step 7).
@@ -80,11 +82,12 @@ You can use the following parameters
 - `-SKIP_BUNDLE=YES` for skipping creating the `ffmpeg-success.zip` file
 - `-CPU_LIMIT=num` for limit CPU thread usage (default: automatically detected)
 
-If you don't need a codec, you can also disable them:
+If you don't need a codec/library, you can also disable them:
 - libraries
     - `-SKIP_LIBKLVANC=YES`
     - `-SKIP_LIBBLURAY=YES`
     - `-SKIP_SNAPPY=YES`
+    - `-SKIP_LIBVMAF=YES`
     - `-SKIP_ZVBI=YES`
 - video codecs
     - `-SKIP_AOM=YES`
