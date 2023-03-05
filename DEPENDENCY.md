@@ -6,6 +6,8 @@ Some libraries have dependencies to others:
 - openssl
 - cmake
     - requires openssl
+- ninja
+    - requires cmake
 - libxml2
     - requires pkg-config
 - fribidi
@@ -21,6 +23,7 @@ Some libraries have dependencies to others:
 - snappy
 - libvmaf
     - requires python3 + pip virtualenv
+    - requires ninja
 - libass
     - requires fribidi
     - requires freetype

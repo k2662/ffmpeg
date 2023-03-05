@@ -9,6 +9,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
 - build tools
     - [cmake](https://cmake.org/)
     - [nasm](http://www.nasm.us/)
+    - [ninja](https://ninja-build.org/)
     - [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)
 - libraries
     - [libass](https://github.com/libass/libass) for subtitle rendering

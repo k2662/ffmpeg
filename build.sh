@@ -243,6 +243,12 @@ checkStatus $? "build cmake"
 echoDurationInSections $START_TIME
 
 START_TIME=$(currentTimeInSeconds)
+echoSection "compile ninja"
+$SCRIPT_DIR/build-ninja.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-ninja.log" 2>&1
+checkStatus $? "build ninja"
+echoDurationInSections $START_TIME
+
+START_TIME=$(currentTimeInSeconds)
 echoSection "compile libxml2"
 $SCRIPT_DIR/build-libxml2.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libxml2.log" 2>&1
 checkStatus $? "build libxml2"
