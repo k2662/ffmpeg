@@ -23,6 +23,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [openssl](https://www.openssl.org/)
     - [SDL](https://www.libsdl.org/) for ffplay
     - [snappy](https://github.com/google/snappy/) for HAP encoding
+    - [libvmaf](https://github.com/Netflix/vmaf/tree/master/libvmaf) for VMAF video filter
     - [libxml2](http://xmlsoft.org)
     - [zlib](https://www.zlib.net) for png format
     - [zvbi](https://sourceforge.net/projects/zapping/) for teletext decoding
