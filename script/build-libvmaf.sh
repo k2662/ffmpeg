@@ -60,7 +60,7 @@ meson build --prefix "$TOOL_DIR" --buildtype release --default-library static
 checkStatus $? "configuration failed"
 
 # build
-ninja -v -C -j $CPUS build
+ninja -v -j $CPUS -C build
 checkStatus $? "build failed"
 
 # install
