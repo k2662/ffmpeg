@@ -63,12 +63,12 @@ checkStatus $? "configuration failed"
 ninja -v -j $CPUS -C build
 checkStatus $? "build failed"
 
+# post-build
+# static linking fails because c++ dependency is missing in pc file (pkg-config file)
+# https://github.com/Netflix/vmaf/issues/788
+sed -i.original -e 's/lvmaf/lvmaf -lstdc++/g' build/meson-private/libvmaf.pc
+checkStatus $? "modify pkg-config .pc file failed"
+
 # install
 ninja -v -C build install
 checkStatus $? "installation failed"
-
-# post-installation
-# static linking fails because c++ dependency is missing in pc file (pkg-config file)
-# https://github.com/Netflix/vmaf/issues/788
-sed -i.original -e 's/lvmaf/lvmaf -lstdc++/g' $TOOL_DIR/lib/pkgconfig/libvmaf.pc
-checkStatus $? "modify pkg-config .pc file failed"
