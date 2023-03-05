@@ -48,7 +48,7 @@ checkStatus $? "unpack failed"
 # prepare python3 virtual environment
 python3 -m virtualenv .venv
 checkStatus $? "python create virtual environment failed"
-source .venv/bin/activate
+. .venv/bin/activate
 checkStatus $? "python activate virtual environment failed"
 pip install meson
 checkStatus $? "python meson installation failed"
