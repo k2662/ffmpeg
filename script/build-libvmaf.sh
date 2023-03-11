@@ -56,19 +56,19 @@ checkStatus $? "python meson installation failed"
 # prepare build
 cd "vmaf-$VERSION/libvmaf/"
 checkStatus $? "change directory failed"
-meson build --prefix "$TOOL_DIR" --buildtype release --default-library static
+meson build --prefix "$TOOL_DIR" --libdir=lib --buildtype release --default-library static
 checkStatus $? "configuration failed"
 
 # build
 ninja -v -j $CPUS -C build
 checkStatus $? "build failed"
 
-# post-build
-# static linking fails because c++ dependency is missing in pc file (pkg-config file)
-# https://github.com/Netflix/vmaf/issues/788
-sed -i.original -e 's/lvmaf/lvmaf -lstdc++/g' build/meson-private/libvmaf.pc
-checkStatus $? "modify pkg-config .pc file failed"
-
 # install
 ninja -v -C build install
 checkStatus $? "installation failed"
+
+# post-installation
+# static linking fails because c++ dependency is missing in pc file (pkg-config file)
+# https://github.com/Netflix/vmaf/issues/788
+sed -i.original -e 's/lvmaf/lvmaf -lstdc++/g' $TOOL_DIR/lib/pkgconfig/libvmaf.pc
+checkStatus $? "modify pkg-config .pc file failed"
