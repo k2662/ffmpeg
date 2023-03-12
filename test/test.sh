@@ -54,6 +54,17 @@ if [ $SKIP_SNAPPY = "NO" ]; then
     echoDurationInSections $START_TIME
 fi
 
+# test libvmaf
+SKIP_LIBVMAF=$(cat "$LOG_DIR/skip-libvmaf")
+checkStatus $? "load skip-libvmaf failed"
+if [ $SKIP_LIBVMAF = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test libvmaf filter"
+    $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -i "$TEST_DIR/test.mp4" -t 00:02 -lavfi libvmaf -f null - > "$TEST_OUT_DIR/test-libvmaf.log" 2>&1
+    checkStatus $? "test libvmaf"
+    echoDurationInSections $START_TIME
+fi
+
 # test libass
 START_TIME=$(currentTimeInSeconds)
 echoSection "run test libass encoding"
