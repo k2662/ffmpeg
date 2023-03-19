@@ -10,6 +10,7 @@ Some libraries have dependencies to others:
     - requires cmake
 - libxml2
     - requires pkg-config
+    - uses zlib
 - fribidi
 - freetype
 - fontconfig
