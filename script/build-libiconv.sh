@@ -48,7 +48,8 @@ cd "libiconv-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$TOOL_DIR" --enable-static=yes --enable-shared=no
+# shared version is required for some library builds (like zvbi)
+./configure --prefix="$TOOL_DIR" --enable-static=yes
 checkStatus $? "configuration failed"
 
 # build
