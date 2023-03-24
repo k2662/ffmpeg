@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright 2021 Martin Riedl
+# Copyright 2023 Martin Riedl
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,30 +25,31 @@ CPUS=$4
 . $SCRIPT_DIR/functions.sh
 
 # load version
-VERSION=$(cat "$SCRIPT_DIR/../version/sdl")
+VERSION=$(cat "$SCRIPT_DIR/../version/libiconv")
 checkStatus $? "load version failed"
 echo "version: $VERSION"
 
 # start in working directory
 cd "$SOURCE_DIR"
 checkStatus $? "change directory failed"
-mkdir "sdl"
+mkdir "libiconv"
 checkStatus $? "create directory failed"
-cd "sdl/"
+cd "libiconv/"
 checkStatus $? "change directory failed"
 
 # download source
-download https://www.libsdl.org/release/SDL2-$VERSION.tar.gz "SDL2.tar.gz"
+download https://ftp.gnu.org/pub/gnu/libiconv/libiconv-$VERSION.tar.gz "libiconv.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
-tar -zxf "SDL2.tar.gz"
+tar -zxf "libiconv.tar.gz"
 checkStatus $? "unpack failed"
-cd "SDL2-$VERSION/"
+cd "libiconv-$VERSION/"
 checkStatus $? "change directory failed"
 
 # prepare build
-./configure --prefix="$TOOL_DIR" --enable-shared=no --enable-system-iconv=no
+# shared version is required for some library builds (like zvbi)
+./configure --prefix="$TOOL_DIR" --enable-static=yes
 checkStatus $? "configuration failed"
 
 # build
