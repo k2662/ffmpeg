@@ -213,12 +213,19 @@ $SCRIPT_DIR/build-nasm.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LO
 checkStatus $? "build nasm"
 echoDurationInSections $START_TIME
 
-START_TIME=$(currentTimeInSeconds)
-echoSection "compile libiconv"
-$SCRIPT_DIR/build-libiconv.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libiconv.log" 2>&1
-checkStatus $? "build libiconv"
-echoDurationInSections $START_TIME
-echo "NO" > "$LOG_DIR/skip-libiconv"
+# build custom libiconv version for static linking
+# linux has problems with libiconv (glibc)
+if [ "$(uname)" = "Darwin" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile libiconv"
+    $SCRIPT_DIR/build-libiconv.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libiconv.log" 2>&1
+    checkStatus $? "build libiconv"
+    echoDurationInSections $START_TIME
+    echo "NO" > "$LOG_DIR/skip-libiconv"
+else
+    echoSection "skip libiconv"
+    echo "YES" > "$LOG_DIR/skip-libiconv"
+fi
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile pkg-config"
