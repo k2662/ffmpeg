@@ -20,6 +20,7 @@ SKIP_TEST="NO"
 SKIP_LIBBLURAY="NO"
 SKIP_SNAPPY="NO"
 SKIP_LIBVMAF="NO"
+SKIP_ZIMG="NO"
 SKIP_ZVBI="NO"
 SKIP_AOM="NO"
 SKIP_OPEN_H264="NO"
@@ -62,6 +63,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_LIBVMAF" ]; then
         SKIP_LIBVMAF=$VALUE
         echo "skip libvmaf $VALUE"
+    fi
+    if [ $KEY = "-SKIP_ZIMG" ]; then
+        SKIP_ZIMG=$VALUE
+        echo "skip zimg $VALUE"
     fi
     if [ $KEY = "-SKIP_ZVBI" ]; then
         SKIP_ZVBI=$VALUE
@@ -350,6 +355,19 @@ echoSection "compile libogg"
 $SCRIPT_DIR/build-libogg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-libogg.log" 2>&1
 checkStatus $? "build libogg"
 echoDurationInSections $START_TIME
+
+if [ $SKIP_ZIMG = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile zimg"
+    $SCRIPT_DIR/build-zimg.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-zimg.log" 2>&1
+    checkStatus $? "build zimg"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libzimg"
+    echo "NO" > "$LOG_DIR/skip-zimg"
+else
+    echoSection "skip zimg"
+    echo "YES" > "$LOG_DIR/skip-zimg"
+fi
 
 if [ $SKIP_ZVBI = "NO" ]; then
     START_TIME=$(currentTimeInSeconds)

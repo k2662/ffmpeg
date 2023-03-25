@@ -26,6 +26,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [snappy](https://github.com/google/snappy/) for HAP encoding
     - [libvmaf](https://github.com/Netflix/vmaf/tree/master/libvmaf) for VMAF video filter
     - [libxml2](http://xmlsoft.org)
+    - [zimg](https://github.com/sekrit-twc/zimg)
     - [zlib](https://www.zlib.net) for png format
     - [zvbi](https://sourceforge.net/projects/zapping/) for teletext decoding
 - video codecs
@@ -90,6 +91,7 @@ If you don't need a codec/library, you can also disable them:
     - `-SKIP_LIBBLURAY=YES`
     - `-SKIP_SNAPPY=YES`
     - `-SKIP_LIBVMAF=YES`
+    - `-SKIP_ZIMG=YES`
     - `-SKIP_ZVBI=YES`
 - video codecs
     - `-SKIP_AOM=YES`
