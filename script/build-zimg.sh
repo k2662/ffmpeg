@@ -60,3 +60,7 @@ checkStatus $? "build failed"
 # install
 make install
 checkStatus $? "installation failed"
+
+# post-installation
+# build fails on some OS, because of missing linking to libm
+sed -i.original -e 's/lzimg/lzimg -lm/g' $TOOL_DIR/lib/pkgconfig/zimg.pc
