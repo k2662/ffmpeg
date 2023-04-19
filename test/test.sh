@@ -65,6 +65,17 @@ if [ $SKIP_LIBVMAF = "NO" ]; then
     echoDurationInSections $START_TIME
 fi
 
+# test zimg
+SKIP_ZIMG=$(cat "$LOG_DIR/skip-zimg")
+checkStatus $? "load skip-zimg failed"
+if [ $SKIP_ZIMG = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "run test zimg filter"
+    $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -i "$TEST_DIR/test.mp4" -t 00:02 -vf "zscale=h=720:h=1280" -f null - > "$TEST_OUT_DIR/test-zimg.log" 2>&1
+    checkStatus $? "test zimg"
+    echoDurationInSections $START_TIME
+fi
+
 # test libass
 START_TIME=$(currentTimeInSeconds)
 echoSection "run test libass encoding"

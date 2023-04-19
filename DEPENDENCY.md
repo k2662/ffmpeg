@@ -33,6 +33,7 @@ Some libraries have dependencies to others:
     - requires harfbuzz
 - libklvanc
 - libogg
+- zimg
 - zvbi
 - aom
 - openh264
