@@ -39,13 +39,25 @@ checkStatus $? "change directory failed"
 
 # download source
 download https://archive.mozilla.org/pub/opus/opus-$VERSION.tar.gz "opus.tar.gz"
-checkStatus $? "download failed"
+if [ $? -ne 0 ]; then
+    echo "download failed; start download from gitlab server"
+    download https://gitlab.xiph.org/xiph/opus/-/archive/v$VERSION/opus-v$VERSION.tar.gz "opus.tar.gz"
+    checkStatus $? "download failed"
+fi
 
 # unpack
 tar -zxf "opus.tar.gz"
 checkStatus $? "unpack failed"
-cd "opus-$VERSION/"
+cd opus*$VERSION/
 checkStatus $? "change directory failed"
+
+# check for pre-generated configure file
+if [ -f "configure" ]; then
+    echo "use existing configure file"
+else
+    ./autogen.sh
+    checkStatus $? "autogen failed"
+fi
 
 # prepare build
 ./configure --prefix="$TOOL_DIR" --enable-shared=no
