@@ -23,6 +23,7 @@ SKIP_LIBVMAF="NO"
 SKIP_ZIMG="NO"
 SKIP_ZVBI="NO"
 SKIP_AOM="NO"
+SKIP_DAV1D="NO"
 SKIP_OPEN_H264="NO"
 SKIP_OPEN_JPEG="NO"
 SKIP_RAV1E="NO"
@@ -75,6 +76,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_AOM" ]; then
         SKIP_AOM=$VALUE
         echo "skip aom $VALUE"
+    fi
+    if [ $KEY = "-SKIP_DAV1D" ]; then
+        SKIP_DAV1D=$VALUE
+        echo "skip dav1d $VALUE"
     fi
     if [ $KEY = "-SKIP_OPEN_H264" ]; then
         SKIP_OPEN_H264=$VALUE
@@ -408,6 +413,19 @@ if [ $SKIP_AOM = "NO" ]; then
 else
     echoSection "skip aom"
     echo "YES" > "$LOG_DIR/skip-aom"
+fi
+
+if [ $SKIP_DAV1D = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile dav1d"
+    $SCRIPT_DIR/build-dav1d.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-dav1d.log" 2>&1
+    checkStatus $? "build dav1d"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libdav1d"
+    echo "NO" > "$LOG_DIR/skip-dav1d"
+else
+    echoSection "skip dav1d"
+    echo "YES" > "$LOG_DIR/skip-dav1d"
 fi
 
 if [ $SKIP_OPEN_H264 = "NO" ]; then

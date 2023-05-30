@@ -36,6 +36,9 @@ Some libraries have dependencies to others:
 - zimg
 - zvbi
 - aom
+- dav1d
+    - requires python3 + pip virtualenv
+    - requires ninja
 - openh264
 - openJPEG
 - rav1e
