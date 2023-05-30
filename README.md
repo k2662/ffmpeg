@@ -32,6 +32,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [zvbi](https://sourceforge.net/projects/zapping/) for teletext decoding
 - video codecs
     - [aom](https://aomedia.org/) for AV1 de-/encoding
+    - [dav1d](https://www.videolan.org/projects/dav1d.html) for AV1 decoding
     - [openh264](https://www.openh264.org/) for H.264 de-/encoding
     - [OpenJPEG](http://www.openjpeg.org/) for JPEG de-/encoding
     - [rav1e](https://github.com/xiph/rav1e) for AV1 encoding
@@ -96,6 +97,7 @@ If you don't need a codec/library, you can also disable them:
     - `-SKIP_ZVBI=YES`
 - video codecs
     - `-SKIP_AOM=YES`
+    - `-SKIP_DAV1D=YES`
     - `-SKIP_OPEN_H264=YES`
     - `-SKIP_OPEN_JPEG=YES`
     - `-SKIP_RAV1E=YES`
