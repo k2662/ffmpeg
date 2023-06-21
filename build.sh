@@ -299,6 +299,8 @@ echoSection "compile harfbuzz"
 $SCRIPT_DIR/build-harfbuzz.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-harfbuzz.log" 2>&1
 checkStatus $? "build harfbuzz"
 echoDurationInSections $START_TIME
+FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libharfbuzz"
+echo "NO" > "$LOG_DIR/skip-libharfbuzz"
 
 START_TIME=$(currentTimeInSeconds)
 echoSection "compile SDL"

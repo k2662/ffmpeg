@@ -25,7 +25,7 @@ LOG_DIR=$5
 # load functions
 . $SCRIPT_DIR/functions.sh
 
-# test freetype
+# test freetype and harfbuzz
 START_TIME=$(currentTimeInSeconds)
 echoSection "run test freetype encoding"
 $OUT_DIR/bin/ffmpeg -i "$TEST_DIR/test.mp4" -frames:v 1 -vf "drawtext=fontfile=$TEST_DIR/NotoSans-Regular.ttf:text='Martin Riedl':fontcolor=white:fontsize=24:box=1:boxcolor=black@0.5:boxborderw=5:x=(w-text_w)/2:y=(h-text_h)/2" "$TEST_OUT_DIR/test-freetype.jpeg" > "$TEST_OUT_DIR/test-freetype.log" 2>&1
