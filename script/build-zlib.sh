@@ -38,7 +38,7 @@ cd "zlib/"
 checkStatus $? "change directory failed"
 
 # download source
-download https://www.zlib.net/zlib-$VERSION.tar.gz "zlib.tar.gz"
+download https://www.zlib.net/fossils/zlib-$VERSION.tar.gz "zlib.tar.gz"
 checkStatus $? "download failed"
 
 # unpacking
