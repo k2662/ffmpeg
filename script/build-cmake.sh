@@ -25,13 +25,13 @@ CPUS=$4
 . $SCRIPT_DIR/functions.sh
 
 # versions
-VERSION_MAJOR="3.27"
-VERSION_MINOR="3.27.4"
+VERSION_MINOR="3.27"
+VERSION_PATCH="3.27.4"
 
 # detect existing installation of cmake
 CURRENT_VERSION=$(cmake --version | grep -m 1 "" |  sed -r 's/.*([0-9]+\.[0-9]+\.[0-9]+)/\1/')
 echo "detected installed version of cmake: $CURRENT_VERSION"
-if [ "$CURRENT_VERSION" = "$VERSION_MINOR" ]; then
+if [ "$CURRENT_VERSION" = "$VERSION_PATCH" ]; then
     echo "cmake already in current version available"
     exit 0
 fi
@@ -44,14 +44,56 @@ checkStatus $? "create directory failed"
 cd "cmake/"
 checkStatus $? "change directory failed"
 
+# download pre-build cmake
+CMAKE_OS=""
+CMAKE_ARCH=""
+CURRENT_OS="$(uname)"
+CURRENT_ARCH="$(uname -m)"
+if [ "$CURRENT_OS" = "Darwin" ]; then
+    echo "darwin detected"
+    CMAKE_OS="macos"
+    CMAKE_ARCH="universal"
+elif [ "$CURRENT_OS" = "Linux" ] && [ "$CURRENT_ARCH" = "x86_64" ]; then
+    echo "linux x86_64 detected"
+    CMAKE_OS="linux"
+    CMAKE_ARCH="x86_64"
+elif [ "$CURRENT_OS" = "Linux" ] && [ "$CURRENT_ARCH" = "aarch64" ]; then
+    echo "linux aarch64 detected"
+    CMAKE_OS="linux"
+    CMAKE_ARCH="aarch64"
+else
+    echo "no supported os detected: ${CURRENT_OS} ${CURRENT_ARCH}"
+fi
+download https://github.com/Kitware/CMake/releases/download/v${VERSION_PATCH}/cmake-${VERSION_PATCH}-${CMAKE_OS}-${CMAKE_ARCH}.tar.gz "cmake-release.tar.gz"
+if [ $? -ne 0 ]; then
+    echo "download of cmake release failed; continue with local build"
+else
+    # unpack cmake-release
+    tar -zxf "cmake-release.tar.gz"
+    checkStatus $? "unpack of release failed"
+    cd "cmake-${VERSION_PATCH}-${CMAKE_OS}-${CMAKE_ARCH}"
+    checkStatus $? "change release directory failed"
+    if [ "$CURRENT_OS" = "Darwin" ]; then
+        cd "CMake.app/Contents"
+        checkStatus $? "change app directory failed"
+    fi
+
+    # copy required files
+    cp bin/* "$TOOL_DIR/bin"
+    checkStatus $? "copy cmake bin failed"
+    cp -r share/* "$TOOL_DIR/share"
+    checkStatus $? "copy cmake share failed"
+    exit 0
+fi
+
 # download source
-download https://cmake.org/files/v$VERSION_MAJOR/cmake-$VERSION_MINOR.tar.gz "cmake.tar.gz"
+download https://cmake.org/files/v$VERSION_MINOR/cmake-$VERSION_PATCH.tar.gz "cmake.tar.gz"
 checkStatus $? "download failed"
 
 # unpack
 tar -zxf "cmake.tar.gz"
 checkStatus $? "unpack failed"
-cd "cmake-$VERSION_MINOR/"
+cd "cmake-$VERSION_PATCH/"
 checkStatus $? "change directory failed"
 
 # prepare build
