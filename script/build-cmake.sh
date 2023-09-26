@@ -26,7 +26,7 @@ CPUS=$4
 
 # versions
 VERSION_MINOR="3.27"
-VERSION_PATCH="3.27.4"
+VERSION_PATCH="3.27.6"
 
 # detect existing installation of cmake
 CURRENT_VERSION=$(cmake --version | grep -m 1 "" |  sed -r 's/.*([0-9]+\.[0-9]+\.[0-9]+)/\1/')
