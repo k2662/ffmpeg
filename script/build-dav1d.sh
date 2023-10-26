@@ -56,7 +56,7 @@ checkStatus $? "python meson installation failed"
 # prepare build
 cd "dav1d-$VERSION/"
 checkStatus $? "change directory failed"
-meson build --prefix "$TOOL_DIR" --default-library=static
+meson build --prefix "$TOOL_DIR" --libdir=lib --default-library=static
 checkStatus $? "configuration failed"
 
 # build
