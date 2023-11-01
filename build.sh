@@ -19,6 +19,7 @@ SKIP_BUNDLE="NO"
 SKIP_TEST="NO"
 SKIP_LIBBLURAY="NO"
 SKIP_SNAPPY="NO"
+SKIP_SRT="NO"
 SKIP_LIBVMAF="NO"
 SKIP_ZIMG="NO"
 SKIP_ZVBI="NO"
@@ -60,6 +61,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_SNAPPY" ]; then
         SKIP_SNAPPY=$VALUE
         echo "skip snappy $VALUE"
+    fi
+    if [ $KEY = "-SKIP_SRT" ]; then
+        SKIP_SRT=$VALUE
+        echo "skip srt $VALUE"
     fi
     if [ $KEY = "-SKIP_LIBVMAF" ]; then
         SKIP_LIBVMAF=$VALUE
@@ -337,6 +342,19 @@ if [ $SKIP_SNAPPY = "NO" ]; then
 else
     echoSection "skip snappy"
     echo "YES" > "$LOG_DIR/skip-snappy"
+fi
+
+if [ $SKIP_SRT = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile srt"
+    $SCRIPT_DIR/build-srt.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-srt.log" 2>&1
+    checkStatus $? "build srt"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libsrt"
+    echo "NO" > "$LOG_DIR/skip-srt"
+else
+    echoSection "skip srt"
+    echo "YES" > "$LOG_DIR/skip-srt"
 fi
 
 if [ $SKIP_LIBVMAF = "NO" ]; then

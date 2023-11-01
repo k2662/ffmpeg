@@ -25,6 +25,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [openssl](https://www.openssl.org/)
     - [SDL](https://www.libsdl.org/) for ffplay
     - [snappy](https://github.com/google/snappy/) for HAP encoding
+    - [srt](https://github.com/Haivision/srt) for protocol srt
     - [libvmaf](https://github.com/Netflix/vmaf/tree/master/libvmaf) for VMAF video filter
     - [libxml2](http://xmlsoft.org)
     - [zimg](https://github.com/sekrit-twc/zimg)
@@ -92,6 +93,7 @@ If you don't need a codec/library, you can also disable them:
     - `-SKIP_LIBKLVANC=YES`
     - `-SKIP_LIBBLURAY=YES`
     - `-SKIP_SNAPPY=YES`
+    - `-SKIP_SRT=YES`
     - `-SKIP_LIBVMAF=YES`
     - `-SKIP_ZIMG=YES`
     - `-SKIP_ZVBI=YES`
