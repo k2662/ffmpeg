@@ -23,6 +23,9 @@ Some libraries have dependencies to others:
     - requires freetype
     - requires fontconfig
 - snappy
+- srt
+    - requires cmake
+    - requires openssl
 - libvmaf
     - requires python3 + pip virtualenv
     - requires ninja
