@@ -43,7 +43,7 @@ checkStatus $? "change directory failed"
 # - master branch is currently (18.11.2022) not working for M1 Mac
 #   --> https://bitbucket.org/multicoreware/x265_git/issues/622/x265-cli-failure-on-mac
 # download https://bitbucket.org/multicoreware/x265_git/get/$VERSION.tar.gz "x265.tar.gz"
-download https://gitlab.com/martinr92/x265-mirror/-/archive/8c159ba54aaf7f3e815790e7951c2ed285d2e0a7/x265-mirror-8c159ba54aaf7f3e815790e7951c2ed285d2e0a7.tar.gz "x265.tar.gz"
+download https://gitlab.com/martinr92/x265-mirror/-/archive/$VERSION/x265-mirror-$VERSION.tar.gz "x265.tar.gz"
 checkStatus $? "download of x265 failed"
 
 # unpack
