@@ -38,7 +38,7 @@ cd "opus/"
 checkStatus $? "change directory failed"
 
 # download source
-download https://archive.mozilla.org/pub/opus/opus-$VERSION.tar.gz "opus.tar.gz"
+download https://downloads.xiph.org/releases/opus/opus-$VERSION.tar.gz "opus.tar.gz"
 if [ $? -ne 0 ]; then
     echo "download failed; start download from gitlab server"
     download https://gitlab.xiph.org/xiph/opus/-/archive/v$VERSION/opus-v$VERSION.tar.gz "opus.tar.gz"
