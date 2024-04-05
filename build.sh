@@ -35,6 +35,7 @@ SKIP_LIBWEBP="NO"
 SKIP_X264="NO"
 SKIP_X265="NO"
 SKIP_X265_MULTIBIT="NO"
+SKIP_XEVD="NO"
 SKIP_LAME="NO"
 SKIP_OPUS="NO"
 SKIP_LIBVORBIS="NO"
@@ -125,6 +126,10 @@ for arg in "$@"; do
     if [ $KEY = "-SKIP_X265_MULTIBIT" ]; then
         SKIP_X265_MULTIBIT=$VALUE
         echo "skip x265 multibit $VALUE"
+    fi
+    if [ $KEY = "-SKIP_XEVD" ]; then
+        SKIP_XEVD=$VALUE
+        echo "skip xevd $VALUE"
     fi
     if [ $KEY = "-SKIP_LAME" ]; then
         SKIP_LAME=$VALUE
@@ -552,6 +557,19 @@ if [ $SKIP_X265 = "NO" ]; then
 else
     echoSection "skip x265"
     echo "YES" > "$LOG_DIR/skip-x265"
+fi
+
+if [ $SKIP_XEVD = "NO" ]; then
+    START_TIME=$(currentTimeInSeconds)
+    echoSection "compile xevd"
+    $SCRIPT_DIR/build-xevd.sh "$SCRIPT_DIR" "$SOURCE_DIR" "$TOOL_DIR" "$CPUS" > "$LOG_DIR/build-xevd.log" 2>&1
+    checkStatus $? "build xevd"
+    echoDurationInSections $START_TIME
+    FFMPEG_LIB_FLAGS="$FFMPEG_LIB_FLAGS --enable-libxevd"
+    echo "NO" > "$LOG_DIR/skip-xevd"
+else
+    echoSection "skip xevd"
+    echo "YES" > "$LOG_DIR/skip-xevd"
 fi
 
 if [ $SKIP_LAME = "NO" ]; then

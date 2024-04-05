@@ -43,6 +43,7 @@ This repository builds FFmpeg, FFprobe and FFplay using
     - [libwebp](https://www.webmproject.org/) for webp encoding
     - [x264](http://www.videolan.org/developers/x264.html) for H.264 encoding
     - [x265](https://www.videolan.org/developers/x265.html) for H.265/HEVC encoding (8bit+10bit+12bit)
+    - [xevd](https://github.com/mpeg5/xevd) for MPEG-5 EVC decoding
 - audio codecs
     - [LAME](http://lame.sourceforge.net/) for MP3 encoding
     - [opus](https://opus-codec.org/) for Opus de-/encoding
@@ -110,6 +111,7 @@ If you don't need a codec/library, you can also disable them:
     - `-SKIP_X264=YES`
     - `-SKIP_X265=YES`
     - `-SKIP_X265_MULTIBIT=YES`
+    - `-SKIP_XEVD=YES`
 - audio codecs
     - `-SKIP_LAME=YES`
     - `-SKIP_OPUS=YES`
