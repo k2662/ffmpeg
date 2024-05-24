@@ -50,6 +50,7 @@ Some libraries have dependencies to others:
 - libwebp
 - x264
 - x265
+- xevd
 - lame
 - opus
 - libvorbis
