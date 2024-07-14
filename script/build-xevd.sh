@@ -64,3 +64,14 @@ checkStatus $? "build failed"
 # install
 make install
 checkStatus $? "installation failed"
+
+# static library is stored in a subfolder called xevd
+if [ "$(uname)" = "Linux" ]; then
+    # copy static library to the other libraries
+    cp "$TOOL_DIR/lib/xevd/libxevd.a" "$TOOL_DIR/lib"
+    checkStatus $? "copy of static library failed"
+
+    # remove dynamic library
+    rm "$TOOL_DIR/lib/libxevd.so"
+    checkStatus $? "removing dynamic library failed"
+fi
