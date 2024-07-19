@@ -5,9 +5,11 @@ on: [push]
 jobs:
   setup:
     runs-on: macos-latest
+    
     steps:
-        - name: Check out repository code
-          uses: actions/checkout@v4
-        - run: mkdir _build
-        - run: cd _build
-        - run: ../build.sh
+    - name: Check out repository code
+    - uses: actions/checkout@v4
+    - run: |
+       mkdir _build
+       cd _build
+       ../build.sh
