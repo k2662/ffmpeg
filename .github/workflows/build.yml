@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   setup:
+    name: build ffmpeg
     runs-on: macos-latest
     
     steps:
